@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+sampion:
+  first_name: Bedrich
+  last_name: Smetana
+  yob: 1950
+  county: moutnice
+  sex: male
+
+picmoch:
+  first_name: Vlastimil
+  last_name: Picmoch
+  yob: 1970
+  county: tesany
+  sex: male
+
+participant_create:
+  first_name: Ucastnik
+  last_name: Vytvoril
+  yob: 1950
+  county: moutnice
+  sex: male
+
+cwp_person:
+  first_name: Adam
+  last_name: Mlcoch
+  yob: 1970
+  county: county_with_people
+  sex: male

@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+upcoming_race:
+  title: Default Race
+  held_on: <%= 1.day.from_now %>
+
+empty_race:
+  title: Race with no categories or teams
+  held_on: <%= 1.year.from_now %>
+
+race_with_teams:
+  title: Race with teams
+  held_on: <%= 1.year.from_now %>
+
+race_with_categories:
+  title: Race with categories
+  held_on: <%= 1.year.from_now %>

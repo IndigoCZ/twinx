@@ -1,0 +1,13 @@
+<h1>Listing teams</h1>
+
+<table>
+  <tr>
+    <th>County</th>
+  </tr>
+
+<% @teams.each do |team| %>
+  <tr>
+    <td><%= team.county.title %></td>
+  </tr>
+<% end %>
+</table>

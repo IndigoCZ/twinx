@@ -1,0 +1,21 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: twinx_development
+  pool: 10
+  username: indigo
+  password:
+
+test:
+  adapter: sqlite3
+  database:  db/test.sqlite3
+  pool: 10
+  timeout: 5000
+
+production:
+  adapter: postgresql
+  encoding: unicode
+  database: twinx_production
+  pool: 20
+  username: indigo
+  password:

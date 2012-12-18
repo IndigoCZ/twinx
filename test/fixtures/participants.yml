@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+sampion:
+  starting_no: 1
+  team: moutnice
+  category: seniori
+  person: sampion
+
+participant_create:
+  starting_no: 100
+  team: moutnice
+  category: seniori
+  person: participant_create
+
+participant_for_cwp:
+  starting_no: 99
+  team: moutnice
+  category: category_with_participants
+  person: sampion

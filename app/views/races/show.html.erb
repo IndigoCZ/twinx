@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Title:</b>
+  <%= @race.title %>
+</p>
+
+<p>
+  <b>Held on:</b>
+  <%= @race.held_on %>
+</p>
+
+
+<%= link_to 'Edit', edit_race_path(@race) %> |
+<%= link_to 'Back', races_path %>

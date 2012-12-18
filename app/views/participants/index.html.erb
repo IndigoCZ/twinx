@@ -1,0 +1,19 @@
+<h1>Listing participants</h1>
+
+<table>
+  <tr>
+    <th>First name</th>
+    <th>Last name</th>
+    <th>Team</th>
+    <th>Category</th>
+  </tr>
+
+<% @participants.each do |participant| %>
+  <tr>
+    <td><%= participant.person.first_name %></td>
+    <td><%= participant.person.last_name %></td>
+    <td><%= participant.team.county.title %></td>
+    <td><%= participant.category.title %></td>
+  </tr>
+<% end %>
+</table>

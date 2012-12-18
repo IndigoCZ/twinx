@@ -1,0 +1,6 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+juniori_max_age:
+  category: juniori
+  type: "max_age"
+  value: "16"
