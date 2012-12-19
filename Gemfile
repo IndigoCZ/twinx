@@ -15,6 +15,11 @@ gem 'webrick'
 
 gem "rspec-rails", :group => [:test, :development]
 
+group :development, :test do
+  gem 'rb-inotify', :require => false
+  gem 'guard-rspec'
+end
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
