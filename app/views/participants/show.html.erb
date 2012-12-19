@@ -1,10 +1,22 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Title:</b>
-  <%= @category.title %>
+  <b>Startovní číslo:</b>
+  <%= @participant.starting_no %>
+</p>
+<p>
+  <b>Jméno:</b>
+  <%= @participant.display_name %>
+</p>
+<p>
+  <b>Kategorie:</b>
+  <%= @participant.category.title %>
+</p>
+<p>
+  <b>Jednota:</b>
+  <%= @participant.team.county.title %>
 </p>
 
 
-<%= link_to 'Edit', edit_race_category_path(@current_race,@category) %> |
-<%= link_to 'Back', race_categories_path(@current_race) %>
+<%= link_to 'Upravit', edit_race_participant_path(@current_race,@participant) %> |
+<%= link_to 'Zpět', race_participants_path(@current_race) %>

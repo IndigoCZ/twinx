@@ -6,6 +6,7 @@
     <th>Last name</th>
     <th>Team</th>
     <th>Category</th>
+    <th>Odkazy</th>
   </tr>
 
 <% @participants.each do |participant| %>
@@ -14,6 +15,7 @@
     <td><%= participant.person.last_name %></td>
     <td><%= participant.team.county.title %></td>
     <td><%= participant.category.title %></td>
+    <td><%= link_to 'Zobrazit', [@current_race, participant] %></td>
   </tr>
 <% end %>
 </table>

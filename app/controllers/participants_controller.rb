@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class ParticipantsController < ApplicationController
   def index
     @participants=@current_race.participants
@@ -5,26 +6,36 @@ class ParticipantsController < ApplicationController
   def new
     @person=Person.new
     @participant=Participant.new
-    @county=County.new
-    # Temporary code
-    @categories=Category.where(race_id:@current_race.id)
   end
   def create
-    @county=County.find_or_create_by_title(params[:county][:title]) # Is this dangerous?
-    person_details=params[:person]
-    person_details[:county_id]=@county.id
-    @person=Person.where(person_details).first_or_create
-    logger.info(@person.inspect)
-    @team=Team.where(race_id:@current_race.id,county_id:@county.id).first_or_create
-    participant_details=params[:participant]
-    participant_details[:team_id]=@team.id
-    participant_details[:person_id]=@person.id
-    @participant=Participant.new(participant_details)
+    @person=Person.where(params[:person]).first_or_create
+    @team=Team.where(race_id:@current_race.id,county_id:params[:person][:county_id]).first_or_create
+    params[:participant][:team_id]=@team.id
+    params[:participant][:person_id]=@person.id
+    @participant=Participant.new(params[:participant])
     if @participant.save
-      redirect_to race_participants_url(@current_race), notice:'Participant was successfully created.'
+      redirect_to race_participants_url(@current_race), notice:'Účastník byl úspěšně vytvořen.'
     else
-      @categories=Category.where(race_id:@current_race.id)
       render action: "new"
     end
   end
+  def show
+    @participant=Participant.find(params[:id])
+  end
+  def edit
+    @participant=Participant.find(params[:id])
+    @person=@participant.person
+  end
+  def update
+    @participant=Participant.find(params[:id])
+    @person=@participant.person
+    @team=Team.where(race_id:@current_race.id,county_id:params[:person][:county_id]).first_or_create
+    @participant.team_id=@team.id
+    if @person.update_attributes(params[:person]) && @participant.update_attributes(params[:participant])
+      redirect_to [@current_race, @participant], notice:'Účastník byl úspěšně upraven.'
+    else
+      render action: "edit"
+    end
+  end
+
 end

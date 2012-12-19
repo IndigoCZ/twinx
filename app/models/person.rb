@@ -3,4 +3,8 @@ class Person < ActiveRecord::Base
   belongs_to :county
   validates_presence_of :first_name, :last_name, :yob, :sex, :county
   validates :yob, :numericality => { only_integer:true , greater_than:1900, less_than:Time.now.year } # Make sure we reboot once a year :-)
+
+  def display_name
+    "#{first_name} #{last_name}"
+  end
 end

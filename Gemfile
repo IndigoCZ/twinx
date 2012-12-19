@@ -13,11 +13,14 @@ end
 
 gem 'webrick'
 
-gem "rspec-rails", :group => [:test, :development]
-
 group :development, :test do
+  gem 'rspec-rails'
+
   gem 'rb-inotify', :require => false
   gem 'guard-rspec'
+
+  gem 'capybara'
+  # apt-get install libxslt-dev libxml2-dev
 end
 
 # Gems used only for assets and not required
