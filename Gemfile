@@ -9,18 +9,23 @@ gem 'pg'
 
 group :test do
   gem 'sqlite3'
-end
-
-gem 'webrick'
-
-group :development, :test do
-  gem 'rspec-rails'
 
   gem 'rb-inotify', :require => false
   gem 'guard-rspec'
 
   gem 'capybara'
   # apt-get install libxslt-dev libxml2-dev
+  gem 'launchy'
+  gem 'faker'
+end
+
+
+group :development, :test do
+  gem 'rspec-rails'
+
+  gem 'factory_girl_rails'
+
+  gem 'webrick' # Bug in regular webrick
 end
 
 # Gems used only for assets and not required
@@ -37,6 +42,7 @@ group :assets do
   gem 'bootstrap-sass', '~> 2.2.1.1'
   # http://railsapps.github.com/twitter-bootstrap-rails.html
 end
+gem 'quiet_assets', :group => :development
 
 gem 'jquery-rails'
 

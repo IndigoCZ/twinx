@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(:version => 20121215145308) do
     t.string   "first_name"
     t.string   "last_name"
     t.string   "full_name"
-    t.string   "sex"
+    t.string   "gender"
     t.integer  "yob"
     t.date     "born"
     t.integer  "county_id"

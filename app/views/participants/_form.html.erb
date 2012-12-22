@@ -7,7 +7,7 @@
       <%= p.input :first_name, label:"Jméno" %>
       <%= p.input :last_name, label:"Příjmení" %>
       <%= p.input :yob, label:"Rok nar." %>
-      <%= p.input :sex, label:"Pohlaví" %>
+      <%= p.input :gender, label:"Pohlaví" %>
       <%= p.association :county, label:"Jednota", :collection => County.all, :prompt => "Prosím zvolte jednotu."   %>
     <% end %>
     <%= f.association :category, label:"Kategorie", :collection => Category.where(race_id:@current_race.id), :prompt => "Prosím zvolte kategorii."   %>

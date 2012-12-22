@@ -27,7 +27,7 @@ last_names=%w[Cech Slovak Nemec Polak Spanel Sedlak Svoboda Novotny Husak Danek 
     first_name:first_names.sample,
     last_name:last_names.sample,
     yob:1910+rand(100),
-    sex:"male",
+    gender:"male",
     county_id:counties.sample.id
   )
 end
@@ -38,7 +38,7 @@ last_names=%w[Cechova Slovakova Nemcova Polakova Spanelova Sedlakova Svobodova N
     first_name:first_names.sample,
     last_name:last_names.sample,
     yob:1910+rand(100),
-    sex:"female",
+    gender:"female",
     county_id:counties.sample.id
   )
 end
