@@ -4,11 +4,11 @@
   <div class="form-inputs">
     <%= f.input :first_name %>
     <%= f.input :last_name %>
-    <%= f.input :full_name %>
+    <%= f.association :county %>
     <%= f.input :yob %>
-    <%= f.input :born %>
-    <%= f.input :gender %>
-    <%= f.input :county_id %>
+    <%= f.input :gender, as: :radio_buttons, collection:[:male,:female], checked: :male %>
+    <%= f.input :born, discard_year:true, include_blank:true %>
+    <%= f.input :full_name %>
     <%= f.input :id_string %>
   </div>
 

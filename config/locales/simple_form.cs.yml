@@ -1,0 +1,30 @@
+cs:
+  simple_form:
+    "yes": 'Ano'
+    "no": 'Ne'
+    required:
+      text: 'povinné'
+      mark: '*'
+    error_notification:
+      default_message: "Nalezeny chyby:"
+    options:
+      person:
+        gender:
+          male: "Muž"
+          female: "Žena"
+  helpers:
+    submit:
+      create: "Vytvořit %{model}"
+      update: "Uložit  %{model}"
+      county:
+        create: "Vytvořit Jednotu"
+        update: "Uložit Jednotu"
+      category:
+        create: "Vytvořit Kategorii"
+        update: "Uložit Kategorii"
+      participant:
+        create: "Vytvořit Účastníka"
+        update: "Uložit  Účastníka"
+      person:
+        create: "Vytvořit Osobu"
+        update: "Uložit Osobu"

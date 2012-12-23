@@ -1,2 +1,31 @@
 cs:
-  hello: "Hello world"
+  pages:
+  activerecord:
+    attributes:
+      race:
+        title: "Název"
+        held_on: "Datum"
+      category:
+        title:  "Název"
+      county:
+        title:  "Název"
+      person:
+        gender: "Pohlaví"
+        first_name: "Jméno"
+        last_name: "Příjmení"
+        full_name: "Plné Jméno"
+        born: "Narozen"
+        yob: "Rok narození"
+        id_string: "Průkaz"
+      participant:
+        starting_no: "Startovní č."
+    models:
+        team: "Tým"
+        county:
+          one: "Jednota"
+          few: "Jednoty"
+          many: "Jednot"
+        category: "Kategorie"
+        race: "Závod"
+        person: "Osoba"
+        participant: "Účastník"

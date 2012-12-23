@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class RacesController < ApplicationController
   def index
     @races = Race.all
@@ -18,7 +19,7 @@ class RacesController < ApplicationController
   def create
     @race = Race.new(params[:race])
     if @race.save
-      redirect_to @race, notice: 'Race was successfully created.'
+      redirect_to @race, notice: "Závod byl úspěšně vytvořen."
     else
       render action: "new"
     end
@@ -27,7 +28,7 @@ class RacesController < ApplicationController
   def update
     @race = Race.find(params[:id])
     if @race.update_attributes(params[:race])
-      redirect_to @race, notice: 'Race was successfully updated.' 
+      redirect_to @race, notice: "Závod byl úspěšně vytvořen."
     else
       render action: "edit"
     end

@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class CountiesController < ApplicationController
   def index
     @counties = County.all
@@ -18,7 +19,7 @@ class CountiesController < ApplicationController
   def create
     @county = County.new(params[:county])
     if @county.save
-      redirect_to @county, notice: 'County was successfully created.'
+      redirect_to @county, notice: "Jednota byla úspěšně vytvořena."
     else
       render action: "new"
     end
@@ -27,7 +28,7 @@ class CountiesController < ApplicationController
   def update
     @county = County.find(params[:id])
     if @county.update_attributes(params[:county])
-      redirect_to @county, notice: 'County was successfully updated.'
+      redirect_to @county, notice: "Jednota byla úspěšně upravena."
     else
       render action: "edit"
     end

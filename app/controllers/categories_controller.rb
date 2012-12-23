@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class CategoriesController < ApplicationController
   def index
     @categories=@current_race.categories
@@ -18,7 +19,7 @@ class CategoriesController < ApplicationController
   def create
     @category = Category.new(params[:category])
     if @category.save
-      redirect_to [@current_race, @category], notice: 'Category was successfully created.'
+      redirect_to [@current_race, @category], notice: 'Kategorie byla úspěšně vytvořena.'
     else
       render action: "new"
     end
@@ -27,7 +28,7 @@ class CategoriesController < ApplicationController
   def update
     @category = Category.find(params[:id])
     if @category.update_attributes(params[:category])
-      redirect_to [@current_race, @category], notice: 'Category was successfully updated.' 
+      redirect_to [@current_race, @category], notice: 'Kategorie byla úspěšně vytvořena.'
     else
       render action: "edit"
     end
