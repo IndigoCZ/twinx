@@ -37,5 +37,10 @@ class ParticipantsController < ApplicationController
       render action: "edit"
     end
   end
+  def destroy
+    @participant=Participant.find(params[:id])
+    @participant.destroy
+    redirect_to race_participants_url(@current_race)
+  end
 
 end

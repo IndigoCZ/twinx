@@ -15,7 +15,7 @@ cs:
   helpers:
     submit:
       create: "Vytvořit %{model}"
-      update: "Uložit  %{model}"
+      update: "Uložit %{model}"
       county:
         create: "Vytvořit Jednotu"
         update: "Uložit Jednotu"
@@ -24,7 +24,7 @@ cs:
         update: "Uložit Kategorii"
       participant:
         create: "Vytvořit Účastníka"
-        update: "Uložit  Účastníka"
+        update: "Uložit Účastníka"
       person:
         create: "Vytvořit Osobu"
         update: "Uložit Osobu"

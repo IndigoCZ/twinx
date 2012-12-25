@@ -20,4 +20,34 @@ describe "Counties" do
     visit county_path(county.id)
     page.should have_content(county.title)
   end
+
+  it "updates a county when I fill in the edit county form" do
+    county.save
+    visit edit_county_path(county.id)
+    fill_in "Název", with: "Some other name"
+    click_button "Uložit Jednotu"
+    page.should have_content("Jednota byla úspěšně upravena.")
+  end
+
+  it "shows a listing of counties when visit the index" do
+    county.save
+    visit counties_path
+    page.should have_content "Přehled Jednot"
+    page.should have_content county.title
+  end
+
+  it "deletes a county when I click the delete button", js:true do
+    DatabaseCleaner.clean
+    county.save
+    visit counties_path
+    page.should have_content county.title
+    page.should have_content "Smazat"
+    expect{
+      click_link 'Smazat'
+      page.driver.accept_js_confirms!
+    }.to change(County,:count).by(-1)
+    page.should have_content "Přehled Jednot"
+    page.should_not have_content county.title
+  end
+
 end

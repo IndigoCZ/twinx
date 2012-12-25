@@ -1,9 +1,8 @@
-<h1>Listing categories</h1>
+<h1>Přehled Kategorií</h1>
 
 <table>
   <tr>
-    <th>Title</th>
-    <th>Race</th>
+    <th>Název</th>
     <th></th>
     <th></th>
     <th></th>
@@ -12,14 +11,13 @@
 <% @categories.each do |category| %>
   <tr>
     <td><%= category.title %></td>
-    <td><%= category.title %></td>
-    <td><%= link_to 'Show', race_category_path(@current_race,category) %></td>
-    <td><%= link_to 'Edit', edit_race_category_path(@current_race,category) %></td>
-    <td><%= link_to 'Destroy', race_category_path(@current_race,category), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to 'Zobrazit', race_category_path(@current_race,category) %></td>
+    <td><%= link_to 'Upravit', edit_race_category_path(@current_race,category) %></td>
+    <td><%= link_to 'Smazat', race_category_path(@current_race,category), method: :delete, data: { confirm: 'Jste si jisti?' } %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Category', new_race_category_path(@current_race) %>
+<%= link_to 'Nová Kategorie', new_race_category_path(@current_race) %>

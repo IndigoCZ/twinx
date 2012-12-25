@@ -37,4 +37,34 @@ describe "Participants" do
     page.should have_content(participant.team.county.title)
     page.should have_content(participant.category.title)
   end
+
+  it "updates a participant when I fill in the edit participant form" do
+    participant.save
+    visit edit_race_participant_path(race.id, participant.id)
+    fill_in "Příjmení", with: "Novák"
+    click_button "Uložit Účastníka"
+    page.should have_content("Účastník byl úspěšně upraven.")
+  end
+
+  it "shows a listing of participants when visit the index" do
+    participant.save
+    visit race_participants_path(race.id)
+    page.should have_content "Přehled Účastníků"
+    page.should have_content participant.person.first_name
+  end
+
+  it "deletes a participant when I click the delete button", js:true do
+    DatabaseCleaner.clean
+    existing_participant=FactoryGirl.create(:participant)
+    visit race_participants_path(existing_participant.race.id)
+    page.should have_content existing_participant.person.first_name
+    page.should have_content "Smazat"
+    expect{
+      click_link 'Smazat'
+      page.driver.accept_js_confirms!
+    }.to change(Participant,:count).by(-1)
+    page.should have_content "Přehled Účastníků"
+    page.should_not have_content existing_participant.person.first_name
+  end
+
 end

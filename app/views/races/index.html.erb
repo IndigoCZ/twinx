@@ -1,9 +1,9 @@
-<h1>Listing races</h1>
+<h1>Přehled Závodů</h1>
 
 <table>
   <tr>
-    <th>Title</th>
-    <th>Held on</th>
+    <th>Název</th>
+    <th>Datum</th>
     <th></th>
     <th></th>
     <th></th>
@@ -13,9 +13,9 @@
   <tr>
     <td><%= race.title %></td>
     <td><%= race.held_on %></td>
-    <td><%= link_to 'Show', race %></td>
-    <td><%= link_to 'Edit', edit_race_path(race) %></td>
-    <td><%= link_to 'Destroy', race, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to 'Zobrazit', race %></td>
+    <td><%= link_to 'Upravit', edit_race_path(race) %></td>
+    <td><%= link_to 'Smazat', race, method: :delete, data: { confirm: 'Jste si jisti?' } %></td>
   </tr>
 <% end %>
 </table>

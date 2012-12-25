@@ -28,7 +28,7 @@ class RacesController < ApplicationController
   def update
     @race = Race.find(params[:id])
     if @race.update_attributes(params[:race])
-      redirect_to @race, notice: "Závod byl úspěšně vytvořen."
+      redirect_to @race, notice: "Závod byl úspěšně upraven."
     else
       render action: "edit"
     end
