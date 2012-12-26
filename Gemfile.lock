@@ -54,6 +54,7 @@ GEM
     client_side_validations-simple_form (2.0.1)
       client_side_validations (~> 3.2.0)
       simple_form (~> 2.0.3)
+    cocoon (1.1.1)
     coderay (1.0.8)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
@@ -201,6 +202,7 @@ DEPENDENCIES
   capybara-webkit!
   client_side_validations
   client_side_validations-simple_form
+  cocoon
   coffee-rails (~> 3.2.1)
   database_cleaner
   factory_girl_rails

@@ -1,0 +1,5 @@
+<div class="nested-fields row">
+  <%= f.input :restrict, wrapper_html:{ :class => 'span4' }, as: :select, collection:{"Pohlaví"=>"gender","Věk od"=>"min_age","Věk do"=>"max_age"} %>
+  <%= f.input :value, wrapper_html:{ :class => 'span6' } %>
+  <%= link_to_remove_association "Odebrat", f, class:"btn" %>
+</div>

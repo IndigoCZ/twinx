@@ -3,7 +3,7 @@
 
   <div class="form-inputs">
     <%= f.input :starting_no, label:"Startovní číslo" %>
-    <%= simple_fields_for(@person) do |p| %>
+    <%= f.simple_fields_for(@person) do |p| %>
       <%= p.input :first_name, label:"Jméno" %>
       <%= p.input :last_name, label:"Příjmení" %>
       <%= p.input :yob, label:"Rok nar." %>

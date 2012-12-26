@@ -7,6 +7,9 @@ cs:
         held_on: "Datum"
       category:
         title:  "Název"
+      constraint:
+        restrict:  "Typ"
+        value: "Hodnota"
       county:
         title:  "Název"
       person:
@@ -26,6 +29,7 @@ cs:
           few: "Jednoty"
           many: "Jednot"
         category: "Kategorie"
+        constraint: "Omezení"
         race: "Závod"
         person: "Osoba"
         participant: "Účastník"

@@ -8,12 +8,21 @@ class ParticipantsController < ApplicationController
     @participant=Participant.new
   end
   def create
-    @person=Person.where(params[:person]).first_or_create
-    @team=Team.where(race_id:@current_race.id,county_id:params[:person][:county_id]).first_or_create
-    params[:participant][:team_id]=@team.id
-    params[:participant][:person_id]=@person.id
-    @participant=Participant.new(params[:participant])
-    if @participant.save
+    success=false
+    Participant.transaction do
+      @person=Person.where(params[:participant][:person]).first_or_create # Improve this
+      @team=Team.where(race_id:@current_race.id,county_id:params[:participant][:person][:county_id]).first_or_create
+      params[:participant][:team_id]=@team.id
+      params[:participant][:person_id]=@person.id
+      params[:participant].delete(:person)
+      @participant=Participant.new(params[:participant])
+      if @participant.save
+        success=true
+      else
+        raise ActiveRecord::Rollback
+      end
+    end
+    if success
       redirect_to race_participants_url(@current_race), notice:'Účastník byl úspěšně vytvořen.'
     else
       render action: "new"
@@ -27,11 +36,21 @@ class ParticipantsController < ApplicationController
     @person=@participant.person
   end
   def update
-    @participant=Participant.find(params[:id])
-    @person=@participant.person
-    @team=Team.where(race_id:@current_race.id,county_id:params[:person][:county_id]).first_or_create
-    @participant.team_id=@team.id
-    if @person.update_attributes(params[:person]) && @participant.update_attributes(params[:participant])
+    success=false
+    Participant.transaction do
+      @participant=Participant.find(params[:id])
+      @person=@participant.person
+      raise ActiveRecord::Rollback unless @person.update_attributes(params[:participant][:person])
+      @team=Team.where(race_id:@current_race.id,county_id:@person.county.id).first_or_create
+      params[:participant].delete(:person)
+      @participant.team_id=@team.id
+      if @participant.update_attributes(params[:participant])
+        success=true
+      else
+        raise ActiveRecord::Rollback
+      end
+    end
+    if success
       redirect_to [@current_race, @participant], notice:'Účastník byl úspěšně upraven.'
     else
       render action: "edit"

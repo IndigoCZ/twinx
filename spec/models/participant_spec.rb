@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Participant do
   it "has a valid factory" do
-     FactoryGirl.create(:participant).should be_valid
+     FactoryGirl.build(:participant).should be_valid
   end
   it "is invalid without a person" do
      FactoryGirl.build(:participant, person_id:nil).should_not be_valid

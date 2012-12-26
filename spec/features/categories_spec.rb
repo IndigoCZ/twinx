@@ -52,4 +52,14 @@ describe "Categories" do
     page.should_not have_content category.title
   end
 
+  it "allows me to specify constraints when creating a category", js:true do
+    visit new_race_category_path(:race_id => race.id)
+    fill_in "Název", with:category.title
+    click_link "Přidat"
+    select "Pohlaví", from:"Typ"
+    fill_in "Hodnota", with:"male"
+    click_button "Vytvořit"
+    page.should have_content("Kategorie byla úspěšně vytvořena.")
+  end
+
 end
