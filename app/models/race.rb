@@ -4,6 +4,7 @@ class Race < ActiveRecord::Base
   has_many :categories
   has_many :teams
   has_many :participants, :through => :categories
+  has_many :results, :through => :participants
   before_destroy :check_dependencies
 
   def check_dependencies

@@ -1,0 +1,16 @@
+<%= simple_form_for([@current_race,@result]) do |f| %>
+  <%= f.error_notification %>
+  <%= display_nonstandard_errors @result %>
+
+  <div class="form-inputs">
+    <%= f.simple_fields_for(@participant) do |builder| %>
+      <%= builder.input :starting_no %>
+    <% end %>
+    <%= f.input :position %>
+    <%= f.input :time_msec %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

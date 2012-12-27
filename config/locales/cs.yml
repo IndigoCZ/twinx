@@ -18,10 +18,15 @@ cs:
         last_name: "Příjmení"
         full_name: "Plné Jméno"
         born: "Narozen"
-        yob: "Rok narození"
+        county: "Jednota"
+        yob: "Rok nar."
         id_string: "Průkaz"
+      result:
+        position: "Pozice"
+        time: "Čas"
       participant:
         starting_no: "Startovní č."
+        category: "Kategorie"
     models:
         team: "Tým"
         county:
@@ -33,3 +38,4 @@ cs:
         race: "Závod"
         person: "Osoba"
         participant: "Účastník"
+        result: "Výsledek"

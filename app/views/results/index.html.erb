@@ -1,0 +1,27 @@
+<h1>Přehled Výsledeků</h1>
+
+<table>
+  <tr>
+    <th>Jméno</th>
+    <th>Pozice</th>
+    <th>Čas</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @results.each do |result| %>
+  <tr>
+    <td><%= result.participant.display_name %></td>
+    <td><%= result.position %></td>
+    <td><%= result.time %></td>
+    <td><%= link_to 'Zobrazit', [@current_race, result] %></td>
+    <td><%= link_to 'Edit', edit_race_result_path(@current_race,result) %></td>
+    <td><%= link_to 'Smazat', [@current_race, result], method: :delete, data: { confirm: 'Jste si jisti?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'Nový výsledek', new_race_result_path(@current_race) %>

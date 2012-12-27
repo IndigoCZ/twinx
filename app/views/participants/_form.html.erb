@@ -2,15 +2,15 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.input :starting_no, label:"Startovní číslo" %>
+    <%= f.input :starting_no %>
     <%= f.simple_fields_for(@person) do |p| %>
-      <%= p.input :first_name, label:"Jméno" %>
-      <%= p.input :last_name, label:"Příjmení" %>
-      <%= p.input :yob, label:"Rok nar." %>
-      <%= p.input :gender, label:"Pohlaví" %>
-      <%= p.association :county, label:"Jednota", :collection => County.all, :prompt => "Prosím zvolte jednotu."   %>
+      <%= p.input :first_name %>
+      <%= p.input :last_name %>
+      <%= p.input :yob %>
+      <%= p.input :gender %>
+      <%= p.association :county, :collection => County.all, :prompt => "Prosím zvolte jednotu."   %>
     <% end %>
-    <%= f.association :category, label:"Kategorie", :collection => Category.where(race_id:@current_race.id), :prompt => "Prosím zvolte kategorii."   %>
+    <%= f.association :category, :collection => Category.where(race_id:@current_race.id), :prompt => "Prosím zvolte kategorii."   %>
   </div>
 
   <div class="form-actions">

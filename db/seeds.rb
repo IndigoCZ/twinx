@@ -2,6 +2,9 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 #
+require 'faker'
+
+Result.delete_all
 Participant.delete_all
 Team.delete_all
 Category.delete_all
@@ -20,25 +23,12 @@ counties=County.create([
   {title:"Nesvacilka"},
   {title:"Rozarin"}
 ])
-first_names=%w[Adam Bedrich Cenek Daniel Erik Filip Gilbert Hugo Ilja Jakub Karel Leopold Martin Nero Ondrej Pavel Quido Robert Stanislav Tomas Uwe Vaclav Walter Xerxes Yari Zdenek]
-last_names=%w[Cech Slovak Nemec Polak Spanel Sedlak Svoboda Novotny Husak Danek Zamecnik Vymazal Hutak Chudacek Matysek Drotar]
 100.times do
   Person.create(
-    first_name:first_names.sample,
-    last_name:last_names.sample,
+    first_name:Faker::Name.first_name,
+    last_name:Faker::Name.last_name,
     yob:1910+rand(100),
-    gender:"male",
-    county_id:counties.sample.id
-  )
-end
-first_names=%w[Alena Beata Ciara Dana Eva Frantiska Gina Helena Irena Jana Klara Linda Milada Nadezda Olga Petra Quida Radka Silva Tana Ursula Viktorka Wendy Xena Yvetta Zdena]
-last_names=%w[Cechova Slovakova Nemcova Polakova Spanelova Sedlakova Svobodova Novota Husakova Dankova Zamecnikova Vymazalova Hutakova Chudackova Matyskova Drotarova]
-50.times do
-  Person.create(
-    first_name:first_names.sample,
-    last_name:last_names.sample,
-    yob:1910+rand(100),
-    gender:"female",
+    gender:["male","female"].sample,
     county_id:counties.sample.id
   )
 end
@@ -65,4 +55,11 @@ races.each do |race|
       team_id:race.teams.sample.id
     )
   end
+end
+
+Participant.all.each do |participant|
+ participant.result=Result.new
+ participant.result.position=rand(100)
+ participant.result.time_msec=rand(100000)
+ participant.result.save
 end

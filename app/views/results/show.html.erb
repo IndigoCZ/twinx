@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Position:</b>
+  <%= @result.position %>
+</p>
+
+<p>
+  <b>Time msec:</b>
+  <%= @result.time_msec %>
+</p>
+
+<p>
+  <b>Participant:</b>
+  <%= @result.participant.person.display_name %>
+</p>
+
+
+<%= link_to 'Upravit', edit_race_result_path(@current_race,@result) %> |
+<%= link_to 'Zpět', race_results_path(@current_race) %>

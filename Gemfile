@@ -73,11 +73,10 @@ gem 'rails-i18n'
 gem 'simple_form'
 gem 'client_side_validations'
 gem 'client_side_validations-simple_form'
-gem 'cocoon'
 # rails generate simple_form:install --bootstrap
 # rails generate client_side_validations:install
 # //= require rails.validations
 # //= require rails.validations.simple_form
 # rails generate client_side_validations:copy_assets
-
-
+gem 'cocoon'
+gem 'select2-rails'

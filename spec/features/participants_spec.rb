@@ -20,7 +20,7 @@ describe "Participants" do
   it "creates a new participant when I fill in the new participant form" do
     #save_and_open_page
     visit new_race_participant_path(:race_id => race.id)
-    fill_in "Startovní číslo", with:participant.starting_no
+    fill_in "Startovní č.", with:participant.starting_no
     fill_in "Jméno", with:participant.person.first_name
     fill_in "Příjmení", with:participant.person.last_name
     fill_in "Rok nar.", with:participant.person.yob
@@ -47,7 +47,7 @@ describe "Participants" do
     page.should have_content("Účastník byl úspěšně upraven.")
   end
 
-  it "shows a listing of participants when visit the index" do
+  it "shows a listing of participants when I visit the index" do
     participant.save
     visit race_participants_path(race.id)
     page.should have_content "Přehled Účastníků"

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121215145308) do
+ActiveRecord::Schema.define(:version => 20121227090300) do
 
   create_table "categories", :force => true do |t|
     t.string   "title"
@@ -62,6 +62,16 @@ ActiveRecord::Schema.define(:version => 20121215145308) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "results", :force => true do |t|
+    t.integer  "position"
+    t.integer  "time_msec"
+    t.integer  "participant_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "results", ["participant_id"], :name => "index_results_on_participant_id"
 
   create_table "teams", :force => true do |t|
     t.integer  "county_id"

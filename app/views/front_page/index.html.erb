@@ -5,6 +5,7 @@
   <h1><%= race.title %></h1>
   <p>
         <%= link_to "Ucastnici", race_participants_path(race), class:"btn btn-large btn-primary" %>
+        <%= link_to "Vysledky", race_results_path(race)      , class:"btn btn-large" %>
         <%= link_to "Kategorie", race_categories_path(race)  , class:"btn btn-large" %>
         <%= link_to "Jednoty"  , race_teams_path(race)       , class:"btn btn-large" %>
   </p>
@@ -18,6 +19,7 @@
         <h3><%= race.title %></h3>
         <p>
         <%= link_to "Ucastnici", race_participants_path(race), class:"btn btn-primary" %>
+        <%= link_to "Vysledky", race_results_path(race)      , class:"btn " %>
         <%= link_to "Kategorie", race_categories_path(race)  , class:"btn" %>
         <%= link_to "Jednoty"  , race_teams_path(race)       , class:"btn" %>
         </p>
