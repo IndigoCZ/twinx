@@ -9,7 +9,8 @@ cs:
         title:  "Název"
       constraint:
         restrict:  "Typ"
-        value: "Hodnota"
+        string_value: "Řetězec"
+        integer_value: "Číslo"
       county:
         title:  "Název"
       person:

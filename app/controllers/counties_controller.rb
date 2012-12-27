@@ -1,7 +1,7 @@
 # encoding: UTF-8
 class CountiesController < ApplicationController
   def index
-    @counties = County.all
+    @counties = County.order('title')
   end
 
   def show

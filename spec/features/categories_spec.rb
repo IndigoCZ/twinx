@@ -57,7 +57,7 @@ describe "Categories" do
     fill_in "Název", with:category.title
     click_link "Přidat"
     select "Pohlaví", from:"Typ"
-    fill_in "Hodnota", with:"male"
+    fill_in "Řetězec", with:"male"
     click_button "Vytvořit"
     page.should have_content("Kategorie byla úspěšně vytvořena.")
   end

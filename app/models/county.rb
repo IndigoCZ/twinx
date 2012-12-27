@@ -6,6 +6,8 @@ class County < ActiveRecord::Base
   has_many :people
   before_destroy :check_dependencies
 
+  scope :finder, lambda { |q| where("title like :q", q: "%#{q}%") }
+
   def check_dependencies
     if people.count > 0
       errors.add(:base, "cannot be deleted while people exist")
@@ -15,5 +17,9 @@ class County < ActiveRecord::Base
       errors.add(:base, "cannot be deleted while teams exist")
       return false
     end
+  end
+
+  def as_json(options)
+    { id: id, text: title }
   end
 end

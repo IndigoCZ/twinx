@@ -6,7 +6,7 @@
     <%= f.input :last_name %>
     <%= f.association :county %>
     <%= f.input :yob %>
-    <%= f.input :gender, as: :radio_buttons, collection:[:male,:female], checked: :male %>
+    <%= f.input :gender, as: :radio_buttons, collection:[:male,:female] %>
     <%= f.input :born, discard_year:true, include_blank:true %>
     <%= f.input :full_name %>
     <%= f.input :id_string %>

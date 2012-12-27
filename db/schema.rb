@@ -23,9 +23,10 @@ ActiveRecord::Schema.define(:version => 20121227090300) do
   create_table "constraints", :force => true do |t|
     t.integer  "category_id"
     t.string   "restrict"
-    t.string   "value"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.string   "string_value"
+    t.integer  "integer_value"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   create_table "counties", :force => true do |t|

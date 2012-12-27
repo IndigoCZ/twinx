@@ -6,11 +6,13 @@
     <%= f.simple_fields_for(@person) do |p| %>
       <%= p.input :first_name %>
       <%= p.input :last_name %>
-      <%= p.input :yob %>
-      <%= p.input :gender %>
-      <%= p.association :county, :collection => County.all, :prompt => "Prosím zvolte jednotu."   %>
+      <%= p.input :yob, input_html:{ class:'restrict_yob' } %>
+      <%= p.input :gender, as: :radio_buttons, collection:[:male,:female], input_html:{ class:'restrict_gender' } %>
+      <%= p.association :county, collection:County.order('title'), :prompt => "Prosím zvolte jednotu." %>
     <% end %>
-    <%= f.association :category, :collection => Category.where(race_id:@current_race.id), :prompt => "Prosím zvolte kategorii."   %>
+    <%= f.association :category, collection:Category.where(race_id:@current_race.id), :prompt => "Prosím zvolte kategorii.",
+      input_html:{ class:'restricted',data:{ restrict_gender:@person.gender,restrict_yob:@person.yob,source:race_categories_path(@current_race)} }
+    %>
   </div>
 
   <div class="form-actions">

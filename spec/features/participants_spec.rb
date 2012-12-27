@@ -1,6 +1,14 @@
 # encoding: UTF-8
 require 'spec_helper'
 
+def gender_to_human(gender)
+  if gender=="male"
+    "Muž"
+  else
+    "Žena"
+  end
+end
+
 describe "Participants" do
   let(:race) { FactoryGirl.create(:race) }
   let(:county) { FactoryGirl.create(:county)}
@@ -24,7 +32,7 @@ describe "Participants" do
     fill_in "Jméno", with:participant.person.first_name
     fill_in "Příjmení", with:participant.person.last_name
     fill_in "Rok nar.", with:participant.person.yob
-    fill_in "Pohlaví", with:participant.person.gender
+    choose gender_to_human(participant.person.gender)
     select county.title, from:"Jednota"
     select participant.category.title, from:"Kategorie"
     click_button "Vytvořit"
@@ -32,7 +40,6 @@ describe "Participants" do
   end
   it "shows details of an existing participant when I visit /:participant_id" do
     participant.save
-    #=FactoryGirl.create(:participant, 
     visit race_participant_path(race.id, participant.id)
     page.should have_content(participant.display_name)
     page.should have_content(participant.team.county.title)

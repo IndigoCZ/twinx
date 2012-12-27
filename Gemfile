@@ -79,4 +79,3 @@ gem 'client_side_validations-simple_form'
 # //= require rails.validations.simple_form
 # rails generate client_side_validations:copy_assets
 gem 'cocoon'
-gem 'select2-rails'

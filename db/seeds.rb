@@ -58,8 +58,5 @@ races.each do |race|
 end
 
 Participant.all.each do |participant|
- participant.result=Result.new
- participant.result.position=rand(100)
- participant.result.time_msec=rand(100000)
- participant.result.save
+  Result.create(position:rand(100),time_msec:rand(100000),participant_id:participant.id)
 end
