@@ -9,5 +9,5 @@ Twinx::Application.routes.draw do
     resources :results
   end
 
-  root :to => 'front_page#index'
+  root :to => 'races#index'
 end

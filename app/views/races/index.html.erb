@@ -1,25 +1,37 @@
 <h1>Přehled Závodů</h1>
-
-<table>
-  <tr>
-    <th>Název</th>
-    <th>Datum</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @races.each do |race| %>
-  <tr>
-    <td><%= race.title %></td>
-    <td><%= race.held_on %></td>
-    <td><%= link_to 'Zobrazit', race %></td>
-    <td><%= link_to 'Upravit', edit_race_path(race) %></td>
-    <td><%= link_to 'Smazat', race, method: :delete, data: { confirm: 'Jste si jisti?' } %></td>
-  </tr>
+<% if @races.size > 0 %>
+  <% race=@races.shift %>
+<div class="hero-unit" id="hero_race">
+  <h1><%= race.title %></h1>
+  <p>
+  <%= link_to "Účastníci", race_participants_path(race), class:"btn btn-large btn-primary" %>
+  <%= link_to "Výsledky", race_results_path(race)      , class:"btn btn-large" %>
+  </p>
+  <p>
+  <%= link_to "Kategorie", race_categories_path(race)  , class:"btn btn-large" %>
+  <%= link_to "Jednoty"  , race_teams_path(race)       , class:"btn btn-large" %>
+  <%= link_to "Smazat", race, method: :delete, class:"btn btn-large btn-danger", data: { confirm: 'Jste si jisti?' } %>
+  </p>
+</div>
 <% end %>
-</table>
-
-<br />
-
+<ul class="thumbnails">
+  <% @races.each do |race| %>
+    <li class="span4">
+  <div class="thumbnail">
+    <div class="caption">
+      <h3><%= race.title %></h3>
+      <p>
+      <%= link_to "Účastníci", race_participants_path(race), class:"btn btn-primary" %>
+      <%= link_to "Výsledky", race_results_path(race)      , class:"btn" %>
+      </p>
+      <p>
+      <%= link_to "Kategorie", race_categories_path(race)  , class:"btn" %>
+      <%= link_to "Jednoty"  , race_teams_path(race)       , class:"btn" %>
+      <%= link_to "Smazat", race, method: :delete, class:"btn btn-danger", data: { confirm: 'Jste si jisti?' } %>
+      </p>
+    </div>
+  </div>
+  </li>
+<% end %>
+</ul>
 <%= link_to 'New Race', new_race_path %>

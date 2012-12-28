@@ -4,6 +4,33 @@ require 'spec_helper'
 describe "Races" do
   let(:race) { FactoryGirl.build(:race) }
 
+  before(:each) do
+    FactoryGirl.create(:race,title:"first race title")
+    FactoryGirl.create(:race,title:"second race title")
+    FactoryGirl.create(:race,title:"third race title")
+  end
+
+  it "shows a list of races when I visit index or root url" do
+    visit root_url
+    page.should have_content("Přehled Závodů")
+    visit races_path
+    page.should have_content("Přehled Závodů")
+    page.should have_content("first race title")
+  end
+  it "shows important links for each race" do
+    visit root_url
+    hero=find("#hero_race")
+    hero.should have_link("Účastníci")
+    hero.should have_link("Výsledky")
+    hero.should have_link("Kategorie")
+    hero.should have_link("Jednoty")
+    thumb=first("div.thumbnail")
+    thumb.should have_link("Účastníci")
+    thumb.should have_link("Výsledky")
+    thumb.should have_link("Kategorie")
+    thumb.should have_link("Jednoty")
+  end
+
   it "shows the new race form when I visit /new" do
     visit new_race_path
     page.should have_content("Nový závod")
@@ -41,13 +68,6 @@ describe "Races" do
     page.should have_content("Závod byl úspěšně upraven.")
   end
 
-  it "shows a listing of races when visit the index" do
-    race.save
-    visit races_path
-    page.should have_content "Přehled Závodů"
-    page.should have_content race.title
-  end
-
   it "deletes a race when I click the delete button", js:true do
     DatabaseCleaner.clean
     race.save
@@ -64,3 +84,9 @@ describe "Races" do
     page.should_not have_content race.title
   end
 end
+# encoding: UTF-8
+require 'spec_helper'
+
+describe "Front_Page" do
+end
+
