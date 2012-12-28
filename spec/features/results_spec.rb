@@ -19,7 +19,7 @@ describe "Results" do
     page.should have_content("Nový výsledek")
   end
 
-  it "creates a new result when I fill in the new result form" do
+  it "creates a new position result when I fill in starting_no and position into the new result form" do
     visit new_race_result_path(:race_id => race.id)
     fill_in "Startovní č.", with:result.participant.starting_no
     fill_in "Pozice", with:result.position
@@ -27,6 +27,8 @@ describe "Results" do
     click_button "Vytvořit"
     page.should have_content("Výsledek byl úspěšně vytvořen.")
   end
+
+  it "creates a new complete result when I fill in starting_no, time and position into the new result form"
 
   it "shows details of an existing result when I visit /:result_id" do
     result.save
