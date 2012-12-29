@@ -6,7 +6,7 @@ class CategoriesController < ApplicationController
     @categories=@categories.for_age(Time.now.year - params[:yob].to_i) if params[:yob]
     respond_to do |format|
       format.html # index.html.erb
-      format.json  { render :json => @categories.map{|cat|{id:cat.id,title:cat.title}} }
+      format.json  { render :json => @categories.order("difficulty ASC").map{|cat|{id:cat.id,title:cat.title}} }
     end
   end
 

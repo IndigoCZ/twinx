@@ -19,4 +19,11 @@ class Category < ActiveRecord::Base
       return false
     end
   end
+  def difficulty
+    rval=Constraint::MAX_DIFFICULTY
+    constraints.each do |constraint|
+      rval=constraint.difficulty if rval > constraint.difficulty
+    end
+    rval
+  end
 end
