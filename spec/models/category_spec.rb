@@ -29,8 +29,6 @@ describe Category do
     FactoryGirl.build(:category, title:nil).should_not be_valid
   end
   it "calculates own difficulty based on restrictions" do
-    @seniori.difficulty
-    @muzi.difficulty
     @seniori.difficulty.should be < @muzi.difficulty
   end
   it "provides gender specific scope" do
