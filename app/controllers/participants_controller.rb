@@ -5,6 +5,8 @@ class ParticipantsController < ApplicationController
   end
   def new
     @person=Person.new
+    @person.gender="male"
+    @person.yob="2000"
     @participant=Participant.new
   end
   def create

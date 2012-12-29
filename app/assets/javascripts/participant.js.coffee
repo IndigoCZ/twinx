@@ -3,8 +3,8 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 Participant =
   calculate_category: ->
-    yob=$('#participant_category_id').data('restrictyob')
-    gender=$('#participant_category_id').data('restrictgender')
+    yob=$('#participant_category_id').data('restrict-yob')
+    gender=$('#participant_category_id').data('restrict-gender')
     callback = (response) -> Participant.update_category response
     $.get $('#participant_category_id').data('source'), {yob, gender}, callback, 'json'
 
@@ -16,11 +16,11 @@ Participant =
 
 jQuery ->
   $('.restrict_yob').change ->
-    $('#participant_category_id').data('restrictyob',$(this).val())
+    $('#participant_category_id').data('restrict-yob',$(this).val())
     Participant.calculate_category()
-    #console.log($('#participant_category_id').data('restrictyob'))
+    #console.log($('#participant_category_id').data('restrict-yob'))
 
   $('.restrict_gender').change ->
-    $('#participant_category_id').data('restrictgender',$(this).val())
+    $('#participant_category_id').data('restrict-gender',$(this).val())
     Participant.calculate_category()
-    #console.log($('#participant_category_id').data('restrictgender'))
+    #console.log($('#participant_category_id').data('restrict-gender'))
