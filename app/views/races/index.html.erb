@@ -4,11 +4,11 @@
 <div class="hero-unit" id="hero_race">
   <h1><%= race.title %></h1>
   <div class="btn-group">
-    <%= link_to "Účastníci", race_participants_path(race), class:"btn btn-large btn-success" %>
-    <%= link_to "Výsledky", race_results_path(race)      , class:"btn btn-large btn-success" %>
-    <%= link_to "Kategorie", race_categories_path(race)  , class:"btn btn-large btn-info" %>
-    <%= link_to "Jednoty"  , race_teams_path(race)       , class:"btn btn-large btn-info" %>
-    <%= link_to "Smazat", race, method: :delete, class:"btn btn-large btn-danger", data: { confirm: 'Jste si jisti?' } %>
+    <%= link_to "Účastníci", race_participants_path(race), class:"btn btn-large btn-primary" %>
+    <%= link_to "Výsledky" , race_results_path(race)     , class:"btn btn-large btn-primary" %>
+    <%= link_to "Kategorie", race_categories_path(race)  , class:"btn btn-large" %>
+    <%= link_to "Jednoty"  , race_teams_path(race)       , class:"btn btn-large" %>
+    <%= link_to "Smazat"   , race                        , class:"btn btn-large btn-inverse", method: :delete, data: { confirm: 'Jste si jisti?' } %>
   </div>
 </div>
 <% end %>
@@ -19,11 +19,11 @@
     <div class="caption">
       <h3><%= race.title %></h3>
       <div class="btn-group">
-        <%= link_to "Účastníci", race_participants_path(race), class:"btn btn-success" %>
-        <%= link_to "Výsledky", race_results_path(race)      , class:"btn btn-success" %>
-        <%= link_to "Kategorie", race_categories_path(race)  , class:"btn btn-info" %>
-        <%= link_to "Jednoty"  , race_teams_path(race)       , class:"btn btn-info" %>
-        <%= link_to "Smazat", race, method: :delete, class:"btn btn-danger", data: { confirm: 'Jste si jisti?' } %>
+        <%= link_to "Účastníci", race_participants_path(race), class:"btn btn-primary" %>
+        <%= link_to "Výsledky" , race_results_path(race)     , class:"btn btn-primary" %>
+        <%= link_to "Kategorie", race_categories_path(race)  , class:"btn" %>
+        <%= link_to "Jednoty"  , race_teams_path(race)       , class:"btn" %>
+        <%= link_to "Smazat"   , race                        , class:"btn btn-inverse", method: :delete , data: { confirm: 'Jste si jisti?' } %>
       </div>
     </div>
   </div>
