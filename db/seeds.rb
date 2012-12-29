@@ -7,6 +7,7 @@ require 'faker'
 Result.delete_all
 Participant.delete_all
 Team.delete_all
+Constraint.delete_all
 Category.delete_all
 Person.delete_all
 County.delete_all
@@ -23,7 +24,7 @@ counties=County.create([
   {title:"Nesvacilka"},
   {title:"Rozarin"}
 ])
-100.times do
+40.times do
   Person.create(
     first_name:Faker::Name.first_name,
     last_name:Faker::Name.last_name,
@@ -39,12 +40,22 @@ races.each do |race|
   end
 end
 races.each do |race|
-  Category.create([
-    {title:"Juniori",race_id:race.id},
-    {title:"Seniori",race_id:race.id},
-    {title:"Juniorky",race_id:race.id},
-    {title:"Seniorky",race_id:race.id},
-  ])
+  Category.create(title:"Juniori",race_id:race.id)
+  Constraint.create(restrict:"gender",string_value:"male",category_id:Category.last.id)
+  Constraint.create(restrict:"max_age",integer_value:16,category_id:Category.last.id)
+  Category.create(title:"Muzi",race_id:race.id)
+  Constraint.create(restrict:"gender",string_value:"male",category_id:Category.last.id)
+  Category.create(title:"Seniori",race_id:race.id)
+  Constraint.create(restrict:"gender",string_value:"male",category_id:Category.last.id)
+  Constraint.create(restrict:"min_age",integer_value:60,category_id:Category.last.id)
+  Category.create(title:"Juniorky",race_id:race.id)
+  Constraint.create(restrict:"gender",string_value:"female",category_id:Category.last.id)
+  Constraint.create(restrict:"max_age",integer_value:16,category_id:Category.last.id)
+  Category.create(title:"Zeny",race_id:race.id)
+  Constraint.create(restrict:"gender",string_value:"female",category_id:Category.last.id)
+  Category.create(title:"Seniorky",race_id:race.id)
+  Constraint.create(restrict:"gender",string_value:"female",category_id:Category.last.id)
+  Constraint.create(restrict:"min_age",integer_value:60,category_id:Category.last.id)
 end
 races.each do |race|
   Person.all.each do |person|
