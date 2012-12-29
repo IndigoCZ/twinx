@@ -3,6 +3,12 @@ module ApplicationHelper
     @current_race
   end
 
+  def nav_link(link_text, link_path)
+    link_to_unless_current link_text, link_path do
+      link_to link_text, link_path, class:"current"
+    end
+  end
+
   def display_nonstandard_errors(resource)
     return '' if (resource.errors.empty?)
     if (resource.errors[:base].empty?)

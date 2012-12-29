@@ -44,7 +44,7 @@ group :assets do
 
   gem 'uglifier', '>= 1.0.3'
 
-  gem 'bootstrap-sass', '~> 2.2.1.1'
+  gem 'bootstrap-sass', '~> 2.2.2.0'
   # http://railsapps.github.com/twitter-bootstrap-rails.html
 end
 gem 'quiet_assets', :group => :development
