@@ -14,8 +14,8 @@ describe Category do
   end
   context "Complex Interactions" do
     before(:each) do
-      ActiveRecord::Base.observers.enable :all
-      DatabaseCleaner.clean
+      #ActiveRecord::Base.observers.enable :all
+      #DatabaseCleaner.clean
       @race=FactoryGirl.create(:race)
       @muzi=FactoryGirl.create(:category,title:"Muzi",race:@race)
       FactoryGirl.create(:constraint,category:@muzi,restrict:"gender",string_value:"male")
