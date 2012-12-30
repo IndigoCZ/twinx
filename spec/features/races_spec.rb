@@ -71,7 +71,7 @@ describe "Races" do
   it "deletes a race when I click the delete button", js:true do
     DatabaseCleaner.clean
     race.save
-    visit races_path
+    visit races_path # Causes QFont::setPixelSize: Pixel size <= 0 (0)
     page.should have_content race.title
     page.should have_content "Smazat"
     expect{
