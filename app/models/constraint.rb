@@ -20,7 +20,7 @@ class Constraint < ActiveRecord::Base
     when "max_age"
       integer_value
     when "min_age"
-      MAX_DIFFICULTY - integer_value
+      (MAX_DIFFICULTY - integer_value)
     else
       MAX_DIFFICULTY
     end

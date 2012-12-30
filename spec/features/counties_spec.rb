@@ -22,6 +22,7 @@ describe "Counties" do
   end
 
   it "updates a county when I fill in the edit county form" do
+    DatabaseCleaner.clean
     county.save
     visit edit_county_path(county.id)
     fill_in "Název", with: "Some other name"
