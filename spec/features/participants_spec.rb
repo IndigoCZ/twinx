@@ -66,6 +66,7 @@ describe "Participants" do
     existing_participant=FactoryGirl.create(:participant)
     visit race_participants_path(existing_participant.race.id)
     page.should have_content existing_participant.person.first_name
+    page.find(".dropdown-toggle").click
     page.should have_content "Smazat"
     expect{
       click_link 'Smazat'

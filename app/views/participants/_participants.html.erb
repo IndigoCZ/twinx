@@ -1,0 +1,31 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th><%= sort_link("Jméno",:name) %></th>
+      <th><%= sort_link("Jednota",:team) %></th>
+      <th><%= sort_link("Kategorie",:category) %></th>
+      <th>Akce</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @participants.each do |participant| %>
+      <tr>
+        <td><%= participant.starting_no %></td>
+        <td><%= participant.person.display_name %></td>
+        <td><%= participant.team.county.title %></td>
+        <td><%= participant.category.title %></td>
+        <td>
+          <div class="btn-group">
+            <%= link_to 'Upravit', edit_race_participant_path(@current_race,participant), :class => 'btn btn-mini' %>
+            <button class="btn btn-mini dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><%= link_to 'Zobrazit', [@current_race, participant] %></li>
+              <li><%= link_to 'Smazat', race_participant_path(@current_race,participant), method: :delete, data: { confirm: 'Jste si jisti?' } %></li>
+            </ul>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

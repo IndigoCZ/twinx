@@ -73,4 +73,6 @@ describe "Results" do
     page.should have_content "Přehled Výsledeků"
     page.should_not have_content existing_result.participant.display_name
   end
+
+  it "allows me to create a result even when there are duplicate starting_nos"
 end

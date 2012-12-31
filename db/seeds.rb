@@ -58,9 +58,9 @@ races.each do |race|
   Constraint.create(restrict:"min_age",integer_value:60,category_id:Category.last.id)
 end
 races.each do |race|
-  Person.all.each do |person|
+  Person.all.each_with_index do |person,index|
     Participant.create(
-      starting_no:rand(998)+1,
+      starting_no:(index+1),
       category_id:race.categories.sample.id,
       person_id:person.id,
       team_id:race.teams.sample.id
@@ -69,5 +69,5 @@ races.each do |race|
 end
 
 Participant.all.each do |participant|
-  Result.create(position:rand(100),time_msec:rand(100000),participant_id:participant.id)
+  Result.create(position:rand(100),participant_id:participant.id)
 end

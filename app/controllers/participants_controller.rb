@@ -1,7 +1,15 @@
 # encoding: UTF-8
 class ParticipantsController < ApplicationController
   def index
-    @participants=@current_race.participants
+    @participants=@current_race.participants.includes([:category,{team: :county},:person])
+    if params[:sort]
+      @participants=@participants.order("#{Participant.sort_by(params[:sort])} ASC")
+    elsif params[:rsort]
+      @participants=@participants.order("#{Participant.sort_by(params[:rsort])} DESC")
+    else
+      @participants=@participants.order("#{Participant.sort_by} ASC")
+    end
+    @participants=@participants.where("people.last_name LIKE ?",params[:search]) if params[:search]
   end
   def new
     @person=Person.new

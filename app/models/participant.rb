@@ -16,4 +16,17 @@ class Participant < ActiveRecord::Base
   def display_name
     person.display_name
   end
+
+  def self.sort_by(column=nil)
+    case column
+    when "team"
+      "counties.title"
+    when "category"
+      "category.title"
+    when "name"
+      "people.last_name"
+    else
+      "starting_no"
+    end
+  end
 end

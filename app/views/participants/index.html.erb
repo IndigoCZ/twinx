@@ -1,25 +1,16 @@
 <h1>Přehled Účastníků</h1>
-<%= link_to "Nový Účastník", new_race_participant_path(@current_race), :class => 'btn btn-primary' %>
-<table>
-  <tr>
-    <th>Jméno</th>
-    <th>Příjmení</th>
-    <th>Tým</th>
-    <th>Kategorie</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @participants.each do |participant| %>
-  <tr>
-    <td><%= participant.person.first_name %></td>
-    <td><%= participant.person.last_name %></td>
-    <td><%= participant.team.county.title %></td>
-    <td><%= participant.category.title %></td>
-    <td><%= link_to 'Zobrazit', [@current_race, participant] %></td>
-    <td><%= link_to 'Upravit', edit_race_participant_path(@current_race,participant) %></td>
-    <td><%= link_to 'Smazat', race_participant_path(@current_race,participant), method: :delete, data: { confirm: 'Jste si jisti?' } %></td>
-  </tr>
+<%= form_tag race_participants_path(@current_race), :method => 'get', :id => "participants_search", :class => "form-search" do %>
+  <p>
+<%= text_field_tag :search, params[:search], :class=>"input-medium search-query" %>
+<%= submit_tag "Search", :name => nil, :class=>"btn" %>
+<% if params[:sort] %>
+  <%= hidden_field_tag :sort, params[:sort] %>
+<% elsif params[:rsort] %>
+  <%= hidden_field_tag :rsort, params[:rsort] %>
 <% end %>
-</table>
+</p>
+<div id="participant_table">
+  <%= render 'participants' %>
+</div>
+<% end %>
+
