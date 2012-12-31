@@ -1,0 +1,28 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Název</th>
+      <th>Omezení</th>
+      <th>Počet Účastníků</th>
+      <th>Akce</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @categories.each do |category| %>
+    <tr>
+      <td><%= category.title %></td>
+      <td><%= category.restriction %></td>
+      <td><%= category.participants.size %></td>
+      <td>
+        <div class="btn-group">
+          <%= link_to 'Upravit', edit_race_category_path(@current_race,category), :class => 'btn btn-mini' %>
+          <button class="btn btn-mini dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+          <ul class="dropdown-menu">
+            <li><%= link_to 'Zobrazit', race_category_path(@current_race,category) %></li>
+            <li><%= link_to 'Smazat', race_category_path(@current_race,category), method: :delete, data: { confirm: 'Jste si jisti?' } %></li>
+          </ul>
+        </div>
+      </td>
+    </tr>
+  <% end %>
+</table>

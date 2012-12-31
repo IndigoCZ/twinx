@@ -1,13 +1,19 @@
 <h1>Přehled týmů</h1>
 
-<table>
-  <tr>
-    <th>Jednota</th>
-  </tr>
-
-<% @teams.each do |team| %>
-  <tr>
-    <td><%= team.county.title %></td>
-  </tr>
-<% end %>
-</table>
+<div id="team_table">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Název</th>
+        <th>Počet Účastníků</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @teams.each do |team| %>
+      <tr>
+        <td><%= team.county.title %></td>
+        <td><%= team.participants.size %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>

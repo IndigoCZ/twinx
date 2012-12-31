@@ -1,12 +1,13 @@
 # encoding: UTF-8
 class CategoriesController < ApplicationController
   def index
-    @categories=@current_race.categories
+    @categories=@current_race.categories.includes(:constraints)
     @categories=@categories.for_gender(params[:gender]) if params[:gender]
     @categories=@categories.for_age(Time.now.year - params[:yob].to_i) if params[:yob]
+    @categories=@categories.order("difficulty ASC")
     respond_to do |format|
       format.html # index.html.erb
-      format.json  { render :json => @categories.order("difficulty ASC").map{|cat|{id:cat.id,title:cat.title}} }
+      format.json  { render :json => @categories.map{|cat|{id:cat.id,title:cat.title}} }
     end
   end
 

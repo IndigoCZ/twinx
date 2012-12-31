@@ -43,6 +43,7 @@ describe "Categories" do
     category.save
     visit race_categories_path(race.id)
     page.should have_content category.title
+    page.find(".dropdown-toggle").click
     page.should have_content "Smazat"
     expect{
       click_link 'Smazat'
@@ -52,12 +53,22 @@ describe "Categories" do
     page.should_not have_content category.title
   end
 
-  it "allows me to specify constraints when creating a category", js:true do
+  it "allows me to specify age constraint when creating a category", js:true do
+    visit new_race_category_path(:race_id => race.id)
+    fill_in "Název", with:category.title
+    click_link "Přidat"
+    select "Věk do", from:"Typ"
+    fill_in "Hodnota", with:"16"
+    click_button "Vytvořit"
+    page.should have_content("Kategorie byla úspěšně vytvořena.")
+  end
+
+  it "allows me to specify gender constraint when creating a category", js:true do
     visit new_race_category_path(:race_id => race.id)
     fill_in "Název", with:category.title
     click_link "Přidat"
     select "Pohlaví", from:"Typ"
-    fill_in "Řetězec", with:"male"
+    fill_in "Hodnota", with:"male"
     click_button "Vytvořit"
     page.should have_content("Kategorie byla úspěšně vytvořena.")
   end

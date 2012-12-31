@@ -21,6 +21,7 @@ describe Category do
       FactoryGirl.create(:constraint,category:@muzi,restrict:"gender",string_value:"male")
       @zeny=FactoryGirl.create(:category,title:"Zeny",race:@race)
       FactoryGirl.create(:constraint,category:@zeny,restrict:"gender",string_value:"female")
+      @zeny.constraints.reload
       @seniori=FactoryGirl.create(:category,title:"Seniori",race:@race)
       FactoryGirl.create(:constraint,category:@seniori,restrict:"gender",string_value:"male")
       FactoryGirl.create(:constraint,category:@seniori,restrict:"min_age",integer_value:60)
@@ -28,6 +29,7 @@ describe Category do
       @juniori=FactoryGirl.create(:category,title:"Juniori",race:@race)
       FactoryGirl.create(:constraint,category:@juniori,restrict:"max_age",integer_value:20)
       FactoryGirl.create(:constraint,category:@juniori,restrict:"gender",string_value:"male")
+      @juniori.constraints.reload
     end
     it "calculates own difficulty based on restrictions" do
       @seniori.difficulty.should be < @muzi.difficulty
@@ -39,6 +41,11 @@ describe Category do
       @race.categories.for_gender("male").for_age(70).count.should eq 2
       @race.categories.for_gender("male").for_age(30).count.should eq 1
       @race.categories.for_gender("male").for_age(15).count.should eq 2
+    end
+    it "provides a short description of its restrictions" do
+      @seniori.restriction.should be == "M60+"
+      @zeny.restriction.should be == "F"
+      @juniori.restriction.should be == "M20-"
     end
   end
 end

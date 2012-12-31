@@ -26,4 +26,19 @@ class Category < ActiveRecord::Base
     end
     rval
   end
+  def restriction
+    restrict_gender=""
+    restrict_age=""
+    constraints.each do |c|
+      case c.restrict
+      when "max_age"
+        restrict_age="#{c.integer_value}-"
+      when "min_age"
+        restrict_age="#{c.integer_value}+"
+      when "gender"
+        restrict_gender=c.string_value[0].upcase
+      end
+    end
+    restrict_gender+restrict_age
+  end
 end

@@ -1,5 +1,5 @@
 class Constraint < ActiveRecord::Base
-  attr_accessible :category_id, :restrict, :string_value, :integer_value
+  attr_accessible :category_id, :restrict, :string_value, :integer_value, :value
   belongs_to :category
   validates_presence_of :restrict
   validates_inclusion_of :restrict, in:["max_age","min_age","gender"]
@@ -13,6 +13,26 @@ class Constraint < ActiveRecord::Base
 
   def string_restriction?
     restrict == "gender"
+  end
+
+  def value
+    if numeric_restriction?
+      integer_value
+    else
+      string_value
+    end
+  end
+
+  def value=(val)
+    if numeric_restriction?
+      self.integer_value=val
+    else
+      self.string_value=val
+    end
+  end
+
+  def description
+    "#{restrict}: #{value}"
   end
 
   def difficulty

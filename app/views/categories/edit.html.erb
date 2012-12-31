@@ -1,6 +1,8 @@
-<h1>Editing category</h1>
+<h1>Upravit kategorii</h1>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', [@current_race, @category] %> |
-<%= link_to 'Back', race_categories_path(@current_race) %>
+<div class="btn-group">
+  <%= link_to 'Zobrazit', [@current_race, @category], class:"btn" %>
+  <%= link_to 'Zpět', race_categories_path(@current_race), class:"btn" %>
+</div>
