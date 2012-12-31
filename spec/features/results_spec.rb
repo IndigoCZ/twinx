@@ -23,12 +23,21 @@ describe "Results" do
     visit new_race_result_path(:race_id => race.id)
     fill_in "Startovní č.", with:result.participant.starting_no
     fill_in "Pozice", with:result.position
-    # Do something about result time
     click_button "Vytvořit"
     page.should have_content("Výsledek byl úspěšně vytvořen.")
   end
 
-  it "creates a new complete result when I fill in starting_no, time and position into the new result form"
+  it "creates a new complete result when I fill in starting_no, time and position into the new result form" do
+    visit new_race_result_path(:race_id => race.id)
+    fill_in "Startovní č.", with:result.participant.starting_no
+    fill_in "Pozice", with:result.position
+    fill_in "result_time_min", with:2
+    fill_in "result_time_sec", with:3
+    fill_in "result_time_fract", with:45
+    click_button "Vytvořit"
+    page.should have_content("Výsledek byl úspěšně vytvořen.")
+    page.should have_content("123450")
+  end
 
   it "shows details of an existing result when I visit /:result_id" do
     result.save
