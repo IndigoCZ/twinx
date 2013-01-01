@@ -25,3 +25,12 @@ body { padding-top: 60px; }
   color: $white;
   background-color: $blue;
 }
+.header-pills > li > .dropdown-toggle, .header-pills > li > a {
+  background-color: $grayLighter;
+}
+.header-pills > li > a:hover {
+  background-color: $gray;
+}
+.header-pills {
+  margin: 0px;
+}

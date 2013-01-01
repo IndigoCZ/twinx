@@ -1,16 +1,13 @@
 <table class="table table-striped">
-  <% Rack::MiniProfiler.step("participants thead") do %>
   <thead>
     <tr>
       <th><%= sort_link("#") %></th>
       <th><%= sort_link("Jméno",:name) %></th>
-      <th><%= sort_link("Jednota",:team) %></th>
-      <th><%= sort_link("Kategorie",:category) %></th>
+      <th><%= filter_combo("Jednota",:team) %></th>
+      <th><%= filter_combo("Kategorie",:category) %></th>
       <th>Akce</th>
     </tr>
   </thead>
-  <% end %>
-  <% Rack::MiniProfiler.step("participants tbody") do %>
   <tbody>
     <% @participants.each do |participant| %>
       <tr>
@@ -31,5 +28,4 @@
       </tr>
     <% end %>
   </tbody>
-  <% end %>
 </table>

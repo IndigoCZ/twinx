@@ -10,6 +10,7 @@ class ParticipantsController < ApplicationController
     else
       @participants=@participants.order("#{Participant.sort_by} ASC")
     end
+    @participants=@participants.filter_by(params[:filter]) if params[:filter]
     if params[:search] && params[:search].length > 0
       @participants=@participants.where("people.last_name LIKE ?",params[:search]+"%")
     end

@@ -11,4 +11,6 @@ describe "Twinx" do
   it "provides printable PDF - county results list"
   it "provides printable PDF - complete results"
   it "allows multiple people to have the same resulting position"
+  it "allows new county to be created when entering a participant"
+  it "allows a persons birthday to be specified when entering a participant"
 end

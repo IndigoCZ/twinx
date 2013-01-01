@@ -1,20 +1,15 @@
 <!doctype html>
 <html>
-<% Rack::MiniProfiler.step("layout head") do %>
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= content_for?(:title) ? yield(:title) : "Twinx v2.2" %></title>
     <meta name="description" content="">
     <meta name="author" content="">
-    <% Rack::MiniProfiler.step("head stylesheets") do %>
-      <%= stylesheet_link_tag "application", :media => "all" %>
-    <% end %>
+    <%= stylesheet_link_tag "application", :media => "all" %>
     <%= csrf_meta_tags %>
     <%= yield(:head) %>
   </head>
-<% end %>
-<% Rack::MiniProfiler.step("layout body") do %>
   <body>
     <header class="navbar navbar-inverse navbar-fixed-top">
       <nav class="navbar-inner">
@@ -26,20 +21,7 @@
     <div id="main" role="main">
       <div class="container">
         <div class="row">
-          <% if @current_race %>
-            <div class="span2">
-              <ul class="nav nav-list">
-                <li><%= nav_link "Nový Účastník", new_race_participant_path(@current_race) %></li>
-                <li><%= nav_link "Účastníci", race_participants_path(@current_race)        %></li>
-                <li><%= nav_link "Výsledky" , race_results_path(@current_race)             %></li>
-                <li><%= nav_link "Jednoty"  , race_teams_path(@current_race)               %></li>
-                <li><%= nav_link "Kategorie", race_categories_path(@current_race)          %></li>
-              </ul>
-            </div>
             <div class="span10">
-          <% else %>
-            <div class="span10">
-          <% end %>
             <%= render 'layouts/messages' %>
             <%= yield %>
           </div>
@@ -50,5 +32,4 @@
     </div> <!--! end of #main -->
     <%= javascript_include_tag "application" %>
   </body>
-<% end %>
 </html>

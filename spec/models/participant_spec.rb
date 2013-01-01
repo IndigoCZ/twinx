@@ -21,4 +21,9 @@ describe Participant do
     Participant.sort_by("team").should be == "counties.title"
     Participant.sort_by("category").should be == "categories.title"
   end
+  it "provides a filter_by method" do
+    team=FactoryGirl.create(:team)
+    participant=FactoryGirl.create(:participant,team:team)
+    Participant.filter_by("team_#{team.id}").first.id.should be == participant.id
+  end
 end

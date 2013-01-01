@@ -1,9 +1,14 @@
 <%= link_to "Twinx", root_path, :class => 'brand' %>
-<ul class="nav">
-  <li><%= link_to('Jednoty', counties_path) %></li>
-  <li><%= link_to('Osoby'  , people_path  ) %></li>
-</ul>
+
 <% if @current_race %>
+  <%= link_to "Nový Účastník", new_race_participant_path(@current_race), class:"btn btn-success pull-left" %>
+  <ul class="nav pull-left">
+    <%# nav_link "Nový Účastník", new_race_participant_path(@current_race), wrapper_class:"nav-success" %>
+    <%= nav_link "Účastníci", race_participants_path(@current_race)        %>
+    <%= nav_link "Výsledky" , race_results_path(@current_race)             %>
+    <%= nav_link "Jednoty"  , race_teams_path(@current_race)               %>
+    <%= nav_link "Kategorie", race_categories_path(@current_race)          %>
+  </ul>
   <%= form_tag(race_participants_path(@current_race), :method => 'get', :id => "participants_search", :class => "navbar-search pull-left") do %>
     <%= text_field_tag :search, params[:search], placeholder:"Hledat", :class=>"search-query" %>
     <% if params[:sort] %>
@@ -13,3 +18,7 @@
     <% end %>
   <% end %>
 <% end %>
+<ul class="nav pull-right">
+  <%= nav_link 'Jednoty', counties_path %>
+  <%= nav_link 'Osoby'  , people_path %>
+</ul>

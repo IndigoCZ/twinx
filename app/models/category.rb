@@ -12,6 +12,7 @@ class Category < ActiveRecord::Base
   scope :excluding_ids, lambda { |ids| where(['categories.id NOT IN (?)', ids]) if ids.any? }
   scope :for_age,    lambda { |age| excluding_ids(violate_min_age(age).map(&:id)+violate_max_age(age).map(&:id)) }
   scope :for_gender, lambda { |gender| includes(:constraints).where("constraints.restrict = 'gender' AND constraints.string_value = ?", gender) }
+  scope :for_race, lambda { |race| where(race_id:race.id) }
 
   def check_dependencies
     if participants.count > 0

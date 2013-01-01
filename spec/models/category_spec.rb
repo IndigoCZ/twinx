@@ -11,6 +11,11 @@ describe Category do
     it "is invalid without a title" do
       FactoryGirl.build(:category, title:nil).should_not be_valid
     end
+    it "provides a scope for current race" do
+      race=FactoryGirl.create(:race)
+      category=FactoryGirl.create(:category,race:race)
+      race.categories.should be == Category.for_race(race)
+    end
   end
   context "Complex Interactions" do
     before(:each) do

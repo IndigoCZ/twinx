@@ -10,6 +10,8 @@ class Participant < ActiveRecord::Base
   before_destroy :clean_result
 
   scope :for_race, lambda { |race| includes([:category,{team: :county},:person]).where("categories.race_id = ?", race.id) }
+  scope :by_team_id, lambda { |team| where(team_id:team) }
+  scope :by_category_id, lambda { |cat| where(category_id:cat) }
 
   def clean_result
     result.destroy if result
@@ -17,6 +19,11 @@ class Participant < ActiveRecord::Base
 
   def display_name
     person.display_name
+  end
+
+  def self.filter_by(string)
+    column,val=string.split("_")
+    self.send("by_#{column}_id",val)
   end
 
   def self.sort_by(column=nil)
