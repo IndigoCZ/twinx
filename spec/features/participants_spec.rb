@@ -13,10 +13,14 @@ describe "Participants" do
   let(:race) { FactoryGirl.create(:race) }
   let(:county) { FactoryGirl.create(:county)}
   let(:category) { FactoryGirl.build(:category, race_id:race.id) }
+  let(:second_category) { FactoryGirl.build(:category,title:"Some other category", race_id:race.id) }
   let(:team) { FactoryGirl.build(:team, race_id:race.id, county_id:county.id)}
-  let(:participant) { FactoryGirl.build(:participant, team_id:team.id, category_id:category.id) }
+  let(:person) { FactoryGirl.build(:person, county_id:county.id) }
+  let(:participant) { FactoryGirl.build(:participant, team_id:team.id, category_id:category.id, person_id:person.id)}
   before :each do
+    person.save
     category.save
+    second_category.save
     team.save
   end
 
@@ -26,7 +30,6 @@ describe "Participants" do
   end
 
   it "creates a new participant when I fill in the new participant form" do
-    #save_and_open_page
     visit new_race_participant_path(:race_id => race.id)
     fill_in "Startovní č.", with:participant.starting_no
     fill_in "Jméno", with:participant.person.first_name
@@ -37,6 +40,21 @@ describe "Participants" do
     select participant.category.title, from:"Kategorie"
     click_button "Vytvořit"
     page.should have_content("Účastník byl úspěšně vytvořen.")
+  end
+  it "creates only one new person when I sign a person into two categories" do
+    participant.save
+    expect{
+      visit new_race_participant_path(:race_id => race.id)
+      fill_in "Startovní č.", with:participant.starting_no
+      fill_in "Jméno", with:participant.person.first_name
+      fill_in "Příjmení", with:participant.person.last_name
+      fill_in "Rok nar.", with:participant.person.yob
+      choose gender_to_human(participant.person.gender)
+      select county.title, from:"Jednota"
+      select second_category.title, from:"Kategorie"
+      click_button "Vytvořit"
+      page.should have_content("Účastník byl úspěšně vytvořen.")
+    }.to change(Person,:count).by(0)
   end
   it "shows details of an existing participant when I visit /:participant_id" do
     participant.save

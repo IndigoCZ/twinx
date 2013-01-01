@@ -8,4 +8,20 @@ class Person < ActiveRecord::Base
   def display_name
     "#{first_name} #{last_name}"
   end
+
+  def self.lookup_or_create(hash)
+    lookup=Person.where(hash.select { |k,v| ["first_name", "last_name", "gender", "yob", "county_id"].include? k })
+    if lookup.size > 1
+      if hash["id_string"]
+        if lookup.where("id_string"=>hash["id_string"]).size > 0
+          return lookup.where("id_string"=>hash["id_string"]).first
+        end
+      end
+      raise "Couldn't determine which person from #{lookup} to choose"
+    elsif lookup.size == 1
+      lookup.first
+    else
+      Person.create(hash)
+    end
+  end
 end

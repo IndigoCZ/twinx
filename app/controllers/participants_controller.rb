@@ -1,20 +1,17 @@
 # encoding: UTF-8
 class ParticipantsController < ApplicationController
   def index
-    Rack::MiniProfiler.step("find participants") do
-      @participants=@current_race.participants.includes([:category,{team: :county},:person])
+    #@participants=@current_race.participants.includes([:category,{team: :county},:person])
+    @participants=Participant.for_race(@current_race)
+    if params[:sort]
+      @participants=@participants.order("#{Participant.sort_by(params[:sort])} ASC")
+    elsif params[:rsort]
+      @participants=@participants.order("#{Participant.sort_by(params[:rsort])} DESC")
+    else
+      @participants=@participants.order("#{Participant.sort_by} ASC")
     end
-    Rack::MiniProfiler.step("order participants") do
-      if params[:sort]
-        @participants=@participants.order("#{Participant.sort_by(params[:sort])} ASC")
-      elsif params[:rsort]
-        @participants=@participants.order("#{Participant.sort_by(params[:rsort])} DESC")
-      else
-        @participants=@participants.order("#{Participant.sort_by} ASC")
-      end
-    end
-    Rack::MiniProfiler.step("search participants") do
-      @participants=@participants.where("people.last_name LIKE ?",params[:search]+"%") if params[:search]
+    if params[:search] && params[:search].length > 0
+      @participants=@participants.where("people.last_name LIKE ?",params[:search]+"%")
     end
   end
   def new
@@ -26,17 +23,15 @@ class ParticipantsController < ApplicationController
   def create
     success=false
     Participant.transaction do
-      @person=Person.where(params[:participant][:person]).first_or_create # Improve this
+      @person=Person.lookup_or_create(params[:participant][:person])
+      #@person||=Person.new(params[:person])
       @team=Team.where(race_id:@current_race.id,county_id:params[:participant][:person][:county_id]).first_or_create
       params[:participant][:team_id]=@team.id
       params[:participant][:person_id]=@person.id
       params[:participant].delete(:person)
       @participant=Participant.new(params[:participant])
-      if @participant.save
-        success=true
-      else
-        raise ActiveRecord::Rollback
-      end
+      raise ActiveRecord::Rollback unless @participant.save
+      success=true
     end
     if success
       redirect_to race_participants_url(@current_race), notice:'Účastník byl úspěšně vytvořen.'
