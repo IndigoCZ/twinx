@@ -1,0 +1,33 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>pozice</th>
+      <th>jmeno(#)</th>
+      <th>jednota</th>
+      <th>kategorie</th>
+      <th>cas</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @results.each do |result| %>
+      <tr>
+        <td><%= result.position %></td>
+        <td><%= "#{result.participant.person.display_name} (#{result.participant.starting_no})" %></td>
+        <td><%= result.participant.team.county.title %></td>
+        <td><%= result.participant.category.title %></td>
+        <td><%= result.time %></td>
+        <td>
+          <div class="btn-group">
+            <%= link_to 'Upravit', edit_race_result_path(@current_race,result), :class => 'btn btn-mini' %>
+            <button class="btn btn-mini dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><%= link_to 'Zobrazit', [@current_race, result] %></li>
+              <li><%= link_to 'Smazat', race_result_path(@current_race,result), method: :delete, data: { confirm: 'Jste si jisti?' } %></li>
+            </ul>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

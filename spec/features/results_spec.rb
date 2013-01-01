@@ -36,7 +36,7 @@ describe "Results" do
     fill_in "result_time_fract", with:45
     click_button "Vytvořit"
     page.should have_content("Výsledek byl úspěšně vytvořen.")
-    page.should have_content("123450")
+    page.should have_content("2:03.450")
   end
 
   it "shows details of an existing result when I visit /:result_id" do
@@ -65,6 +65,7 @@ describe "Results" do
     existing_result=FactoryGirl.create(:result)
     visit race_results_path(existing_result.participant.race.id)
     page.should have_content existing_result.participant.display_name
+    page.find("tbody").find(".dropdown-toggle").click
     page.should have_content "Smazat"
     expect{
       click_link 'Smazat'

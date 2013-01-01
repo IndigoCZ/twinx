@@ -1,18 +1,23 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Position:</b>
-  <%= @result.position %>
+<b>Pozice:</b>
+<%= @result.position %>
 </p>
 
 <p>
-  <b>Time msec:</b>
-  <%= @result.time_msec %>
+<b>Čas:</b>
+<%= @result.time %>
 </p>
 
 <p>
-  <b>Participant:</b>
-  <%= @result.participant.person.display_name %>
+<b>Účastník:</b>
+<%= @result.participant.person.display_name %>
+</p>
+
+<p>
+<b>Startovní číslo:</b>
+<%= @result.participant.starting_no %>
 </p>
 
 
