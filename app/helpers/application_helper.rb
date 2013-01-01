@@ -9,17 +9,23 @@ module ApplicationHelper
     end
   end
 
-  def sort_link(text,attr)
-    new_params=params
-    if params[:sort] && params[:sort]==attr.to_s
-      new_params.delete(:sort)
-      new_params[:rsort]=attr
-      link_to text, url_for(new_params)
-    else
+  def sort_link(text,attr=nil)
+    new_params=params.dup
+    if attr
+      if params[:sort] && params[:sort]==attr.to_s
+        new_params.delete(:sort)
+        new_params[:rsort]=attr
+      else
+        new_params.delete(:rsort)
+        new_params[:sort]=attr
+      end
+    elsif params[:rsort]=="default"
       new_params.delete(:rsort)
-      new_params[:sort]=attr
-      link_to text, url_for(new_params)
+      new_params.delete(:sort)
+    else
+      new_params[:rsort]="default"
     end
+    link_to text, url_for(new_params)
   end
 
   def display_nonstandard_errors(resource)

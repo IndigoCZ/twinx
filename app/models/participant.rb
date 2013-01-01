@@ -9,6 +9,8 @@ class Participant < ActiveRecord::Base
   validates_presence_of :person, :team, :category, :starting_no
   before_destroy :clean_result
 
+  scope :for_race, lambda { |race| includes([:category,{team: :county},:person]).where("categories.race_id = ?", race.id) }
+
   def clean_result
     result.destroy if result
   end

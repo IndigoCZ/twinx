@@ -1,16 +1,5 @@
 <h1>Přehled Účastníků</h1>
-<%= form_tag race_participants_path(@current_race), :method => 'get', :id => "participants_search", :class => "form-search" do %>
-  <p>
-<%= text_field_tag :search, params[:search], :class=>"input-medium search-query" %>
-<%= submit_tag "Search", :name => nil, :class=>"btn" %>
-<% if params[:sort] %>
-  <%= hidden_field_tag :sort, params[:sort] %>
-<% elsif params[:rsort] %>
-  <%= hidden_field_tag :rsort, params[:rsort] %>
-<% end %>
-</p>
-<div id="participant_table">
-  <%= render 'participants' %>
-</div>
-<% end %>
+  <div id="participant_table">
+    <%= render 'participants' %>
+  </div>
 

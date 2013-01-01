@@ -3,3 +3,13 @@
   <li><%= link_to('Jednoty', counties_path) %></li>
   <li><%= link_to('Osoby'  , people_path  ) %></li>
 </ul>
+<% if @current_race %>
+  <%= form_tag(race_participants_path(@current_race), :method => 'get', :id => "participants_search", :class => "navbar-search pull-left") do %>
+    <%= text_field_tag :search, params[:search], placeholder:"Hledat", :class=>"search-query" %>
+    <% if params[:sort] %>
+      <%= hidden_field_tag :sort, params[:sort] %>
+    <% elsif params[:rsort] %>
+      <%= hidden_field_tag :rsort, params[:rsort] %>
+    <% end %>
+  <% end %>
+<% end %>
