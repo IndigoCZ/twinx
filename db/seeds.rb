@@ -68,6 +68,15 @@ races.each do |race|
   end
 end
 
-Participant.all.each do |participant|
-  Result.create(position:rand(100),participant_id:participant.id)
+Category.all.each do |category|
+  last_time=rand(100000)+30000
+  category.participants.to_a.shuffle.each_with_index do |participant,index|
+    split=last_time+rand(10000)
+    time={}
+    time["fract"]=(split % 1000).to_s
+    time["sec"]=((split / 1000) % 60).to_s
+    time["min"]=(split / 60000).to_s
+    Result.create!(position:index+1,time:time,participant_id:participant.id)
+    last_time=split
+  end
 end
