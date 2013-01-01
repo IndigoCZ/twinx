@@ -19,5 +19,6 @@ describe Participant do
   it "provides sort query strings" do
     Participant.sort_by.should be == "starting_no"
     Participant.sort_by("team").should be == "counties.title"
+    Participant.sort_by("category").should be == "categories.title"
   end
 end

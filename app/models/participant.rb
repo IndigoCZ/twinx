@@ -22,7 +22,7 @@ class Participant < ActiveRecord::Base
     when "team"
       "counties.title"
     when "category"
-      "category.title"
+      "categories.title"
     when "name"
       "people.last_name"
     else

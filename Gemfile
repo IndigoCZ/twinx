@@ -24,10 +24,7 @@ group :test do
   gem 'faker'
 end
 
-group :development, :production do
-  gem 'rack-mini-profiler'
-end
-
+gem 'rack-mini-profiler'
 
 group :development, :test do
   gem 'rspec-rails'
