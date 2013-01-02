@@ -32,4 +32,19 @@ describe Result do
     result.time="0:1.12"
     result.time.should be == "0:01.120"
   end
+  it "provides a race filter" do
+    result=FactoryGirl.create(:result)
+    Result.for_race(result.participant.race).first.id.should be == result.id
+  end
+  it "provides sort query strings" do
+    Result.sort_by.should be == "position"
+    Result.sort_by("team").should be == "counties.title"
+    Result.sort_by("category").should be == "categories.title"
+  end
+  it "provides a filter_by method" do
+    team=FactoryGirl.create(:team)
+    participant=FactoryGirl.create(:participant,team:team)
+    result=FactoryGirl.create(:result,participant:participant)
+    Result.filter_by("team_#{team.id}").first.id.should be == result.id
+  end
 end

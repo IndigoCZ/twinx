@@ -4,6 +4,10 @@ class Result < ActiveRecord::Base
   validates_presence_of :participant, :position
   validates :position, :time_msec, :numericality => { only_integer:true }, allow_nil:true
 
+  scope :for_race, lambda { |race| includes(participant:[:category,{team: :county},:person]).where("categories.race_id = ?", race.id) }
+  scope :by_team_id, lambda { |team| includes(:participant).where("participants.team_id = ?", team) }
+  scope :by_category_id, lambda { |cat| includes(:participant).where("participants.category_id = ?", cat) }
+
   def time
     return nil if time_msec.nil?
     "#{time_min}:#{time_sec}.#{time_fract}"
@@ -44,4 +48,21 @@ class Result < ActiveRecord::Base
     (time_msec % 1000).to_s.rjust(3,"0")
   end
 
+  def self.filter_by(string)
+    column,val=string.split("_")
+    self.send("by_#{column}_id",val)
+  end
+
+  def self.sort_by(column=nil)
+    case column
+    when "team"
+      "counties.title"
+    when "category"
+      "categories.title"
+    when "name"
+      "people.last_name"
+    else
+      "position"
+    end
+  end
 end
