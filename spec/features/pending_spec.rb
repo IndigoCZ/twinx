@@ -2,7 +2,6 @@
 require 'spec_helper'
 
 describe "Twinx" do
-  it "allows filtering of participants"
   it "provides the same management of results as for participants"
   it "can manage staff members"
   it "provides printable PDF - category starting list"
@@ -13,4 +12,5 @@ describe "Twinx" do
   it "allows multiple people to have the same resulting position"
   it "allows new county to be created when entering a participant"
   it "allows a persons birthday to be specified when entering a participant"
+  it "supports import and export of race results"
 end
