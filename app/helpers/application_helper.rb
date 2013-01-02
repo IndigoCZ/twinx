@@ -25,7 +25,7 @@ module ApplicationHelper
         new_params.delete(:rsort)
         new_params[:sort]=attr
       end
-    elsif params[:rsort]=="default"
+    elsif params[:sort] || params[:rsort]=="default"
       new_params.delete(:rsort)
       new_params.delete(:sort)
     else
