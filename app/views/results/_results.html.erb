@@ -1,11 +1,11 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>pozice</th>
-      <th>jmeno(#)</th>
-      <th>jednota</th>
-      <th>kategorie</th>
-      <th>cas</th>
+      <th><%= sort_link("Umístění") %></th>
+      <th><%= sort_link("Jméno(#)", :name) %></th>
+      <th><%= filter_combo("Jednota",:team) %></th>
+      <th><%= filter_combo("Kategorie",:category) %></th>
+      <th>Čas</th>
       <th></th>
     </tr>
   </thead>

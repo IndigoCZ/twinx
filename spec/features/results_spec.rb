@@ -60,6 +60,42 @@ describe "Results" do
     page.should have_content result.participant.display_name
   end
 
+  it "allows sorting of results on the index" do
+    z_person=FactoryGirl.create(:person,last_name:"ZZZZZ", county_id:county.id)
+    z_participant=FactoryGirl.create(:participant, team_id:team.id, category_id:category.id, person_id:z_person.id)
+    z_result=FactoryGirl.create(:result, position:1, participant:z_participant)
+    a_person=FactoryGirl.create(:person,last_name:"AAAAA", county_id:county.id)
+    a_participant=FactoryGirl.create(:participant, team_id:team.id, category_id:category.id, person_id:a_person.id)
+    a_result=FactoryGirl.create(:result, position:2, participant:a_participant)
+
+    visit race_results_path(race.id)
+    page.should have_content(/ZZZZZ.*AAAAA/)
+    page.find("#name_sort").should have_content "Jméno"
+    page.find("#name_sort").click
+    page.should have_content(/AAAAA.*ZZZZZ/)
+  end
+  it "allows filtering of results on the index", js:true do
+    DatabaseCleaner.clean
+    this_race=FactoryGirl.create(:race)
+    z_category=FactoryGirl.create(:category, title:"ZZZZZ",race:this_race)
+    z_person=FactoryGirl.create(:person)
+    z_participant=FactoryGirl.create(:participant, category:z_category, person:z_person, starting_no:1)
+    z_result=FactoryGirl.create(:result, position:1, participant:z_participant)
+    a_category=FactoryGirl.create(:category, title:"AAAAA",race:this_race)
+    a_person=FactoryGirl.create(:person)
+    a_participant=FactoryGirl.create(:participant, category:a_category, person:a_person, starting_no:2)
+    a_result=FactoryGirl.create(:result, position:1, participant:a_participant)
+
+    visit race_results_path(this_race.id)
+    page.should have_content(/ZZZZZ.*AAAAA/)
+    page.find("#category_filter").should have_content "Kategorie"
+    page.find("#category_filter").find(".dropdown-toggle").click
+    page.find("#category_filter").should have_content "AAAAA"
+    within("#category_filter") { click_link "AAAAA" }
+    page.should have_content("AAAAA")
+    page.should_not have_content("ZZZZZ")
+  end
+
   it "deletes a result when I click the delete button", js:true do
     DatabaseCleaner.clean
     existing_result=FactoryGirl.create(:result)

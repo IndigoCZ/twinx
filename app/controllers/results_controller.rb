@@ -2,6 +2,18 @@
 class ResultsController < ApplicationController
   def index
     @results = @current_race.results
+    @results=Result.for_race(@current_race)
+    if params[:sort]
+      @results=@results.order("#{Result.sort_by(params[:sort])} ASC")
+    elsif params[:rsort]
+      @results=@results.order("#{Result.sort_by(params[:rsort])} DESC")
+    else
+      @results=@results.order("#{Result.sort_by} ASC")
+    end
+    @results=@results.filter_by(params[:filter]) if params[:filter]
+    if params[:search] && params[:search].length > 0
+      @results=@results.where("people.last_name LIKE ?",params[:search]+"%")
+    end
   end
   def new
     @result = Result.new

@@ -1,7 +1,6 @@
 # encoding: UTF-8
 class ParticipantsController < ApplicationController
   def index
-    #@participants=@current_race.participants.includes([:category,{team: :county},:person])
     @participants=Participant.for_race(@current_race)
     if params[:sort]
       @participants=@participants.order("#{Participant.sort_by(params[:sort])} ASC")
