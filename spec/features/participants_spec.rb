@@ -78,6 +78,37 @@ describe "Participants" do
     page.should have_content "Přehled Účastníků"
     page.should have_content participant.person.first_name
   end
+  it "allows sorting of participants on the index" do
+    z_person=FactoryGirl.create(:person,last_name:"ZZZZZ", county_id:county.id)
+    z_participant=FactoryGirl.create(:participant, team_id:team.id, category_id:category.id, person_id:z_person.id, starting_no:1)
+    a_person=FactoryGirl.create(:person,last_name:"AAAAA", county_id:county.id)
+    a_participant=FactoryGirl.create(:participant, team_id:team.id, category_id:category.id, person_id:a_person.id, starting_no:2)
+
+    visit race_participants_path(race.id)
+    page.should have_content(/ZZZZZ.*AAAAA/)
+    page.find("#name_sort").should have_content "Jméno"
+    page.find("#name_sort").click
+    page.should have_content(/AAAAA.*ZZZZZ/)
+  end
+  it "allows filtering of participants on the index", js:true do
+    DatabaseCleaner.clean
+    this_race=FactoryGirl.create(:race)
+    z_category=FactoryGirl.create(:category, title:"ZZZZZ",race:this_race)
+    z_person=FactoryGirl.create(:person)
+    z_participant=FactoryGirl.create(:participant, category:z_category, person:z_person, starting_no:1)
+    a_category=FactoryGirl.create(:category, title:"AAAAA",race:this_race)
+    a_person=FactoryGirl.create(:person)
+    a_participant=FactoryGirl.create(:participant, category:a_category, person:a_person, starting_no:2)
+
+    visit race_participants_path(this_race.id)
+    page.should have_content(/ZZZZZ.*AAAAA/)
+    page.find("#category_filter").should have_content "Kategorie"
+    page.find("#category_filter").find(".dropdown-toggle").click
+    page.find("#category_filter").should have_content "AAAAA"
+    within("#category_filter") { click_link "AAAAA" }
+    page.should have_content("AAAAA")
+    page.should_not have_content("ZZZZZ")
+  end
 
   it "deletes a participant when I click the delete button", js:true do
     DatabaseCleaner.clean

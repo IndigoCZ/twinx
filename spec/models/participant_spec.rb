@@ -16,6 +16,10 @@ describe Participant do
   it "is invalid without a starting number" do
     FactoryGirl.build(:participant, starting_no:nil).should_not be_valid
   end
+  it "provides a race filter" do
+    participant=FactoryGirl.create(:participant)
+    Participant.for_race(participant.race).first.id.should be == participant.id
+  end
   it "provides sort query strings" do
     Participant.sort_by.should be == "starting_no"
     Participant.sort_by("team").should be == "counties.title"
