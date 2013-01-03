@@ -56,6 +56,33 @@ describe "Participants" do
       page.should have_content("Účastník byl úspěšně vytvořen.")
     }.to change(Person,:count).by(0)
   end
+  it "automatically picks the appropriate category for the participant", js:true do
+    DatabaseCleaner.clean
+    this_race=FactoryGirl.create(:race)
+    old_male_category=FactoryGirl.create(:category, title:"OLD_MALE",race:this_race)
+    FactoryGirl.create(:constraint, restrict:"min_age", value:"30", category:old_male_category)
+    FactoryGirl.create(:constraint, restrict:"gender", value:"male", category:old_male_category)
+    young_male_category=FactoryGirl.create(:category, title:"YOUNG_MALE",race:this_race)
+    FactoryGirl.create(:constraint, restrict:"max_age", value:"29", category:young_male_category)
+    FactoryGirl.create(:constraint, restrict:"gender", value:"male", category:young_male_category)
+    old_female_category=FactoryGirl.create(:category, title:"OLD_FEMALE",race:this_race)
+    FactoryGirl.create(:constraint, restrict:"min_age", value:"30", category:old_female_category)
+    FactoryGirl.create(:constraint, restrict:"gender", value:"female", category:old_female_category)
+    young_female_category=FactoryGirl.create(:category, title:"YOUNG_FEMALE",race:this_race)
+    FactoryGirl.create(:constraint, restrict:"max_age", value:"29", category:young_female_category)
+    FactoryGirl.create(:constraint, restrict:"gender", value:"female", category:young_female_category)
+
+    visit new_race_participant_path(:race_id => this_race.id)
+    fill_in "Rok nar.", with:Time.now.year-29
+    choose gender_to_human("male")
+    page.should have_select('Kategorie', :selected => 'YOUNG_MALE')
+    choose gender_to_human("female")
+    page.should have_select('Kategorie', :selected => 'YOUNG_FEMALE')
+    fill_in "Rok nar.", with:Time.now.year-30
+    page.should have_select('Kategorie', :selected => 'OLD_FEMALE')
+    choose gender_to_human("male")
+    page.should have_select('Kategorie', :selected => 'OLD_MALE')
+  end
   it "shows details of an existing participant when I visit /:participant_id" do
     participant.save
     visit race_participant_path(race.id, participant.id)
