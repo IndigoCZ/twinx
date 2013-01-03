@@ -11,5 +11,4 @@ describe "Twinx" do
   it "properly handles ties"
   it "allows new county to be created when entering a participant"
   it "allows a persons birthday to be specified when entering a participant"
-  it "supports import and export of race results"
 end
