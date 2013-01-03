@@ -30,6 +30,21 @@ describe "Participants" do
   end
 
   it "creates a new participant when I fill in the new participant form" do
+    expect {
+      visit new_race_participant_path(:race_id => race.id)
+      fill_in "Startovní č.", with:participant.starting_no
+      fill_in "Jméno", with:participant.person.first_name
+      fill_in "Příjmení", with:participant.person.last_name
+      fill_in "Rok nar.", with:participant.person.yob
+      choose gender_to_human(participant.person.gender)
+      select county.title, from:"Jednota"
+      select participant.category.title, from:"Kategorie"
+      click_button "Vytvořit"
+      page.should have_content("Účastník byl úspěšně vytvořen.")
+    }.to change(Participant, :count).by(1)
+  end
+
+  it "fills in default starting number and county based on last entry" do
     visit new_race_participant_path(:race_id => race.id)
     fill_in "Startovní č.", with:participant.starting_no
     fill_in "Jméno", with:participant.person.first_name
@@ -39,8 +54,34 @@ describe "Participants" do
     select county.title, from:"Jednota"
     select participant.category.title, from:"Kategorie"
     click_button "Vytvořit"
+    visit new_race_participant_path(:race_id => race.id)
+    page.should have_select('Jednota', :selected => participant.person.county.title)
+    find_field('Startovní č.').value.to_i.should be == (participant.starting_no+1)
+  end
+
+  it "allows new county to be created when entering a participant"
+  it "allows a persons birthday to be specified when entering a participant" do
+    DatabaseCleaner.clean
+    this_race=FactoryGirl.create(:race)
+    this_category=FactoryGirl.create(:category,race:this_race)
+    this_county=FactoryGirl.create(:county)
+    this_person=FactoryGirl.build(:person,county:this_county)
+    visit new_race_participant_path(:race_id => this_race.id)
+    page.should have_select('Narozen')
+    fill_in "Startovní č.", with:1
+    fill_in "Jméno", with:this_person.first_name
+    fill_in "Příjmení", with:this_person.last_name
+    fill_in "Rok nar.", with:this_person.yob
+    select '13', from:"participant_person_born_3i"
+    select 'Duben', from:"participant_person_born_2i"
+    choose gender_to_human(this_person.gender)
+    select this_county.title, from:"Jednota"
+    select this_category.title, from:"Kategorie"
+    click_button "Vytvořit"
     page.should have_content("Účastník byl úspěšně vytvořen.")
   end
+  it "can manage staff members"
+
   it "creates only one new person when I sign a person into two categories" do
     participant.save
     expect{

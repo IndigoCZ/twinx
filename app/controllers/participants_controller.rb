@@ -12,7 +12,7 @@ class ParticipantsController < ApplicationController
     end
     @participants=@participants.filter_by(params[:filter]) if params[:filter]
     if params[:search] && params[:search].length > 0
-      @participants=@participants.where("people.last_name LIKE ?",params[:search]+"%")
+      @participants=@participants.where("people.last_name ILIKE ?",params[:search]+"%")
     end
     respond_to do |format|
       format.html
@@ -23,14 +23,17 @@ class ParticipantsController < ApplicationController
     @person=Person.new
     @person.gender="male"
     @person.yob="2000"
+		@person.county_id=session[:last_county_id]
     @participant=Participant.new
+		@participant.starting_no=session[:last_starting_no].to_i+1
   end
   def create
     success=false
     Participant.transaction do
       @person=Person.lookup_or_create(params[:participant][:person])
-      #@person||=Person.new(params[:person])
       @team=Team.where(race_id:@current_race.id,county_id:params[:participant][:person][:county_id]).first_or_create
+      session[:last_starting_no]=params[:participant][:starting_no]
+      session[:last_county_id]=params[:participant][:person][:county_id]
       params[:participant][:team_id]=@team.id
       params[:participant][:person_id]=@person.id
       params[:participant].delete(:person)
