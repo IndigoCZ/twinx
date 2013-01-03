@@ -11,8 +11,12 @@ Participant =
   update_category: (response)->
     #console.log(response)
     $('#participant_category_id').empty()
+    first=true
     for item in response
-      $('#participant_category_id').append($("<option></option>").attr("value", item["id"]).text(item["title"]))
+      if first
+        $('#participant_category_id').append($("<option></option>").attr("value", item["id"]).attr("selected","selected").text(item["title"]))
+      else
+        $('#participant_category_id').append($("<option></option>").attr("value", item["id"]).text(item["title"]))
 
 jQuery ->
   $('.restrict_yob').change ->
