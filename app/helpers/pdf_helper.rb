@@ -35,25 +35,17 @@ module PdfHelper
   def pdf_transform_data(header_list,data,selection)
     rval=[]
     row=[]
-    selection.each do |col|
-      row<<header_list[col][:title]
+    selection.each_key do |col|
+      row<<header_list[col]
     end
     rval<<row
 
     data.each do |line|
       row=[]
-      selection.each do |col|
+      selection.each_key do |col|
         row<<line[col]
       end
       rval<<row
-    end
-    rval
-  end
-
-  def pdf_column_widths(header_list,selection)
-    rval=[]
-    selection.each do |col|
-      rval<<header_list[col][:width]
     end
     rval
   end

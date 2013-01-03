@@ -4,18 +4,25 @@ prawn_document( :page_size => 'A4', :page_layout => :portrait, :margin => 25) do
   render "layouts/header", :pdf => pdf
 
   header_list={
-    starting_no:{title:"#",width:70},
-    name:{title:"Jméno",width:250},
-    category:{title:"Kategorie",width:70},
-    team:{title:"Jednota",width:130}
+    starting_no:"#",
+    name:"Jméno",
+    category:"Kategorie",
+    team:"Jednota",
+    yob:"Rok nar."
   }
 
-  selection=[:starting_no,:name,:category,:team]
   if pdf_grouping
     participant_groups=@participants.to_a.group_by(& pdf_grouping)
+    case pdf_grouping
+    when :category
+      selection={starting_no:{width:70},name:{width:250},yob:{width:80},team:{width:130}}
+    when :team
+      selection={starting_no:{width:70},name:{width:250},yob:{width:80},category:{width:130}}
+    end
     selection.delete(pdf_grouping)
   else
     participant_groups={all:@participants}
+    selection={starting_no:{width:70},name:{width:250},category:{width:80},team:{width:130}}
   end
 
   participant_groups.each_pair do |key,participant_list|
@@ -25,19 +32,20 @@ prawn_document( :page_size => 'A4', :page_layout => :portrait, :margin => 25) do
         starting_no:participant.starting_no,
         name:participant.display_name,
         category:participant.category.title,
-        team:participant.team.title
+        team:participant.team.title,
+        yob:participant.person.yob
       }
     end
 
     pdf_table_break(pdf)
     if pdf_table_title(key)
-      pdf.text pdf_table_title(key), :size => 16 # Title
+      pdf.text(pdf_table_title(key), :size => 16)# Title
     end
 
     pdf.font_size(10)
-    column_widths=pdf_column_widths(header_list,selection)
+
     pdf.table(pdf_transform_data(header_list,data,selection), :header => true) do
-      column_widths.each_with_index do |val,index|
+      selection.values.map{ |x| x[:width] }.each_with_index do |val,index|
         column(index).width = val
       end
     end
