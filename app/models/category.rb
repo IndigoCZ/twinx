@@ -2,6 +2,7 @@ class Category < ActiveRecord::Base
   attr_accessible :race_id, :title, :constraints_attributes
   belongs_to :race
   has_many :participants
+  has_many :results, through: :participants
   has_many :constraints
   validates_presence_of :title, :race
   before_destroy :check_dependencies
@@ -27,6 +28,11 @@ class Category < ActiveRecord::Base
     end
     rval
   end
+
+  def dnfs
+    participants.includes(:result).where("results.id IS NULL")
+  end
+
   def restriction
     restrict_gender=""
     restrict_age=""

@@ -3,6 +3,7 @@ class Team < ActiveRecord::Base
   belongs_to :county
   belongs_to :race
   has_many :participants
+  has_many :results, through: :participants
   validates_presence_of :race, :county
   before_destroy :check_dependencies
 
@@ -19,4 +20,7 @@ class Team < ActiveRecord::Base
     county.title
   end
 
+  def dnfs
+    participants.includes(:result).where("results.id IS NULL")
+  end
 end
