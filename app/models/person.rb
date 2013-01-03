@@ -4,6 +4,7 @@ class Person < ActiveRecord::Base
   validates_presence_of :first_name, :last_name, :yob, :gender, :county
   validates :yob, :numericality => { only_integer:true , greater_than:1900, less_than:Time.now.year } # Make sure we reboot once a year :-)
   validates_inclusion_of :gender, in:["male","female"]
+  before_validation :add_year_to_birthday
 
   def display_name
     "#{first_name} #{last_name}"
@@ -22,6 +23,12 @@ class Person < ActiveRecord::Base
       lookup.first
     else
       Person.create(hash)
+    end
+  end
+
+  def add_year_to_birthday
+    if born && yob
+      self.born=Date.new(yob.to_i,born.month,born.day)
     end
   end
 end
