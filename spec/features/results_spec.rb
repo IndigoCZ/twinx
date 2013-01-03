@@ -112,4 +112,8 @@ describe "Results" do
   end
 
   it "allows me to create a result even when there are duplicate starting_nos"
+  it "properly handles ties"
+  it "provides printable PDF - category results list"
+  it "provides printable PDF - county results list"
+  it "provides printable PDF - complete results"
 end

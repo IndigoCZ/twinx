@@ -9,8 +9,10 @@
     <%= nav_link "Jednoty"  , race_teams_path(@current_race)               %>
     <%= nav_link "Kategorie", race_categories_path(@current_race)          %>
   </ul>
-  <%= form_tag(race_participants_path(@current_race), :method => 'get', :id => "participants_search", :class => "navbar-search pull-left") do %>
-    <%= text_field_tag :search, params[:search], placeholder:"Hledat", :class=>"search-query" %>
+  <% new_params=params.dup; new_params[:format]="pdf" %>
+  <%= link_to "PDF", url_for(new_params) , class:"btn btn-danger pull-left" %>
+  <%= form_tag(race_participants_path(@current_race), :method => 'get', :id => "participants_search", :class => "navbar-search pull-right") do %>
+    <%= text_field_tag :search, params[:search], placeholder:"Hledat účastníka", :class=>"search-query" %>
     <% if params[:sort] %>
       <%= hidden_field_tag :sort, params[:sort] %>
     <% elsif params[:rsort] %>
@@ -19,6 +21,6 @@
   <% end %>
 <% end %>
 <ul class="nav pull-right">
-  <%= nav_link 'Jednoty', counties_path %>
+  <%= nav_link 'Obce', counties_path %>
   <%= nav_link 'Osoby'  , people_path %>
 </ul>
