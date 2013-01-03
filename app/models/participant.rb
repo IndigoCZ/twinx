@@ -26,6 +26,15 @@ class Participant < ActiveRecord::Base
     self.send("by_#{column}_id",val)
   end
 
+  def self.group_by(column=nil)
+    case column
+    when "team"
+      "counties.title"
+    else
+      "categories.title"
+    end
+  end
+
   def self.sort_by(column=nil)
     case column
     when "team"

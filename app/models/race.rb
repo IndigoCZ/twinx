@@ -17,4 +17,9 @@ class Race < ActiveRecord::Base
       return false
     end
   end
+
+  def subtitle
+    logger.warn "FIX THIS: race subtitle being called!"
+    title
+  end
 end

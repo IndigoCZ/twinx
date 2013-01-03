@@ -2,6 +2,7 @@
 class ParticipantsController < ApplicationController
   def index
     @participants=Participant.for_race(@current_race)
+    @participants=@participants.order("#{Participant.sort_by(params[:group])} ASC") if params[:group]
     if params[:sort]
       @participants=@participants.order("#{Participant.sort_by(params[:sort])} ASC")
     elsif params[:rsort]
@@ -12,6 +13,10 @@ class ParticipantsController < ApplicationController
     @participants=@participants.filter_by(params[:filter]) if params[:filter]
     if params[:search] && params[:search].length > 0
       @participants=@participants.where("people.last_name LIKE ?",params[:search]+"%")
+    end
+    respond_to do |format|
+      format.html
+      format.pdf
     end
   end
   def new

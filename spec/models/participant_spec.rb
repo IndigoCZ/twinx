@@ -25,6 +25,11 @@ describe Participant do
     Participant.sort_by("team").should be == "counties.title"
     Participant.sort_by("category").should be == "categories.title"
   end
+  it "provides group query strings" do
+    Participant.group_by.should be == "categories.title"
+    Participant.group_by("team").should be == "counties.title"
+    Participant.group_by("category").should be == "categories.title"
+  end
   it "provides a filter_by method" do
     team=FactoryGirl.create(:team)
     participant=FactoryGirl.create(:participant,team:team)
