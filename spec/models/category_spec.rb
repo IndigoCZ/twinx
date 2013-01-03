@@ -52,5 +52,13 @@ describe Category do
       @zeny.restriction.should be == "F"
       @juniori.restriction.should be == "M20-"
     end
+
+    it "provides a list of DNF participants" do
+      a=FactoryGirl.create(:participant,category:@juniori)
+      b=FactoryGirl.create(:participant,category:@juniori)
+      FactoryGirl.create(:result,participant:a)
+      @juniori.dnfs.should include b
+      @juniori.dnfs.should_not include a
+    end
   end
 end
