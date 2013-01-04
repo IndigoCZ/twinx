@@ -1,5 +1,5 @@
 class Category < ActiveRecord::Base
-  attr_accessible :race_id, :title, :constraints_attributes
+  attr_accessible :race_id, :title, :constraints_attributes, :code
   belongs_to :race
   has_many :participants
   has_many :results, through: :participants

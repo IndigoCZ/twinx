@@ -1,5 +1,5 @@
 class Race < ActiveRecord::Base
-  attr_accessible :held_on, :title
+  attr_accessible :held_on, :title, :subtitle, :short_name
   validates_presence_of :title, :held_on
   has_many :categories
   has_many :teams
@@ -16,10 +16,5 @@ class Race < ActiveRecord::Base
       errors.add(:base, "cannot be deleted while teams exist")
       return false
     end
-  end
-
-  def subtitle
-    logger.warn "FIX THIS: race subtitle being called!"
-    title
   end
 end

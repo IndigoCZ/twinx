@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121231204008) do
+ActiveRecord::Schema.define(:version => 20130104150918) do
 
   create_table "categories", :force => true do |t|
     t.string   "title"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(:version => 20121231204008) do
     t.datetime "updated_at",                        :null => false
     t.integer  "difficulty"
     t.integer  "participants_count", :default => 0
+    t.string   "code"
   end
 
   create_table "constraints", :force => true do |t|
@@ -64,6 +65,8 @@ ActiveRecord::Schema.define(:version => 20121231204008) do
     t.date     "held_on"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "subtitle"
+    t.string   "short_name"
   end
 
   create_table "results", :force => true do |t|
