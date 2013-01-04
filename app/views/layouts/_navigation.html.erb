@@ -1,7 +1,11 @@
 <%= link_to "Twinx", root_path, :class => 'brand' %>
 
 <% if @current_race %>
-  <%= link_to "Nový Účastník", new_race_participant_path(@current_race), class:"btn btn-success pull-left" %>
+  <% if request[:controller]=="results" %>
+    <%= link_to "Nový Výsledek", new_race_result_path(@current_race), class:"btn btn-success pull-left" %>
+  <% else %>
+    <%= link_to "Nový Účastník", new_race_participant_path(@current_race), class:"btn btn-success pull-left" %>
+  <% end %>
   <ul class="nav pull-left">
     <%# nav_link "Nový Účastník", new_race_participant_path(@current_race), wrapper_class:"nav-success" %>
     <%= nav_link "Účastníci", race_participants_path(@current_race)        %>
@@ -20,7 +24,7 @@
     <% end %>
   <% end %>
 <% end %>
-<ul class="nav pull-right">
-  <%= nav_link 'Obce', counties_path %>
-  <%= nav_link 'Osoby'  , people_path %>
-</ul>
+  <ul class="nav pull-right">
+    <%= nav_link 'Obce', counties_path %>
+    <%= nav_link 'Osoby'  , people_path %>
+  </ul>

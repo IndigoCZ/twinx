@@ -29,12 +29,16 @@ class ResultsController < ApplicationController
     params[:result].delete(:participant)
     @result = Result.new(params[:result])
     @participant=Participant.find_by_starting_no(starting_no)
-    @result.participant=@participant
-    if @result.save
-      redirect_to [@current_race, @result], notice: 'Výsledek byl úspěšně vytvořen.'
+    if @participant.result
+      redirect_to [@current_race, @participant.result], alert: 'Výsledek pro účastníka již existuje.'
     else
-      @participant||=Participant.new(starting_no:starting_no)
-      render action: "new"
+      @result.participant=@participant
+      if @result.save
+        redirect_to [@current_race, @result], notice: 'Výsledek byl úspěšně vytvořen.'
+      else
+        @participant||=Participant.new(starting_no:starting_no)
+        render action: "new"
+      end
     end
   end
   def show

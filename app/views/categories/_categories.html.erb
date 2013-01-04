@@ -19,6 +19,8 @@
           <button class="btn btn-mini dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
           <ul class="dropdown-menu">
             <li><%= link_to 'Zobrazit', race_category_path(@current_race,category) %></li>
+            <li><%= link_to 'Startovní listina', race_participants_path(@current_race,filter:"category_#{category.id}") %></li>
+            <li><%= link_to 'Výsledková listina', race_results_path(@current_race,filter:"category_#{category.id}") %></li>
             <li><%= link_to 'Smazat', race_category_path(@current_race,category), method: :delete, data: { confirm: 'Jste si jisti?' } %></li>
           </ul>
         </div>
