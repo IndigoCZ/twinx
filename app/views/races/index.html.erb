@@ -5,7 +5,7 @@
   <h1><%= race.title %></h1>
   <p><div class="btn-group">
     <%= link_to "Účastníci", race_participants_path(race), class:"btn btn-large btn-primary span2" %>
-    <%= link_to "Výsledky" , race_results_path(race)     , class:"btn btn-large btn-primary span2" %>
+    <%= link_to "Výsledky" , race_results_path(race,group:"category")     , class:"btn btn-large btn-primary span2" %>
   </div></p>
   <p><div class="btn-group">
     <%= link_to "Kategorie", race_categories_path(race)  , class:"btn btn-large span2" %>
@@ -22,7 +22,7 @@
       <h3><%= race.title %></h3>
   <p><div class="btn-group">
         <%= link_to "Účastníci", race_participants_path(race), class:"btn btn-primary span1" %>
-        <%= link_to "Výsledky" , race_results_path(race)     , class:"btn btn-primary span1" %>
+        <%= link_to "Výsledky" , race_results_path(race,group:"category")     , class:"btn btn-primary span1" %>
   </div></p>
   <p><div class="btn-group">
         <%= link_to "Kategorie", race_categories_path(race)  , class:"btn span1" %>

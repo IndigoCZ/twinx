@@ -56,16 +56,16 @@ describe "Results" do
   it "shows a listing of results when visit the index" do
     result=FactoryGirl.create(:result, participant_id:@participant.id)
     visit race_results_path(@race.id)
-    page.should have_content "Přehled Výsledeků"
+    page.should have_content "Přehled Výsledků"
     page.should have_content result.participant.display_name
   end
 
   it "allows sorting of results on the index" do
     z_person=FactoryGirl.create(:person,last_name:"ZZZZZ", county_id:@county.id)
-    z_participant=FactoryGirl.create(:participant, team_id:@team.id, category_id:@category.id, person_id:z_person.id)
+    z_participant=FactoryGirl.create(:participant, team_id:@team.id, category_id:@category.id, person_id:z_person.id, starting_no:123)
     z_result=FactoryGirl.create(:result, position:1, participant:z_participant)
     a_person=FactoryGirl.create(:person,last_name:"AAAAA", county_id:@county.id)
-    a_participant=FactoryGirl.create(:participant, team_id:@team.id, category_id:@category.id, person_id:a_person.id)
+    a_participant=FactoryGirl.create(:participant, team_id:@team.id, category_id:@category.id, person_id:a_person.id, starting_no:456)
     a_result=FactoryGirl.create(:result, position:2, participant:a_participant)
 
     visit race_results_path(@race.id)
@@ -107,7 +107,7 @@ describe "Results" do
       click_link 'Smazat'
       page.driver.accept_js_confirms!
     }.to change(Result,:count).by(-1)
-    page.should have_content "Přehled Výsledeků"
+    page.should have_content "Přehled Výsledků"
     page.should_not have_content existing_result.participant.display_name
   end
 end
@@ -129,7 +129,7 @@ end
       page.should have_content("Výsledek pro účastníka již existuje.")
     end
 
-    it "allows me to create a result even when there are duplicate starting_nos"
+    it "DEFERRED - allows me to create a result even when there are duplicate starting_nos"
     it "properly handles ties"
   end
 end

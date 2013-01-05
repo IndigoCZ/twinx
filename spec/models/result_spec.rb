@@ -39,7 +39,7 @@ describe Result do
   it "provides sort query strings" do
     Result.sort_by.should be == "position"
     Result.sort_by("team").should be == "counties.title"
-    Result.sort_by("category").should be == "categories.title"
+    Result.sort_by("category").should be == "categories.sort_order"
   end
   it "provides a filter_by method" do
     team=FactoryGirl.create(:team)

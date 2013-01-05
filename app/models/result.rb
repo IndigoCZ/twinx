@@ -58,7 +58,7 @@ class Result < ActiveRecord::Base
     when "team"
       "counties.title"
     when "category"
-      "categories.title"
+      "categories.sort_order"
     when "name"
       "people.last_name"
     else

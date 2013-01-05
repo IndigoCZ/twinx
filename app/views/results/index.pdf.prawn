@@ -22,7 +22,7 @@ prawn_document( :page_size => 'A4', :page_layout => :portrait, :margin => 25) do
     end
   else
     result_groups={all:@results}
-    selection={position:{width:50},name:{width:200},team:{width:100},category:{width:100},time:{width:80}}
+    selection={position:{width:50},name:{width:160},team:{width:120},category:{width:120},time:{width:80}}
   end
 
   result_groups.each_pair do |key,result_list|

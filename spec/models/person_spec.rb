@@ -54,6 +54,7 @@ describe Person do
       person.id.should_not be == lookup.id
     end
     it "raises an exception for the edge case where two people have the same credentials but a different id_string when the id_string is not specified in lookup" do
+      DatabaseCleaner.clean
       template=FactoryGirl.build(:person)
       person1=template.dup
       person1.id_string="ABC"
@@ -72,6 +73,7 @@ describe Person do
       }.to raise_error
     end
     it "handles the edge case where two people have the same credentials but a different id_string when the id_string is specified in lookup" do
+      DatabaseCleaner.clean
       template=FactoryGirl.build(:person)
       person1=template.dup
       person1.id_string="ABC"

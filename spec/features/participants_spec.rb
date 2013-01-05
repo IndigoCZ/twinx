@@ -86,7 +86,7 @@ describe "Participants" do
     participant.save
     expect{
       visit new_race_participant_path(:race_id => race.id)
-      fill_in "Startovní č.", with:participant.starting_no
+      fill_in "Startovní č.", with:participant.starting_no+1000
       fill_in "Jméno", with:participant.person.first_name
       fill_in "Příjmení", with:participant.person.last_name
       fill_in "Rok nar.", with:participant.person.yob

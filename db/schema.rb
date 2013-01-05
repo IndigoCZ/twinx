@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(:version => 20130104150918) do
     t.integer  "difficulty"
     t.integer  "participants_count", :default => 0
     t.string   "code"
+    t.integer  "sort_order"
   end
 
   create_table "constraints", :force => true do |t|

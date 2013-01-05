@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class Participant < ActiveRecord::Base
   attr_accessible :category_id, :starting_no, :team_id, :person_id
   belongs_to :person
@@ -8,6 +9,7 @@ class Participant < ActiveRecord::Base
   validates :starting_no, :numericality => { only_integer:true }
   validates_presence_of :person, :team, :category, :starting_no
   before_destroy :clean_result
+  validate :starting_no_unique_for_race
 
   scope :for_race, lambda { |race| includes([:category,{team: :county},:person]).where("categories.race_id = ?", race.id) }
   scope :by_team_id, lambda { |team| where(team_id:team) }
@@ -21,6 +23,15 @@ class Participant < ActiveRecord::Base
     person.display_name
   end
 
+  def starting_no_unique_for_race
+    if self.race
+      lookup=self.race.participants.where(starting_no:(self.starting_no))
+      if lookup.size > 0
+        errors.add(:starting_no, "Startovní číslo musí být pro závod unikátní") unless lookup.first.id == self.id
+      end
+    end
+  end
+
   def self.filter_by(string)
     column,val=string.split("_")
     self.send("by_#{column}_id",val)
@@ -31,7 +42,7 @@ class Participant < ActiveRecord::Base
     when "team"
       "counties.title"
     else
-      "categories.title"
+      "categories.sort_order"
     end
   end
 
@@ -40,7 +51,7 @@ class Participant < ActiveRecord::Base
     when "team"
       "counties.title"
     when "category"
-      "categories.title"
+      "categories.sort_order"
     when "name"
       "people.last_name"
     else

@@ -4,7 +4,7 @@ class CategoriesController < ApplicationController
     @categories=@current_race.categories.includes(:constraints)
     @categories=@categories.for_gender(params[:gender]) if params[:gender]
     @categories=@categories.for_age(Time.now.year - params[:yob].to_i) if params[:yob]
-    @categories=@categories.order("difficulty ASC")
+    @categories=@categories.order("difficulty DESC")
     respond_to do |format|
       format.html # index.html.erb
       format.json  { render :json => @categories.map{|cat|{id:cat.id,title:cat.title}} }

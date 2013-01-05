@@ -54,8 +54,8 @@ describe Category do
     end
 
     it "provides a list of DNF participants" do
-      a=FactoryGirl.create(:participant,category:@juniori)
-      b=FactoryGirl.create(:participant,category:@juniori)
+      a=FactoryGirl.create(:participant,category:@juniori, starting_no:123)
+      b=FactoryGirl.create(:participant,category:@juniori, starting_no:456)
       FactoryGirl.create(:result,participant:a)
       @juniori.dnfs.should include b
       @juniori.dnfs.should_not include a
