@@ -1,0 +1,5 @@
+<%= form_tag({:action => :create}, :multipart => true) do %>
+  <%= label_tag(:q, "Import CSV file:") %>
+  <%= file_field_tag 'import' %>
+  <%= submit_tag("Import", class:"btn btn-primary")%>
+<% end %>
