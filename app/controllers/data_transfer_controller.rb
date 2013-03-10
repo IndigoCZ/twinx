@@ -19,6 +19,7 @@ class DataTransferController < ApplicationController
       array_of_hashes<<row
     end
     array_of_hashes.each do |row|
+      logger.info("Importing #{row["starting_no"]}")
       county=County.where(title:row["team"]).first_or_create
       person=Person.lookup_or_create(
        "first_name" => row["first_name"],
@@ -45,6 +46,12 @@ class DataTransferController < ApplicationController
         if row["position"] && row["position"].to_i > 0
           if participant.result
             logger.info "Participant #{participant.starting_no} already has a result"
+            result=participant.result
+            result.position=row["position"]
+            if row["time"]
+              result.time=row["time"]
+            end
+            result.save
           else
             if row["time"]
               Result.create(participant_id:participant.id,position:row["position"],time:row["time"])
