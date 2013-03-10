@@ -6,6 +6,7 @@
       <tr>
         <th>Název</th>
         <th>Počet Účastníků</th>
+        <th>Body</th>
         <th>Akce</th>
       </tr>
     </thead>
@@ -14,6 +15,11 @@
       <tr>
       <td><%= team.county.title %></td>
       <td><%= team.participants.size %></td>
+      <% if params[:limit] %>
+        <td><%= team.points(params[:limit]) %></td>
+      <% else %>
+        <td><%= team.points %></td>
+      <% end %>
       <td>
         <div class="btn-group">
           <%= link_to 'Startovní listina', race_participants_path(@current_race,filter:"team_#{team.id}"), :class => 'btn btn-mini' %>

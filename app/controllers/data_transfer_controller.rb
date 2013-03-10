@@ -2,6 +2,10 @@
 require 'csv'
 class DataTransferController < ApplicationController
   def index
+    respond_to do |format|
+      format.html
+      format.csv { send_data Participant.to_csv(@current_race) }
+    end
   end
   def create
     arr_of_arrs = CSV.parse(params[:import].read)

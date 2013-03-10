@@ -1,5 +1,13 @@
 class TeamsController < ApplicationController
   def index
-    @teams=@current_race.teams.includes(:county).order("counties.title ASC")
+    if params[:sort]=="points"
+      @teams=@current_race.teams.sort_by{ |t| t.points(params[:limit]) }.reverse
+    else
+      @teams=@current_race.teams.includes(:county).order("counties.title ASC")
+    end
+    respond_to do |format|
+      format.html
+      format.pdf
+    end
   end
 end

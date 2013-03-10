@@ -55,7 +55,11 @@ prawn_document( :page_size => 'A4', :page_layout => :portrait, :margin => 25) do
       pdf.text(pdf_table_title(key), :size => 16)# Title
     end
 
-    pdf.font_size(10)
+    if params[:group]
+      pdf.font_size(9)
+    else
+      pdf.font_size(10)
+    end
 
     pdf.table(pdf_transform_data(header_list,data,selection), :header => true) do
       selection.values.map{ |x| x[:width] }.each_with_index do |val,index|

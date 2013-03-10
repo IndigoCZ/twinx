@@ -48,6 +48,17 @@ class Result < ActiveRecord::Base
     (time_msec % 1000).to_s.rjust(3,"0")
   end
 
+  def points
+    case position
+    when 1
+      12
+    when 2..10
+      (12 - position)
+    else
+      1
+    end
+  end
+
   def self.filter_by(string)
     column,val=string.split("_")
     self.send("by_#{column}_id",val)
