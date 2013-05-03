@@ -130,8 +130,7 @@ end
       click_button "Vytvořit"
       page.should have_content("Výsledek pro účastníka již existuje.")
     end
-
-    it "DEFERRED - allows me to create a result even when there are duplicate starting_nos"
+    it "allows me to create a result even when there is a duplicate starting no in another race"
     it "properly handles ties"
   end
 end
