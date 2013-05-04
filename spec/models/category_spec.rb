@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require 'spec_helper'
 
 describe Category do
@@ -59,6 +60,13 @@ describe Category do
       FactoryGirl.create(:result,participant:a)
       @juniori.dnfs.should include b
       @juniori.dnfs.should_not include a
+    end
+
+    it "returns a list of categories from a ruleset file" do
+      Category.categories_from_ruleset["M"]["title"].should eq "Muži A"
+    end
+    it "creates a category by code with details from ruleset file" do
+      Category.create_by_code(@race,"M").title.should eq "Muži A"
     end
   end
 end
