@@ -150,6 +150,5 @@ end
       runner1.result.should be_nil
       runner2.result.position.should eq 111
     end
-    it "properly handles ties"
   end
 end
