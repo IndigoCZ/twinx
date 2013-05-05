@@ -28,32 +28,24 @@ class ParticipantsController < ApplicationController
 		@participant.starting_no=session[:last_starting_no].to_i+1
   end
   def create
-    success=false
-    Participant.transaction do
-      @person=Person.new(params[:participant][:person])
-      if @person.valid?
-        @person=Person.lookup_or_create(params[:participant][:person])
-      else
-        params[:participant].delete(:person)
-        @participant=Participant.new(params[:participant])
-        raise ActiveRecord::Rollback unless @participant.save
+    @person=Person.new(params[:participant].delete(:person))
+    @team=Team.where(race_id:@current_race.id,county_id:@person.county.id).first_or_initialize
+    @participant=Participant.new(params[:participant])
+    if @person.valid? && @team.valid?
+      if @person.save
+        @participant.person_id=@person.id
+        if @team.persisted? || @team.save
+          @participant.team_id=@team.id
+          session[:last_county_id]=@person.county.id
+          if @participant.save
+            session[:last_starting_no]=@participant.starting_no
+            redirect_to new_race_participant_url(@current_race), notice:'Účastník byl úspěšně vytvořen.'
+            return
+          end
+        end
       end
-      @team=Team.where(race_id:@current_race.id,county_id:params[:participant][:person][:county_id]).first_or_create
-      session[:last_starting_no]=params[:participant][:starting_no]
-      session[:last_county_id]=params[:participant][:person][:county_id]
-      params[:participant][:team_id]=@team.id
-      params[:participant][:person_id]=@person.id
-      params[:participant].delete(:person)
-      @participant=Participant.new(params[:participant])
-      raise ActiveRecord::Rollback unless @participant.save
-      success=true
     end
-    if success
-      #redirect_to race_participants_url(@current_race), notice:'Účastník byl úspěšně vytvořen.'
-      redirect_to new_race_participant_url(@current_race), notice:'Účastník byl úspěšně vytvořen.'
-    else
-      render action: "new"
-    end
+    render action: "new"
   end
   def show
     @participant=Participant.find(params[:id])
