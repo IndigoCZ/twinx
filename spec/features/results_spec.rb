@@ -130,7 +130,26 @@ end
       click_button "Vytvořit"
       page.should have_content("Výsledek pro účastníka již existuje.")
     end
-    it "allows me to create a result even when there is a duplicate starting no in another race"
+    it "allows me to create a result even when there is a duplicate starting no in another race" do
+      DatabaseCleaner.clean
+      race1=FactoryGirl.create(:race)
+      race2=FactoryGirl.create(:race)
+      existing_county=FactoryGirl.create(:county)
+      cat1=FactoryGirl.create(:category, race_id:race1.id)
+      cat2=FactoryGirl.create(:category, race_id:race2.id)
+      team1=FactoryGirl.create(:team, race_id:race1.id, county_id:existing_county.id)
+      team2=FactoryGirl.create(:team, race_id:race2.id, county_id:existing_county.id)
+      existing_person=FactoryGirl.create(:person, county:existing_county)
+      runner1=FactoryGirl.create(:participant, person:existing_person, team:team1, category:cat1, starting_no:123)
+      runner2=FactoryGirl.create(:participant, person:existing_person, team:team2, category:cat2, starting_no:123)
+      visit new_race_result_path(:race_id => race2.id)
+      fill_in "Startovní č.", with:123
+      fill_in "Pozice", with:111
+      click_button "Vytvořit"
+      page.should have_content("Výsledek byl úspěšně vytvořen.")
+      runner1.result.should be_nil
+      runner2.result.position.should eq 111
+    end
     it "properly handles ties"
   end
 end
