@@ -21,16 +21,17 @@ class DataTransferController < ApplicationController
     array_of_hashes.each do |row|
       logger.info("Importing #{row["starting_no"]}")
       county=County.where(title:row["team"]).first_or_create
-      person=Person.lookup_or_create(
-       "first_name" => row["first_name"],
-       "last_name" => row["last_name"],
-       "full_name" => row["full_name"],
-       "gender" => row["gender"],
-       "yob" => row["yob"],
-       "born" => row["born"],
-       "id_string" => row["id_string"],
-       "county_id" => county.id
+      person=Person.create(
+       first_name:row["first_name"],
+       last_name:row["last_name"],
+       full_name:row["full_name"],
+       gender:row["gender"],
+       yob:row["yob"],
+       born:row["born"],
+       id_string:row["id_string"],
+       county_id:county.id
       )
+      person.dedup
       if row["competing"]=="true"
         if @current_race.categories.where(code:row["category"]).size == 1
           category=@current_race.categories.where(code:row["category"]).first

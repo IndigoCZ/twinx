@@ -62,68 +62,6 @@ describe Person do
     end
   end
   context "Complex interactions" do
-=begin
-    it "provides a finder for existing people" do
-      person=FactoryGirl.create(:person)
-      lookup=Person.lookup_or_create(
-        "first_name"=>person.first_name,
-        "last_name"=>person.last_name,
-        "yob"=>person.yob,
-        "gender"=>person.gender,
-        "county_id"=>person.county_id
-      )
-      person.id.should be == lookup.id
-    end
-    it "finder for existing people returns a new person when none exists" do
-      person=FactoryGirl.create(:person)
-      lookup=Person.lookup_or_create(
-        "first_name"=>person.last_name,
-        "last_name"=>person.first_name,
-        "yob"=>person.yob,
-        "gender"=>person.gender,
-        "county_id"=>person.county_id
-      )
-      person.id.should_not be == lookup.id
-    end
-    it "raises an exception for the edge case where two people have the same credentials but a different id_string when the id_string is not specified in lookup" do
-      DatabaseCleaner.clean
-      template=FactoryGirl.build(:person)
-      person1=template.dup
-      person1.id_string="ABC"
-      person1.save
-      person2=template.dup
-      person2.id_string="DEF"
-      person2.save
-      expect {
-        lookup=Person.lookup_or_create(
-          "first_name"=>template.first_name,
-          "last_name"=>template.last_name,
-          "yob"=>template.yob,
-          "gender"=>template.gender,
-          "county_id"=>template.county_id
-        )
-      }.to raise_error
-    end
-    it "handles the edge case where two people have the same credentials but a different id_string when the id_string is specified in lookup" do
-      DatabaseCleaner.clean
-      template=FactoryGirl.build(:person)
-      person1=template.dup
-      person1.id_string="ABC"
-      person1.save
-      person2=template.dup
-      person2.id_string="DEF"
-      person2.save
-      lookup=Person.lookup_or_create(
-        "first_name"=>template.first_name,
-        "last_name"=>template.last_name,
-        "yob"=>template.yob,
-        "gender"=>template.gender,
-        "county_id"=>template.county_id,
-        "id_string"=>"ABC"
-      )
-      person1.id.should be == lookup.id
-    end
-=end
     it "Updates the born date with YOB before saving" do
       person=FactoryGirl.build(:person,yob:1977)
       person.born=Date.new(1,5,13)
