@@ -31,20 +31,23 @@ describe Person do
     end
   end
   context "Merging" do
-    it "Can merge two people" do
-      person1=FactoryGirl.create(:person)
-      person2=person1.dup
-      person2.id_string="MERGE THIS"
-      person2.save
-      participant1=FactoryGirl.create(:participant, person_id:person1.id)
-      participant2=FactoryGirl.create(:participant, person_id:person2.id)
-      person1.merge(person2)
-      person2.persisted?.should be_false
-      person1.id_string.should eq "MERGE THIS"
-      person1.participants.should eq [participant1,participant2]
-      
+    before :each do
+      @person1=FactoryGirl.create(:person)
+      @person2=@person1.dup
+      @person2.id_string="MERGE THIS"
+      @person2.save
     end
-    it "Can locate a duplicate person"
+    it "Can merge two people" do
+      participant1=FactoryGirl.create(:participant, person_id:@person1.id)
+      participant2=FactoryGirl.create(:participant, person_id:@person2.id)
+      @person1.merge(@person2)
+      @person2.persisted?.should be_false
+      @person1.id_string.should eq "MERGE THIS"
+      @person1.participants.should eq [participant1,participant2]
+    end
+    it "Can locate a duplicate person" do
+      @person1.find_dupes.should eq [@person2]
+    end
     it "Can deduplicate two identical people"
   end
   context "Complex interactions" do

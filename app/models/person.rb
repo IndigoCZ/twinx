@@ -12,8 +12,11 @@ class Person < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
+  def self.required_params
+    ["first_name", "last_name", "gender", "yob", "county_id"]
+  end
+
   def self.lookup_or_create(hash)
-    required_params=["first_name", "last_name", "gender", "yob", "county_id"]
     required_params.each do |rp|
       raise "Parameter #{rp} missing from lookup hash" unless hash.has_key? rp
     end
@@ -49,6 +52,9 @@ class Person < ActiveRecord::Base
     self.participants+=other_person.participants
     other_person.delete
     self.save if self.changed?
+  end
+  def find_dupes
+    Person.where(first_name:first_name,last_name:last_name,gender:gender,yob:yob,county_id:county_id).where("id != ?", id)
   end
 
   def complement_record_from_hash(hash)
