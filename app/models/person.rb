@@ -43,6 +43,14 @@ class Person < ActiveRecord::Base
     end
   end
 
+  def merge(other_person)
+    self.id_string=other_person.id_string if other_person.id_string
+    self.born=other_person.born if other_person.born
+    self.participants+=other_person.participants
+    other_person.delete
+    self.save if self.changed?
+  end
+
   def complement_record_from_hash(hash)
     if hash["born"]
       if self.born
