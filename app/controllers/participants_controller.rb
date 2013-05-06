@@ -32,7 +32,7 @@ class ParticipantsController < ApplicationController
     @team=Team.where(race_id:@current_race.id,county_id:@person.county.id).first_or_initialize
     @participant=Participant.new(params[:participant])
     if @person.valid? && @team.valid?
-      if @person.save
+      if @person.save && @person.dedup
         @participant.person_id=@person.id
         if @team.persisted? || @team.save
           @participant.team_id=@team.id
