@@ -1,11 +1,3 @@
-GIT
-  remote: https://github.com/thoughtbot/capybara-webkit.git
-  revision: 7bf3c800315ebf90da1f549c028b90306c88c0f2
-  specs:
-    capybara-webkit (0.14.1)
-      capybara (~> 2.0, >= 2.0.2)
-      json
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -43,12 +35,18 @@ GEM
     bootstrap-sass (2.2.2.0)
       sass (~> 3.2)
     builder (3.0.4)
-    capybara (2.1.0)
+    capybara (2.0.3)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
-      xpath (~> 2.0)
+      selenium-webdriver (~> 2.0)
+      xpath (~> 1.0.0)
+    capybara-webkit (0.14.2)
+      capybara (~> 2.0, >= 2.0.2)
+      json
+    childprocess (0.3.9)
+      ffi (~> 1.0, >= 1.0.11)
     client_side_validations (3.2.5)
     client_side_validations-simple_form (2.1.0)
       client_side_validations (~> 3.2.5)
@@ -176,11 +174,17 @@ GEM
       rspec-expectations (~> 2.13.0)
       rspec-mocks (~> 2.13.0)
     ruby-rc4 (0.1.5)
+    rubyzip (0.9.9)
     sass (3.2.8)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
       sass (>= 3.1.10)
       tilt (~> 1.3)
+    selenium-webdriver (2.32.1)
+      childprocess (>= 0.2.5)
+      multi_json (~> 1.0)
+      rubyzip
+      websocket (~> 1.0.4)
     simple_form (2.1.0)
       actionpack (~> 3.0)
       activemodel (~> 3.0)
@@ -202,7 +206,8 @@ GEM
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
     webrick (1.3.1)
-    xpath (2.0.0)
+    websocket (1.0.7)
+    xpath (1.0.0)
       nokogiri (~> 1.3)
 
 PLATFORMS
@@ -210,8 +215,8 @@ PLATFORMS
 
 DEPENDENCIES
   bootstrap-sass (~> 2.2.2.0)
-  capybara
-  capybara-webkit!
+  capybara (~> 2.0.3)
+  capybara-webkit
   client_side_validations
   client_side_validations-simple_form
   cocoon

@@ -13,9 +13,9 @@ group :test do
   gem 'rb-inotify', :require => false
   gem 'guard-rspec'
 
-  gem 'capybara'
+  gem 'capybara', '~> 2.0.3'
   # apt-get install libxslt-dev libxml2-dev
-  gem 'capybara-webkit', :git => 'https://github.com/thoughtbot/capybara-webkit.git'
+  gem 'capybara-webkit' #,:git => 'https://github.com/thoughtbot/capybara-webkit.git'
   # apt-get install libqt4-dev
   
   gem 'database_cleaner'
