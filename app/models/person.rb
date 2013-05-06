@@ -56,6 +56,11 @@ class Person < ActiveRecord::Base
   def find_dupes
     Person.where(first_name:first_name,last_name:last_name,gender:gender,yob:yob,county_id:county_id).where("id != ?", id)
   end
+  def dedup
+    find_dupes.each do |dupe|
+      self.merge(dupe)
+    end
+  end
 
   def complement_record_from_hash(hash)
     if hash["born"]

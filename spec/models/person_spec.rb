@@ -36,21 +36,33 @@ describe Person do
       @person2=@person1.dup
       @person2.id_string="MERGE THIS"
       @person2.save
+      @person3=@person1.dup
+      @person3.born=Date.new(@person3.yob,1,1)
+      @person3.save
     end
     it "Can merge two people" do
       participant1=FactoryGirl.create(:participant, person_id:@person1.id)
       participant2=FactoryGirl.create(:participant, person_id:@person2.id)
+      participant3=FactoryGirl.create(:participant, person_id:@person3.id)
       @person1.merge(@person2)
       @person2.persisted?.should be_false
       @person1.id_string.should eq "MERGE THIS"
-      @person1.participants.should eq [participant1,participant2]
+      @person1.merge(@person3)
+      @person3.persisted?.should be_false
+      @person1.born.should eq Date.new(@person1.yob,1,1)
+      @person1.participants.should eq [participant1,participant2,participant3]
     end
     it "Can locate a duplicate person" do
-      @person1.find_dupes.should eq [@person2]
+      @person1.find_dupes.should eq [@person2,@person3]
     end
-    it "Can deduplicate two identical people"
+    it "Can deduplicate two identical people" do
+      @person1.dedup
+      @person1.id_string.should eq "MERGE THIS"
+      @person1.born.should eq Date.new(@person1.yob,1,1)
+    end
   end
   context "Complex interactions" do
+=begin
     it "provides a finder for existing people" do
       person=FactoryGirl.create(:person)
       lookup=Person.lookup_or_create(
@@ -111,6 +123,7 @@ describe Person do
       )
       person1.id.should be == lookup.id
     end
+=end
     it "Updates the born date with YOB before saving" do
       person=FactoryGirl.build(:person,yob:1977)
       person.born=Date.new(1,5,13)
