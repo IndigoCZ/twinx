@@ -29,18 +29,17 @@ class ParticipantsController < ApplicationController
   end
   def create
     @person=Person.new(params[:participant].delete(:person))
-    if @person.valid?
-      if @person.save && @person.dedup
-        @team=Team.where(race_id:@current_race.id,county_id:@person.county.id).first_or_create
-        @participant=Participant.new(params[:participant])
-        @participant.team_id=@team.id
-        @participant.person_id=@person.id
-        session[:last_county_id]=@person.county.id
-        if @participant.save
-          session[:last_starting_no]=@participant.starting_no
-          redirect_to new_race_participant_url(@current_race), notice:'Účastník byl úspěšně vytvořen.'
-          return
-        end
+    if @person.save
+      @person.dedup
+      @team=Team.where(race_id:@current_race.id,county_id:@person.county.id).first_or_create
+      @participant=Participant.new(params[:participant])
+      @participant.team_id=@team.id
+      @participant.person_id=@person.id
+      session[:last_county_id]=@person.county.id
+      if @participant.save
+        session[:last_starting_no]=@participant.starting_no
+        redirect_to new_race_participant_url(@current_race), notice:'Účastník byl úspěšně vytvořen.'
+        return
       end
     end
     render action: "new"
