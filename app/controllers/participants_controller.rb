@@ -55,21 +55,13 @@ class ParticipantsController < ApplicationController
     @person=@participant.person
   end
   def update
-    success=false
-    Participant.transaction do
-      @participant=Participant.find(params[:id])
-      @person=@participant.person
-      raise ActiveRecord::Rollback unless @person.update_attributes(params[:participant][:person])
-      @team=Team.where(race_id:@current_race.id,county_id:@person.county.id).first_or_create
-      params[:participant].delete(:person)
-      @participant.team_id=@team.id
-      if @participant.update_attributes(params[:participant])
-        success=true
-      else
-        raise ActiveRecord::Rollback
-      end
-    end
-    if success
+    @participant=Participant.find(params[:id])
+    @person=@participant.person
+    @person.attributes=params[:participant].delete(:person)
+    @team=Team.where(race_id:@current_race.id,county_id:@person.county.id).first_or_create
+    @participant.team_id=@team.id
+    @participant.attributes=params[:participant]
+    if @person.save && @participant.save
       redirect_to [@current_race, @participant], notice:'Účastník byl úspěšně upraven.'
     else
       render action: "edit"
