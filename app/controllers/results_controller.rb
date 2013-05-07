@@ -1,7 +1,6 @@
 # encoding: UTF-8
 class ResultsController < ApplicationController
   def index
-    @results = @current_race.results
     @results=Result.for_race(@current_race)
     @results=@results.order("#{Result.sort_by(params[:group])} ASC") if params[:group]
     if params[:sort]
