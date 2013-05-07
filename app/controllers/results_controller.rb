@@ -1,19 +1,7 @@
 # encoding: UTF-8
 class ResultsController < ApplicationController
   def index
-    @results=Result.for_race(@current_race)
-    @results=@results.order("#{Result.sort_by(params[:group])} ASC") if params[:group]
-    if params[:sort]
-      @results=@results.order("#{Result.sort_by(params[:sort])} ASC")
-    elsif params[:rsort]
-      @results=@results.order("#{Result.sort_by(params[:rsort])} DESC")
-    else
-      @results=@results.order("#{Result.sort_by} ASC")
-    end
-    @results=@results.filter_by(params[:filter]) if params[:filter]
-    if params[:search] && params[:search].length > 0
-      @results=@results.where("people.last_name LIKE ?",params[:search]+"%")
-    end
+    @results=group_sort_and_filter_class_for_current_race(Result)
     respond_to do |format|
       format.html
       format.pdf

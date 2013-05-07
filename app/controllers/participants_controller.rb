@@ -1,19 +1,7 @@
 # encoding: UTF-8
 class ParticipantsController < ApplicationController
   def index
-    @participants=Participant.for_race(@current_race)
-    @participants=@participants.order("#{Participant.sort_by(params[:group])} ASC") if params[:group]
-    if params[:sort]
-      @participants=@participants.order("#{Participant.sort_by(params[:sort])} ASC")
-    elsif params[:rsort]
-      @participants=@participants.order("#{Participant.sort_by(params[:rsort])} DESC")
-    else
-      @participants=@participants.order("#{Participant.sort_by} ASC")
-    end
-    @participants=@participants.filter_by(params[:filter]) if params[:filter]
-    if params[:search] && params[:search].length > 0
-      @participants=@participants.where("people.last_name ILIKE ?",params[:search]+"%")
-    end
+    @participants=group_sort_and_filter_class_for_current_race(Participant)
     respond_to do |format|
       format.html
       format.pdf
