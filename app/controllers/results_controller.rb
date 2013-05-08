@@ -31,13 +31,10 @@ class ResultsController < ApplicationController
   end
   def show
     @result = Result.find(params[:id])
-    @participant=@result.participant
   end
   def edit
     @result = Result.find(params[:id])
     @participant=@result.participant
-    @result = Result.find(params[:id])
-    @result.participant=@participant
   end
   def update
     starting_no=params[:result][:participant][:starting_no]
