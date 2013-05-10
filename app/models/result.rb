@@ -59,6 +59,38 @@ class Result < ActiveRecord::Base
     end
   end
 
+  def starting_no
+    if participant
+      participant.starting_no
+    else
+      @starting_no
+    end
+  end
+
+  def starting_no=(no)
+    @starting_no=no
+    try_to_set_participant
+  end
+
+  def race
+    if participant
+      participant.race
+    else
+      @race
+    end
+  end
+
+  def race=(race)
+    @race=race
+    try_to_set_participant
+  end
+
+  def try_to_set_participant
+    if race && starting_no
+      self.participant=Participant.find_for_result(race,starting_no)
+    end
+  end
+
   def self.filter_by(string)
     column,val=string.split("_")
     self.send("by_#{column}_id",val)

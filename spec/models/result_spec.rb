@@ -36,6 +36,30 @@ describe Result do
       result.time.should be == "0:01.120"
     end
   end
+  context "Participant" do
+    it "Provides direct access to participant starting_no and race" do
+      participant=FactoryGirl.create(:participant)
+      result=Result.new()
+      result.participant=participant
+      result.starting_no.should eq participant.starting_no
+      result.race.should eq participant.race
+    end
+    it "Provides a way to store starting_no and race" do
+      race=FactoryGirl.create(:race)
+      result=Result.new()
+      result.starting_no=11
+      result.starting_no.should eq 11
+      result.race=race
+      result.race.should eq race
+    end
+    it "sets a participant when supplied with a race and starting_no" do
+      participant=FactoryGirl.create(:participant)
+      result=Result.new()
+      result.starting_no=participant.starting_no
+      result.race=participant.race
+      result.participant.should eq participant
+    end
+  end
   context "Sorting and filtering" do
     it "provides sort query strings" do
       Result.sort_by.should be == "position"
