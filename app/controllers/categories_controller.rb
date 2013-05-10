@@ -33,12 +33,7 @@ class CategoriesController < ApplicationController
   end
 
   def update
-    @category = Category.find(params[:id])
-    if @category.update_attributes(params[:category])
-      redirect_to [@current_race, @category], notice: 'Kategorie byla úspěšně upravena.'
-    else
-      render action: "edit"
-    end
+    default_update(Category)
   end
 
   def destroy

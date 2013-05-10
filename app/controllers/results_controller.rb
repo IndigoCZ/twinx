@@ -30,12 +30,7 @@ class ResultsController < ApplicationController
     @result = Result.find(params[:id])
   end
   def update
-    @result = Result.find(params[:id])
-    if @result.update_attributes(params[:result])
-      redirect_to [@current_race,@result], notice: 'Výsledek byl úspěšně upraven.'
-    else
-      render action: "edit"
-    end
+    default_update(Result)
   end
   def destroy
     @result = Result.find(params[:id])

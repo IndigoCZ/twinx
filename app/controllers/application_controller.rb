@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :get_current_race
@@ -26,4 +27,13 @@ class ApplicationController < ActionController::Base
     return things
   end
 
+  def default_update(klass)
+    @item = klass.find(params[:id])
+    klass_sym=klass.to_s.downcase.to_sym
+    if @item.update_attributes(params[klass_sym])
+      redirect_to [@current_race, @item], notice: t("messages.#{klass_sym}.updated_successfully")
+    else
+      render action: "edit"
+    end
+  end
 end

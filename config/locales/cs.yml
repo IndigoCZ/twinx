@@ -1,5 +1,10 @@
 cs:
   pages:
+  messages:
+    result:
+      updated_successfully: "Výsledek byl úspěšně upraven."
+    category:
+      updated_successfully: "Kategorie byla úspěšně upravena."
   activerecord:
     attributes:
       race:
