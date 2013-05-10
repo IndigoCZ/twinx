@@ -24,6 +24,7 @@ cs:
       result:
         position: "Pozice"
         time: "Čas"
+        starting_no: "Startovní č."
       participant:
         starting_no: "Startovní č."
         category: "Kategorie"

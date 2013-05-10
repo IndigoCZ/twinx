@@ -9,22 +9,16 @@ class ResultsController < ApplicationController
   end
   def new
     @result = Result.new
-    @participant=Participant.new
   end
   def create
-    starting_no=params[:result][:participant][:starting_no]
-    params[:result].delete(:participant)
     @result = Result.new(params[:result])
-    @participant=Participant.find_for_result(@current_race,starting_no)
-    if @participant.result
-      redirect_to [@current_race, @participant.result], alert: 'Výsledek pro účastníka již existuje.'
+    @result.race=@current_race
+    if @result.save
+      redirect_to new_race_result_url(@current_race), notice: 'Výsledek byl úspěšně vytvořen.'
     else
-      @result.participant=@participant
-      if @result.save
-        #redirect_to [@current_race, @result], notice: 'Výsledek byl úspěšně vytvořen.'
-        redirect_to new_race_result_url(@current_race), notice: 'Výsledek byl úspěšně vytvořen.'
+      if @result.participant_lookup(true)
+        redirect_to [@current_race, @result.participant_lookup(true).result], alert: 'Výsledek pro účastníka již existuje.'
       else
-        @participant||=Participant.new(starting_no:starting_no)
         render action: "new"
       end
     end
@@ -34,18 +28,12 @@ class ResultsController < ApplicationController
   end
   def edit
     @result = Result.find(params[:id])
-    @participant=@result.participant
   end
   def update
-    starting_no=params[:result][:participant][:starting_no]
-    params[:result].delete(:participant)
     @result = Result.find(params[:id])
-    @participant=Participant.find_for_result(@current_race,starting_no)
-    params[:result][:participant_id]=@participant.id
     if @result.update_attributes(params[:result])
       redirect_to [@current_race,@result], notice: 'Výsledek byl úspěšně upraven.'
     else
-      @participant||=Participant.new(starting_no:starting_no)
       render action: "edit"
     end
   end

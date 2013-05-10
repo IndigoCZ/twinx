@@ -37,27 +37,36 @@ describe Result do
     end
   end
   context "Participant" do
+    before :each do 
+      @result=Result.new()
+    end
     it "Provides direct access to participant starting_no and race" do
       participant=FactoryGirl.create(:participant)
-      result=Result.new()
-      result.participant=participant
-      result.starting_no.should eq participant.starting_no
-      result.race.should eq participant.race
+      @result.participant=participant
+      @result.starting_no.should eq participant.starting_no
+      @result.race.should eq participant.race
     end
     it "Provides a way to store starting_no and race" do
       race=FactoryGirl.create(:race)
-      result=Result.new()
-      result.starting_no=11
-      result.starting_no.should eq 11
-      result.race=race
-      result.race.should eq race
+      @result.starting_no=11
+      @result.starting_no.should eq 11
+      @result.race=race
+      @result.race.should eq race
     end
-    it "sets a participant when supplied with a race and starting_no" do
+    it "Provides a way to lookup a participant" do
       participant=FactoryGirl.create(:participant)
-      result=Result.new()
-      result.starting_no=participant.starting_no
-      result.race=participant.race
-      result.participant.should eq participant
+      @result.starting_no=participant.starting_no
+      @result.race=participant.race
+      @result.participant_lookup.should eq participant
+    end
+    it "Lookup can ignore participants with results" do
+      existing_result=FactoryGirl.create(:result)
+      participant=existing_result.participant
+      @result.starting_no=participant.starting_no
+      @result.race=participant.race
+      @result.participant_lookup.should eq nil
+      participant.result.delete
+      @result.participant_lookup.should eq participant
     end
   end
   context "Sorting and filtering" do
