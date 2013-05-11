@@ -6,7 +6,11 @@ describe Duration do
       dur.to_i.should eq nil
       dur.to_s.should eq nil
     end
-    it "can handle 0 properly"
+    it "can handle 0 properly" do
+      dur=Duration.new(0)
+      dur.to_i.should eq nil
+      dur.to_s.should eq nil
+    end
   end
   context "parsing" do
     it "can be initialized from number of ms" do
