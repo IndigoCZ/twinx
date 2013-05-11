@@ -16,24 +16,21 @@ describe Result do
     it "returns a well formatted time" do
       result=FactoryGirl.build(:result)
       result.time_msec=60000
-      result.time.should be == "1:00.000"
-      result.time_msec=123456
-      result.time.should be == "2:03.456"
-      result.time_msec=59999
-      result.time.should be == "0:59.999"
-      result.time_msec=1
-      result.time.should be == "0:00.001"
+      @duration_instance=stub
+      Duration.should_receive(:from_ms).and_return(@duration_instance)
+      result.time.should be == @duration_instance
     end
     it "accepts a hash as time value" do
       result=FactoryGirl.build(:result)
       time={"fract"=>"12","sec"=>"1","min"=>"0"}
+      Duration.should_receive(:from_hash).with(time).and_return(1012) # It actually returns a Duration instance
       result.time=time
-      result.time.should be == "0:01.120"
     end
     it "accepts a string as time value" do
       result=FactoryGirl.build(:result)
+      time="0:1.12"
+      Duration.should_receive(:from_string).with(time).and_return(1012) # It actually returns a Duration instance
       result.time="0:1.12"
-      result.time.should be == "0:01.120"
     end
   end
   context "Participant" do

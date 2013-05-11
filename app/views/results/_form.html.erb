@@ -7,9 +7,9 @@
     <div class="control-group string optional">
       <label class="string optional control-label" for="result_time_min">Čas</label>
       <div class="controls">
-        <input class="numeric string optional" id="result_time_min" name="result[time][min]" type="text" value="<%= @result.time_min %>" />:
-        <input class="numeric string optional" id="result_time_sec" name="result[time][sec]" type="text" value="<%= @result.time_sec %>" />.
-        <input class="numeric string optional" id="result_time_fract" name="result[time][fract]" type="text" value="<%= @result.time_fract %>" />
+        <input class="numeric string optional" id="result_time_min" name="result[time][min]" type="text" value="<%= @result.time.min %>" />:
+        <input class="numeric string optional" id="result_time_sec" name="result[time][sec]" type="text" value="<%= @result.time.sec %>" />.
+        <input class="numeric string optional" id="result_time_fract" name="result[time][fract]" type="text" value="<%= @result.time.fract %>" />
       </div>
     </div>
 
