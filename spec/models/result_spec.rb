@@ -33,6 +33,17 @@ describe Result do
       result.time="0:1.12"
     end
   end
+  context "Points" do
+    it "assigns 12 points for first place" do
+      Result.new(position:1).points.should eq 12
+    end
+    it "assigns from 10 down to 2 points for second to tenth place" do
+      Result.new(position:5).points.should eq 7
+    end
+    it "assigns 1 point for every other finish" do
+      Result.new(position:77).points.should eq 1
+    end
+  end
   context "Participant" do
     before :each do 
       @result=Result.new()
