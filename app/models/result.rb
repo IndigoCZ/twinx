@@ -1,3 +1,4 @@
+require 'duration'
 class Result < ActiveRecord::Base
   attr_accessible :position, :time, :participant_id, :starting_no
   attr_writer :race, :starting_no
