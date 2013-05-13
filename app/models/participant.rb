@@ -32,45 +32,6 @@ class Participant < ActiveRecord::Base
     end
   end
 
-  def attr_for_csv(column)
-    case column
-    when "starting_no"
-      starting_no
-    when "first_name"
-      person.first_name
-    when "last_name"
-      person.last_name
-    when "full_name"
-      person.full_name
-    when "gender"
-      person.gender
-    when "yob"
-      person.yob
-    when "team"
-      team.title
-    when "category"
-      category.code
-    when "position"
-      if result
-        result.position
-      else
-        "DNF"
-      end
-    when "time"
-      if result && result.time
-        result.time
-      else
-        nil
-      end
-    when "born"
-      person.born
-    when "competing"
-      true
-    when "id_string"
-      person.id_string
-    end
-  end
-
   def self.find_for_result(race,starting_no)
     self.includes(:race).where("races.id = ?",race.id).where(starting_no:starting_no).first
   end
@@ -99,20 +60,6 @@ class Participant < ActiveRecord::Base
       "people.last_name"
     else
       "starting_no"
-    end
-  end
-
-  def self.to_csv(race)
-    header=%w[starting_no first_name last_name full_name gender yob team category position time born competing id_string]
-    CSV.generate do |csv|
-      csv << header
-      self.for_race(race).each do |participant|
-        row=[]
-        header.each do |col|
-          row<<participant.attr_for_csv(col)
-        end
-        csv << row
-      end
     end
   end
 end
