@@ -27,6 +27,8 @@ describe Team do
       @race=FactoryGirl.create(:race)
       @team=FactoryGirl.create(:team,race:@race)
     end
+    it "provides an overall score for all participants"
+    it "provides a total of the top N scores"
     it "provides a list of DNF participants" do
       a=FactoryGirl.create(:participant,team:@team)
       b=FactoryGirl.create(:participant,team:@team)
