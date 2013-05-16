@@ -9,12 +9,7 @@ class Category < ActiveRecord::Base
   before_destroy :check_dependencies
   accepts_nested_attributes_for :constraints,:reject_if => :all_blank, allow_destroy: true
 
-  scope :violate_max_age,   lambda { |age| includes(:constraints).where("constraints.restrict = 'max_age' AND constraints.integer_value < ?", age) }
-  scope :violate_min_age,   lambda { |age| includes(:constraints).where("constraints.restrict = 'min_age' AND constraints.integer_value > ?", age) }
-  scope :excluding_ids, lambda { |ids| where(['categories.id NOT IN (?)', ids]) if ids.any? }
-  scope :for_age,    lambda { |age| excluding_ids(violate_min_age(age).map(&:id)+violate_max_age(age).map(&:id)) }
-  scope :for_gender, lambda { |gender| includes(:constraints).where("constraints.restrict = 'gender' AND constraints.string_value = ?", gender) }
-  scope :for_race, lambda { |race| where(race_id:race.id) }
+  scope :for_race, lambda { |race| includes(:constraints).where(race_id:race.id) }
 
   def check_dependencies
     if participants.count > 0

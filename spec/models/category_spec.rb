@@ -40,14 +40,6 @@ describe Category do
     it "calculates own difficulty based on restrictions" do
       @seniori.difficulty.should be < @muzi.difficulty
     end
-    it "provides gender specific scope" do
-      @race.categories.for_gender("female").count.should eq 1
-    end
-    it "provides age specific scope" do
-      @race.categories.for_gender("male").for_age(70).count.should eq 2
-      @race.categories.for_gender("male").for_age(30).count.should eq 1
-      @race.categories.for_gender("male").for_age(15).count.should eq 2
-    end
     it "provides a short description of its restrictions" do
       @seniori.restriction.should be == "M60+"
       @zeny.restriction.should be == "F"
