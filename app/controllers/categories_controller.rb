@@ -1,10 +1,11 @@
 # encoding: UTF-8
+require 'category_picker'
 class CategoriesController < ApplicationController
   def index
-    @categories=@current_race.categories.includes(:constraints)
-    @categories=@categories.for_gender(params[:gender]) if params[:gender]
-    @categories=@categories.for_age(Time.now.year - params[:yob].to_i) if params[:yob]
-    @categories=@categories.order("difficulty DESC")
+    @categories=Category.for_race(@current_race)
+    if params[:gender] && params[:yob]
+      @categories=CategoryPicker.new(@categories).pick(params)
+    end
     respond_to do |format|
       format.html # index.html.erb
       format.json  { render :json => @categories.map{|cat|{id:cat.id,title:cat.title}} }
