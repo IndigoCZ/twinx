@@ -1,17 +1,32 @@
-class CSVInterface
-  def self.header
-    %w[starting_no first_name last_name full_name gender yob team category position time born competing id_string]
+require 'csv'
+module CSVInterface
+  class InvalidField < Exception; end
+  class CSVPresenter; end
+  def self.valid_fields
+    %w[starting_no first_name last_name full_name gender yob team category position time born id_string]
   end
 
-  def self.export(race)
+  def self.valid_field?(field_name)
+    self.valid_fields.include?(field_name)
+  end
+
+  def self.check_header(header)
+    header.each do |col|
+      raise InvalidField.new("#{col} is not valid") unless self.valid_field?(col)
+    end
+  end
+
+  def self.export(participants,header)
+    self.check_header(header)
     CSV.generate do |csv|
-      csv << self.header
-      Participant.for_race(race).each do |participant|
+      csv << header
+      participants.each do |participant|
         row=[]
+        participant=CSVPresenter.new(participant)
         header.each do |col|
-          row<<participant.attr_for_csv(col)
+          row<<participant.send(col)
         end
-        csv << row
+        csv<<row
       end
     end
   end
