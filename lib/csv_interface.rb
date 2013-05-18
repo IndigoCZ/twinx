@@ -1,7 +1,60 @@
 require 'csv'
 module CSVInterface
   class InvalidField < Exception; end
-  class CSVPresenter; end
+  class NullResult
+    def position
+      "DNF"
+    end
+    def time
+      nil
+    end
+  end
+  class CSVPresenter
+    def initialize(participant)
+      @participant=participant
+      @person=participant.person
+      @result=participant.result || NullResult.new
+      @team=participant.team
+      @category=participant.category
+    end
+    def starting_no
+      @participant.starting_no
+    end
+    def first_name
+      @person.first_name
+    end
+    def last_name
+      @person.last_name
+    end
+    def full_name
+      @person.full_name
+    end
+    def gender
+      @person.gender
+    end
+    def yob
+      @person.yob
+    end
+    def team
+      @team.title
+    end
+    def category
+      @category.code
+    end
+    def position
+      @result.position
+    end
+    def time
+      @result.time
+    end
+    def born
+      @person.born
+    end
+    def id_string
+      @person.id_string
+    end
+  end
+
   def self.valid_fields
     %w[starting_no first_name last_name full_name gender yob team category position time born id_string]
   end
@@ -30,45 +83,7 @@ module CSVInterface
       end
     end
   end
-
-  def self.attr_for_csv(column)
-    case column
-    when "starting_no"
-      starting_no
-    when "first_name"
-      person.first_name
-    when "last_name"
-      person.last_name
-    when "full_name"
-      person.full_name
-    when "gender"
-      person.gender
-    when "yob"
-      person.yob
-    when "team"
-      team.title
-    when "category"
-      category.code
-    when "position"
-      if result
-        result.position
-      else
-        "DNF"
-      end
-    when "time"
-      if result && result.time
-        result.time
-      else
-        nil
-      end
-    when "born"
-      person.born
-    when "competing"
-      true
-    when "id_string"
-      person.id_string
-    end
-  end
+=begin
 
   def import(csv_data)
     arr_of_arrs = CSV.parse(csv_data)
@@ -127,5 +142,5 @@ module CSVInterface
       end
     end
   end
-
+=end
 end

@@ -3,9 +3,11 @@ require 'csv_interface'
 require 'csv'
 class DataTransferController < ApplicationController
   def index
+    @participants=@current_race.participants
+    @header=["starting_no", "first_name", "last_name", "full_name", "gender", "yob", "team", "category", "position", "time", "born", "id_string"]
     respond_to do |format|
       format.html
-      format.csv { send_data CSVInterface.export(@current_race) }
+      format.csv { send_data CSVInterface.export(@participants,@header) }
     end
   end
   def create
