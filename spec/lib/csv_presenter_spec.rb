@@ -18,6 +18,12 @@ describe CSVPresenter do
     @participant.should_receive(:category)
     CSVPresenter.new(@participant)
   end
+  it "presents a NullResult when no result is found" do
+    @participant.should_receive(:result).and_return(nil)
+    presenter=CSVPresenter.new(@participant)
+    presenter.position.should eq "DNF"
+    presenter.time.should eq nil
+  end
   it "forwards the methods to relevant objects" do
     presenter=CSVPresenter.new(@participant)
     @participant.should_receive(:starting_no)
