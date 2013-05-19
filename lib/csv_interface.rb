@@ -1,60 +1,7 @@
 require 'csv'
+require 'csv_presenter'
 module CSVInterface
   class InvalidField < Exception; end
-  class NullResult
-    def position
-      "DNF"
-    end
-    def time
-      nil
-    end
-  end
-  class CSVPresenter
-    def initialize(participant)
-      @participant=participant
-      @person=participant.person
-      @result=participant.result || NullResult.new
-      @team=participant.team
-      @category=participant.category
-    end
-    def starting_no
-      @participant.starting_no
-    end
-    def first_name
-      @person.first_name
-    end
-    def last_name
-      @person.last_name
-    end
-    def full_name
-      @person.full_name
-    end
-    def gender
-      @person.gender
-    end
-    def yob
-      @person.yob
-    end
-    def team
-      @team.title
-    end
-    def category
-      @category.code
-    end
-    def position
-      @result.position
-    end
-    def time
-      @result.time
-    end
-    def born
-      @person.born
-    end
-    def id_string
-      @person.id_string
-    end
-  end
-
   def self.valid_fields
     %w[starting_no first_name last_name full_name gender yob team category position time born id_string]
   end
