@@ -3,13 +3,13 @@ describe Duration do
   context "special cases" do
     it "can handle nil properly" do
       dur=Duration.new(nil)
-      dur.to_i.should eq nil
-      dur.to_s.should eq nil
+      dur.to_i.should eq 0
+      dur.to_s.should eq ""
     end
     it "can handle 0 properly" do
       dur=Duration.new(0)
-      dur.to_i.should eq nil
-      dur.to_s.should eq nil
+      dur.to_i.should eq 0
+      dur.to_s.should eq ""
     end
   end
   context "parsing" do

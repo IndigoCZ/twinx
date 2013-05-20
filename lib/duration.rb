@@ -18,11 +18,11 @@ class Duration
     self.new((min*60000)+(sec*1000)+msec)
   end
   def to_i
-    return nil if zero?
+    return 0 if zero?
     @ms
   end
   def to_s
-    return nil if zero?
+    return "" if zero?
     "#{min}:#{sec}.#{fract}"
   end
   def min
