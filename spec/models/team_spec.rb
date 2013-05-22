@@ -22,10 +22,9 @@ describe Team do
     end
   end
 
-  context "Complex interactions" do
+  context "scoring" do
     before(:each) do
-      @race=FactoryGirl.create(:race)
-      @team=FactoryGirl.create(:team,race:@race)
+      @team=FactoryGirl.create(:team)
     end
     it "provides an overall score for all participants"
     it "provides a total of the top N scores"
@@ -35,6 +34,21 @@ describe Team do
       FactoryGirl.create(:result,participant:a)
       @team.dnfs.should include b
       @team.dnfs.should_not include a
+    end
+  end
+  context "lookups" do
+    before(:each) do
+      @race=FactoryGirl.create(:race)
+      @county=FactoryGirl.create(:county)
+    end
+    it "finds a team for race and county if it exists" do
+      @team=FactoryGirl.create(:team,race:@race,county:@county)
+      Team.first_or_create_for_race_and_county(@race,@county).should eq @team
+    end
+    it "creates a team for race and county if it exists" do
+      expect {
+        Team.first_or_create_for_race_and_county(@race,@county)
+      }.to change(Team,:count).by(1)
     end
   end
 end

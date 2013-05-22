@@ -16,6 +16,10 @@ class Team < ActiveRecord::Base
     end
   end
 
+  def self.first_or_create_for_race_and_county(race,county)
+    self.where(race_id:race,county_id:county).first_or_create
+  end
+
   def title
     county.title
   end
