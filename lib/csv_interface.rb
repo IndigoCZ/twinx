@@ -2,22 +2,13 @@ require 'csv'
 require 'csv_presenter'
 module CSVInterface
   class InvalidField < Exception; end
-  def self.valid_fields
-    %w[starting_no first_name last_name full_name gender yob team category position time born id_string]
-  end
+  class MissingField < Exception; end
+  extend self
 
-  def self.valid_field?(field_name)
-    self.valid_fields.include?(field_name)
-  end
+  # External Interface
 
-  def self.check_header(header)
-    header.each do |col|
-      raise InvalidField.new("#{col} is not valid") unless self.valid_field?(col)
-    end
-  end
-
-  def self.export(participants,header)
-    self.check_header(header)
+  def export(participants,header)
+    check_header(header)
     CSV.generate do |csv|
       csv << header
       participants.each do |participant|
@@ -30,31 +21,57 @@ module CSVInterface
       end
     end
   end
-=begin
 
-  def import(csv_data)
-    arr_of_arrs = CSV.parse(csv_data)
-    header_list=arr_of_arrs.shift
-    array_of_hashes=[]
-    arr_of_arrs.each do |line|
+  def import(race,csv_data)
+    csv_data = CSV.parse(csv_data)
+    header=csv_data.shift
+    check_header(header)
+    body=parse_body(csv_data,header)
+    body
+  end
+
+  # Internals
+
+  def valid_fields
+    %w[starting_no first_name last_name full_name gender yob team category position time born id_string]
+  end
+
+  def valid_field?(field_name)
+    valid_fields.include?(field_name)
+  end
+
+  def check_header(header,required=[])
+    header.each do |col|
+      raise InvalidField.new("#{col} is not valid") unless valid_field?(col)
+    end
+    required.each do |col|
+      raise MissingField unless header.include?(col)
+    end
+  end
+  def parse_body(csv_body,header)
+    hash_per_line=[]
+    csv_body.each do |line|
       row={}
-      header_list.each_with_index do |head,i|
+      header.each_with_index do |head,i|
         row[head]=line[i]
       end
-      array_of_hashes<<row
+      hash_per_line<<row
     end
+    hash_per_line
+  end
+=begin
     array_of_hashes.each do |row|
       logger.info("Importing #{row["starting_no"]}")
       county=County.where(title:row["team"]).first_or_create
       person=Person.create(
-       first_name:row["first_name"],
-       last_name:row["last_name"],
-       full_name:row["full_name"],
-       gender:row["gender"],
-       yob:row["yob"],
-       born:row["born"],
-       id_string:row["id_string"],
-       county_id:county.id
+        first_name:row["first_name"],
+        last_name:row["last_name"],
+        full_name:row["full_name"],
+        gender:row["gender"],
+        yob:row["yob"],
+        born:row["born"],
+        id_string:row["id_string"],
+        county_id:county.id
       )
       person.dedup
       if row["competing"]=="true"
@@ -88,6 +105,5 @@ module CSVInterface
         end
       end
     end
-  end
 =end
 end

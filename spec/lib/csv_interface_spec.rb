@@ -5,6 +5,22 @@ describe CSVInterface do
       CSVInterface.valid_field?(field_name).should be_true
     end
   end
+  it "can check that a header only contains valid fields" do
+    expect {
+      CSVInterface.check_header(%w[starting_no full_name])
+    }.not_to raise_error(CSVInterface::InvalidField)
+    expect {
+      CSVInterface.check_header(%w[xxx])
+    }.to raise_error(CSVInterface::InvalidField)
+  end
+  it "can check that a header contains all required fields" do
+    expect {
+      CSVInterface.check_header(%w[starting_no full_name],%w[full_name])
+    }.not_to raise_error(CSVInterface::MissingField)
+    expect {
+      CSVInterface.check_header(%w[starting_no],%w[full_name])
+    }.to raise_error(CSVInterface::MissingField)
+  end
   context "Export" do
     it "raises an exception when passed an invalid header" do
      expect {
@@ -24,6 +40,12 @@ describe CSVInterface do
     end
   end
   context "Import" do
-    it "imports all participants for a race in CSV format"
+    xit "imports all participants for a race from CSV data" do
+      @csv_file=<<CSV
+starting_no,first_name,last_name,yob,gender,team,category,position,time
+1,Lojzik,Kotrba,1990,male,Moutnice,M,99,""
+2,Romana,Picmochova,1950,female,Moutnice,Z35,1,1:23.456
+CSV
+    end
   end
 end
