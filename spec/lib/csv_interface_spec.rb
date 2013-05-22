@@ -6,20 +6,12 @@ describe CSVInterface do
     end
   end
   it "can check that a header only contains valid fields" do
-    expect {
-      CSVInterface.check_header(%w[starting_no full_name])
-    }.not_to raise_error(CSVInterface::InvalidField)
-    expect {
-      CSVInterface.check_header(%w[xxx])
-    }.to raise_error(CSVInterface::InvalidField)
+    CSVInterface.check_header(%w[starting_no full_name]).should be_true
+    CSVInterface.check_header(%w[xxx]).should be_false
   end
   it "can check that a header contains all required fields" do
-    expect {
-      CSVInterface.check_header(%w[starting_no full_name],%w[full_name])
-    }.not_to raise_error(CSVInterface::MissingField)
-    expect {
-      CSVInterface.check_header(%w[starting_no],%w[full_name])
-    }.to raise_error(CSVInterface::MissingField)
+    CSVInterface.check_header(%w[starting_no full_name],%w[full_name]).should be_true
+    CSVInterface.check_header(%w[starting_no],%w[full_name]).should be_false
   end
   context "Export" do
     it "raises an exception when passed an invalid header" do
@@ -40,12 +32,39 @@ describe CSVInterface do
     end
   end
   context "Import" do
-    xit "imports all participants for a race from CSV data" do
+    it "supports import" do
+      @race=double("Race")
+      @race.stub(:id).and_return(101)
+      @c1=double("Consumer")
+      @c2=double("Consumer")
       @csv_file=<<CSV
 starting_no,first_name,last_name,yob,gender,team,category,position,time
-1,Lojzik,Kotrba,1990,male,Moutnice,M,99,""
-2,Romana,Picmochova,1950,female,Moutnice,Z35,1,1:23.456
+1,Lojzik,Kotrba,1990,male,Moutnice,M,11,1:22:345
+2,Radmila,Kozena,1950,female,Moutnice,Z35,1,""
 CSV
+      CSVConsumer.should_receive(:new).with({
+        "starting_no"=>"1",
+        "first_name"=>"Lojzik",
+        "last_name"=>"Kotrba",
+        "yob"=>"1990",
+        "gender"=>"male",
+        "team"=>"Moutnice",
+        "category"=>"M",
+        "position"=>"11",
+        "time"=>"1:22:345"}).and_return(@c1)
+      @c1.should_receive(:save)
+      CSVConsumer.should_receive(:new).with({
+        "starting_no"=>"2",
+        "first_name"=>"Radmila",
+        "last_name"=>"Kozena",
+        "yob"=>"1950",
+        "gender"=>"female",
+        "team"=>"Moutnice",
+        "category"=>"Z35",
+        "position"=>"1",
+        "time"=>""}).and_return(@c2)
+      @c2.should_receive(:save)
+      CSVInterface.import(@race,@csv_file)
     end
   end
 end
