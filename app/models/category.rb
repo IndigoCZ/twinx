@@ -45,7 +45,9 @@ class Category < ActiveRecord::Base
     restrict_gender+restrict_age
   end
 
-  def self.create_by_code(race,code)
+  def self.first_or_create_by_code(race,code)
+    cats=self.where(race_id:race.id,code:code)
+    return cats.first unless cats.empty?
     details=self.categories_from_ruleset[code]
     cat=Category.create(race_id:race.id,title:details["title"],code:code,sort_order:details["sort_order"])
     Constraint.create(category_id:cat.id,restrict:"gender",value:details["gender"])

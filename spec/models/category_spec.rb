@@ -58,7 +58,11 @@ describe Category do
       Category.categories_from_ruleset["M"]["title"].should eq "Muži A"
     end
     it "creates a category by code with details from ruleset file" do
-      Category.create_by_code(@race,"M").title.should eq "Muži A"
+      Category.first_or_create_by_code(@race,"M").title.should eq "Muži A"
+    end
+    it "returns a category by code if it exists" do
+      @category=FactoryGirl.create(:category,race:@race,code:"M",title:"Other Category")
+      Category.first_or_create_by_code(@race,"M").should eq @category
     end
   end
 end
