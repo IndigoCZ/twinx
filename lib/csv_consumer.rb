@@ -18,26 +18,30 @@ class CSVConsumer < OpenStruct
     @team_id||=Team.first_or_create_for_race_and_county(race,get_county).id
   end
   def get_person
-    @person_id||=Person.create(
+    return @person_id if @person_id
+    person=Person.new(
         first_name:first_name,
         last_name:last_name,
         gender:gender,
         yob:yob,
         county_id:get_county
       )
-    Person.full_name=full_name if full_name
-    Person.born=born if born
-    Person.id_string=id_string if id_string
-    Person.save
+    person.full_name=full_name if full_name
+    person.born=born if born
+    person.id_string=id_string if id_string
+    person.save
+    @person_id=person.id
   end
   def get_participant
     @participant_id||=Participant.create(starting_no:starting_no,person_id:get_person,team_id:get_team,category_id:get_category)
   end
   def get_position
-    position.empty? ? nil : position.to_i
+    return nil if position.nil? || position.empty?
+    position
   end
   def get_time
-    time.empty? ? nil : time
+    return nil if time.nil? || time.empty?
+    time
   end
   def get_result
     @result_id||=Result.create(participant_id:get_participant,position:get_position,time:get_time)
