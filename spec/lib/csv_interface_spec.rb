@@ -51,7 +51,8 @@ CSV
         "team"=>"Moutnice",
         "category"=>"M",
         "position"=>"11",
-        "time"=>"1:22:345"}).and_return(@c1)
+        "time"=>"1:22:345",
+        "race"=>@race}).and_return(@c1)
       @c1.should_receive(:save)
       CSVConsumer.should_receive(:new).with({
         "starting_no"=>"2",
@@ -62,7 +63,8 @@ CSV
         "team"=>"Moutnice",
         "category"=>"Z35",
         "position"=>"1",
-        "time"=>""}).and_return(@c2)
+        "time"=>"",
+        "race"=>@race}).and_return(@c2)
       @c2.should_receive(:save)
       CSVInterface.import(@race,@csv_file)
     end

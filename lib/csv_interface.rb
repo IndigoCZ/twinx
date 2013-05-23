@@ -27,7 +27,7 @@ module CSVInterface
     csv_data = CSV.parse(csv_data)
     header=csv_data.shift
     check_header(header)
-    consumers=parse_body(csv_data,header)
+    consumers=parse_body(csv_data,header,race)
     consumers.each do |consumer|
       consumer.save
     end
@@ -52,12 +52,13 @@ module CSVInterface
     end
     return true
   end
-  def parse_body(csv_body,header)
+  def parse_body(csv_body,header,race)
     csv_body.map do |line|
       row={}
       header.each_with_index do |head,i|
         row[head]=line[i]
       end
+      row["race"]=race
       CSVConsumer.new(row)
     end
   end
