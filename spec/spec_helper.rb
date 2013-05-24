@@ -5,6 +5,7 @@ require 'rspec/rails'
 require 'rspec/autorun'
 require 'capybara/rspec'
 Capybara.javascript_driver = :webkit
+Capybara.automatic_reload = false
 
 require 'database_cleaner'
 

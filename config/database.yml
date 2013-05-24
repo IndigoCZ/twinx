@@ -1,21 +1,18 @@
-development:
+defaults: &defaults
   adapter: postgresql
   encoding: unicode
-  database: twinx_development
-  pool: 10
-  username: indigo
+  pool: 20
+  username: <%= ENV['TWINX_DB_USER'] %>
   password:
+
+development:
+  <<: *defaults
+  database: twinx_development
 
 test:
-  adapter: sqlite3
-  database:  db/test.sqlite3
-  pool: 10
-  timeout: 5000
+  <<: *defaults
+  database: twinx_test
 
 production:
-  adapter: postgresql
-  encoding: unicode
+  <<: *defaults
   database: twinx_production
-  pool: 20
-  username: indigo
-  password:
