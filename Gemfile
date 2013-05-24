@@ -8,7 +8,7 @@ gem 'rails', '3.2.13'
 gem 'pg'
 
 group :test do
-  gem 'sqlite3'
+  #  gem 'sqlite3'
 
   gem 'rb-inotify', :require => false
   gem 'guard-rspec'
@@ -17,7 +17,7 @@ group :test do
   # apt-get install libxslt-dev libxml2-dev
   gem 'capybara-webkit' #,:git => 'https://github.com/thoughtbot/capybara-webkit.git'
   # apt-get install libqt4-dev
-  
+
   gem 'database_cleaner'
 
   gem 'launchy'
@@ -69,7 +69,6 @@ gem 'jquery-rails'
 # gem 'debugger'
 
 gem 'rails-i18n'
-
 
 gem 'simple_form'
 gem 'client_side_validations'
