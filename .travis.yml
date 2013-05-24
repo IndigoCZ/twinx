@@ -4,6 +4,7 @@ rvm:
 env:
   - TWINX_DB_USER=postgres
 script:
-  - RAILS_ENV=test bundle exec rake --trace db:migrate test
+  - RAILS_ENV=test bundle exec rake db:migrate test
+  - RAILS_ENV=test bundle exec rspec
 before_script:
   - psql -c 'create database twinx_test;' -U postgres
