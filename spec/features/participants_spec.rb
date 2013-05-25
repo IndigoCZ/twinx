@@ -59,7 +59,6 @@ describe "Participants" do
     find_field('Startovní č.').value.to_i.should be == (participant.starting_no+1)
   end
 
-  it "allows new county to be created when entering a participant"
   it "allows a persons birthday to be specified when entering a participant" do
     DatabaseCleaner.clean
     this_race=FactoryGirl.create(:race)
@@ -80,7 +79,6 @@ describe "Participants" do
     click_button "Vytvořit"
     page.should have_content("Účastník byl úspěšně vytvořen.")
   end
-  it "can manage staff members"
 
   it "creates only one new person when I sign a person into two categories" do
     participant.save

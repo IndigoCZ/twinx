@@ -1,0 +1,4 @@
+== TODO
+
+* It should be possible to create a new county when entering a participant
+* It should be possible to enter non-participants as well
