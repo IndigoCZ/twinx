@@ -13,10 +13,6 @@ class Person < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
-  def self.required_params
-    ["first_name", "last_name", "gender", "yob", "county_id"]
-  end
-
   def check_dependencies
     if participants.count > 0
       errors.add(:base, "cannot be deleted while participants exist")

@@ -18,8 +18,4 @@ class County < ActiveRecord::Base
       return false
     end
   end
-
-  def as_json(options)
-    { id: id, text: title }
-  end
 end

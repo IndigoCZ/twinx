@@ -1,8 +1,4 @@
 module ApplicationHelper
-  def current_race
-    @current_race
-  end
-
   def nav_link(link_text, link_path, options={})
     current=false
     ln=link_to_unless_current link_text, link_path do
