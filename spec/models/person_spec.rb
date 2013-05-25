@@ -29,6 +29,19 @@ describe Person do
     it "is invalid with a gender other than male/female" do
       FactoryGirl.build(:person, gender:"none").should_not be_valid
     end
+    it "can be deleted when empty" do
+      @person=FactoryGirl.create(:person)
+      expect {
+        @person.destroy
+      }.to change(Person,:count).by(-1)
+    end
+    it "cannot be deleted while it has participants" do
+      @person=FactoryGirl.create(:person)
+      FactoryGirl.create(:participant,person:@person)
+      expect {
+        @person.destroy
+      }.not_to change(Person,:count)
+    end
   end
   context "Merging" do
     before :each do

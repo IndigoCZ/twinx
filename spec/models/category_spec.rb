@@ -17,6 +17,27 @@ describe Category do
       category=FactoryGirl.create(:category,race:race)
       race.categories.should be == Category.for_race(race)
     end
+    it "can be deleted when empty" do
+      @category=FactoryGirl.create(:category)
+      expect {
+        @category.destroy
+      }.to change(Category,:count).by(-1)
+    end
+    it "will also destroy all it's constraints before deletion" do
+      @category=FactoryGirl.create(:category)
+      FactoryGirl.create(:constraint,category:@category)
+      expect {
+        @category.reload
+        @category.destroy
+      }.to change(Constraint,:count).by(-1)
+    end
+    it "cannot be deleted while it has participants" do
+      @category=FactoryGirl.create(:category)
+      FactoryGirl.create(:participant,category:@category)
+      expect {
+        @category.destroy
+      }.not_to change(Category,:count)
+    end
   end
   context "Complex Interactions" do
     before(:each) do

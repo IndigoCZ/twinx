@@ -7,6 +7,7 @@ class Person < ActiveRecord::Base
   validates_inclusion_of :gender, in:["male","female"]
   #validates_uniqueness_of :id_string, allow_nil:true
   before_validation :add_year_to_birthday
+  before_destroy :check_dependencies
 
   def display_name
     "#{first_name} #{last_name}"
@@ -14,6 +15,13 @@ class Person < ActiveRecord::Base
 
   def self.required_params
     ["first_name", "last_name", "gender", "yob", "county_id"]
+  end
+
+  def check_dependencies
+    if participants.count > 0
+      errors.add(:base, "cannot be deleted while participants exist")
+      return false
+    end
   end
 
   def merge(other_person)

@@ -4,7 +4,7 @@ class Category < ActiveRecord::Base
   belongs_to :race
   has_many :participants
   has_many :results, through: :participants
-  has_many :constraints
+  has_many :constraints, :dependent => :destroy
   validates_presence_of :title, :race
   before_destroy :check_dependencies
   accepts_nested_attributes_for :constraints,:reject_if => :all_blank, allow_destroy: true

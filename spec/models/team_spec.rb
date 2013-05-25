@@ -20,6 +20,19 @@ describe Team do
       team=FactoryGirl.create(:team,race:race)
       race.teams.should be == Team.for_race(race)
     end
+    it "can be deleted when empty" do
+      @team=FactoryGirl.create(:team)
+      expect {
+        @team.destroy
+      }.to change(Team,:count).by(-1)
+    end
+    it "cannot be deleted while it has participants" do
+      @team=FactoryGirl.create(:team)
+      FactoryGirl.create(:participant,team:@team)
+      expect {
+        @team.destroy
+      }.not_to change(Team,:count)
+    end
     it "provides a list of DNF participants" do
       @team=FactoryGirl.create(:team)
       a=FactoryGirl.create(:participant,team:@team)
