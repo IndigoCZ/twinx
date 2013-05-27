@@ -113,6 +113,16 @@ describe "Results" do
     page.should_not have_content existing_result.participant.display_name
   end
 end
+  context "PDF" do
+    it "supports PDF view of race results" do
+      this_race=FactoryGirl.create(:race,subtitle:"Subtitle")
+      participant=FactoryGirl.create(:participant,race:this_race)
+      result=FactoryGirl.create(:result,participant:participant,time_msec:10000)
+      expect {
+        visit race_results_path(race_id:this_race.id, format: "pdf")
+      }.not_to raise_error
+    end
+  end
 
   context "Complex interactions" do
     it "redirects me to an existing result when I try to create a duplicate result" do

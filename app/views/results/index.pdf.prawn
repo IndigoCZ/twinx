@@ -33,7 +33,7 @@ prawn_document( :page_size => 'A4', :page_layout => :portrait, :margin => 25) do
         category:result.participant.category.title,
         team:result.participant.team.title,
         yob:result.participant.person.yob,
-        time:result.time,
+        time:result.time.to_s,
         position:result.position
       }
     end
