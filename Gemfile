@@ -86,3 +86,8 @@ gem 'prawn'
 gem 'prawn_rails'
 
 gem 'coveralls', require: false
+
+gem 'rails_admin'
+
+
+gem "devise"
