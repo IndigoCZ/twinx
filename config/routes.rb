@@ -3,9 +3,6 @@ Twinx::Application.routes.draw do
 
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
 
-  resources :people
-  resources :counties
-
   resources :races do
     resources :teams, only:["index"]
     resources :categories
