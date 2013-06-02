@@ -1,4 +1,7 @@
 == TODO
 
 * It should be possible to create a new county when entering a participant
+* The County field in the participant form should be a freeform field with options pulled from County.all, but it should ultimately refer to Team.title
 * It should be possible to enter non-participants as well
+* Clean up spec/features/results_spec.rb
+* Clean up spec/features/participants_spec.rb

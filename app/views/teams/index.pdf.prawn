@@ -14,7 +14,7 @@ prawn_document( :page_size => 'A4', :page_layout => :portrait, :margin => 25) do
   data=[]
   @teams.each do |team|
     data<<{
-      title:team.county.title,
+      title:team.title,
       points:team.points(params[:limit]),
       participants:team.participants.size
     }

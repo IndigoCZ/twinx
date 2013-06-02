@@ -14,7 +14,7 @@ describe "Participants" do
   let(:county) { FactoryGirl.create(:county)}
   let(:category) { FactoryGirl.build(:category, race_id:race.id) }
   let(:second_category) { FactoryGirl.build(:category,title:"Some other category", race_id:race.id) }
-  let(:team) { FactoryGirl.build(:team, race_id:race.id, county_id:county.id)}
+  let(:team) { FactoryGirl.build(:team, race_id:race.id, title:county.title, county_id:county.id)}
   let(:person) { FactoryGirl.build(:person, county_id:county.id) }
   let(:participant) { FactoryGirl.build(:participant, team_id:team.id, category_id:category.id, person_id:person.id)}
   before :each do
@@ -126,7 +126,7 @@ describe "Participants" do
     participant.save
     visit race_participant_path(race.id, participant.id)
     page.should have_content(participant.display_name)
-    page.should have_content(participant.team.county.title)
+    page.should have_content(participant.team.title)
     page.should have_content(participant.category.title)
   end
 

@@ -19,7 +19,7 @@ class ParticipantsController < ApplicationController
     @person=Person.new(params[:participant].delete(:person))
     if @person.save
       @person.dedup
-      @team=Team.first_or_create_for_race_and_county(@current_race,@person.county.id)
+      @team=Team.with_race_and_title(@current_race,@person.county.title)
       @participant=Participant.new(params[:participant])
       @participant.team_id=@team.id
       @participant.person_id=@person.id

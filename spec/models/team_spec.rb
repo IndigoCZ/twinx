@@ -8,13 +8,6 @@ describe Team do
     it "is invalid without a race" do
       FactoryGirl.build(:team, race_id:nil).should_not be_valid
     end
-    it "is invalid without a county" do
-      FactoryGirl.build(:team, county_id:nil).should_not be_valid
-    end
-    it "provides a quick link to it's county title" do
-      team=FactoryGirl.create(:team)
-      team.title.should be == team.county.title
-    end
     it "provides a scope for current race" do
       race=FactoryGirl.create(:race)
       team=FactoryGirl.create(:team,race:race)
@@ -65,12 +58,12 @@ describe Team do
       @county=FactoryGirl.create(:county)
     end
     it "finds a team for race and county if it exists" do
-      @team=FactoryGirl.create(:team,race:@race,county:@county)
-      Team.first_or_create_for_race_and_county(@race,@county).should eq @team
+      @team=FactoryGirl.create(:team,race:@race,title:@county.title)
+      Team.with_race_and_title(@race,@county.title).should eq @team
     end
     it "creates a team for race and county if it exists" do
       expect {
-        Team.first_or_create_for_race_and_county(@race,@county)
+        Team.with_race_and_title(@race,@county.title)
       }.to change(Team,:count).by(1)
     end
   end

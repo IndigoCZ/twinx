@@ -2,7 +2,6 @@ require 'ostruct'
 class CSVConsumer < OpenStruct
   def save
     get_category
-    get_county
     get_team
     get_person
     get_participant
@@ -11,11 +10,11 @@ class CSVConsumer < OpenStruct
   def get_category
     @category_id||=Category.first_or_create_by_code(race,category)
   end
-  def get_county
-    @county_id||=County.first_or_create(title:team).id
-  end
   def get_team
-    @team_id||=Team.first_or_create_for_race_and_county(race,get_county).id
+    @team_id||=Team.with_race_and_title(race,team).id
+  end
+  def get_county
+    @county_id||=Team.find(get_team).county.id
   end
   def get_person
     return @person_id if @person_id

@@ -13,7 +13,7 @@
     <tbody>
     <% @teams.each do |team| %>
       <tr>
-      <td><%= team.county.title %></td>
+      <td><%= team.title %></td>
       <td><%= team.participants.size %></td>
       <% if params[:limit] %>
         <td><%= team.points(params[:limit]) %></td>

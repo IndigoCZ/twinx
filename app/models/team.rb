@@ -4,7 +4,7 @@ class Team < ActiveRecord::Base
   belongs_to :race
   has_many :participants
   has_many :results, through: :participants
-  validates_presence_of :race, :county
+  validates_presence_of :race, :title
   before_destroy :check_dependencies
 
   scope :for_race, lambda { |race| where(race_id:race.id).includes(:county) }
@@ -16,12 +16,14 @@ class Team < ActiveRecord::Base
     end
   end
 
-  def self.first_or_create_for_race_and_county(race,county)
-    self.where(race_id:race,county_id:county).first_or_create
-  end
-
-  def title
-    county.title
+  def self.with_race_and_title(race,title)
+    county=County.where(title:title).first_or_create
+    team=self.where(race_id:race,title:title).first_or_create
+    unless team.county==county
+      team.county=county
+      team.save
+    end
+    return team
   end
 
   def dnfs
