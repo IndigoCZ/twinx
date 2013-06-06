@@ -16,7 +16,7 @@ group :test do
 
   gem 'capybara', '~> 2.0.3'
   # apt-get install libxslt-dev libxml2-dev
-  gem 'capybara-webkit' #,:git => 'https://github.com/thoughtbot/capybara-webkit.git'
+  gem 'capybara-webkit', '~> 0.14.2' #,:git => 'https://github.com/thoughtbot/capybara-webkit.git'
   # apt-get install libqt4-dev
 
   gem 'database_cleaner'
