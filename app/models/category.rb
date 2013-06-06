@@ -1,6 +1,6 @@
 # encoding: UTF-8
 class Category < ActiveRecord::Base
-  attr_accessible :race_id, :title, :constraints_attributes, :code, :sort_order
+  attr_accessible :race_id, :title, :constraints_attributes, :code, :sort_order, :difficulty
   belongs_to :race
   has_many :participants
   has_many :results, through: :participants
@@ -17,12 +17,16 @@ class Category < ActiveRecord::Base
       return false
     end
   end
-  def difficulty
+  def calculate_difficulty
     rval=Constraint::MAX_DIFFICULTY
-    constraints.each do |constraint|
+    self.constraints.each do |constraint|
       rval=constraint.difficulty if rval > constraint.difficulty
     end
     rval
+  end
+  def recalculate_difficulty
+    self.reload
+    self.update_attributes(difficulty:calculate_difficulty)
   end
 
   def dnfs
