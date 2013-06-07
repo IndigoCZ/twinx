@@ -107,10 +107,10 @@ describe "Results" do
     page.should have_content "Smazat"
     expect{
       click_link 'Smazat'
-      page.driver.accept_js_confirms!
+      accept_popup(page)
+      page.should_not have_content existing_result.participant.display_name
     }.to change(Result,:count).by(-1)
     page.should have_content "Přehled Výsledků"
-    page.should_not have_content existing_result.participant.display_name
   end
 end
   context "PDF" do

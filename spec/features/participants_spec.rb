@@ -118,6 +118,7 @@ describe "Participants" do
     choose gender_to_human("female")
     page.should have_select('Kategorie', :selected => 'YOUNG_FEMALE')
     fill_in "Rok nar.", with:Time.now.year-30
+    choose gender_to_human("female") # Need to loose focus for capybara/firefox
     page.should have_select('Kategorie', :selected => 'OLD_FEMALE')
     choose gender_to_human("male")
     page.should have_select('Kategorie', :selected => 'OLD_MALE')
@@ -185,10 +186,10 @@ describe "Participants" do
     page.should have_content "Smazat"
     expect{
       click_link 'Smazat'
-      page.driver.accept_js_confirms!
+      accept_popup(page)
+      page.should_not have_content existing_participant.person.first_name
     }.to change(Participant,:count).by(-1)
     page.should have_content "Přehled Účastníků"
-    page.should_not have_content existing_participant.person.first_name
   end
 
 end

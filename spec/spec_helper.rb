@@ -6,7 +6,7 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
 require 'capybara/rspec'
-Capybara.javascript_driver = :webkit
+#Capybara.javascript_driver = :webkit
 Capybara.automatic_reload = false
 
 require 'database_cleaner'
@@ -46,3 +46,7 @@ RSpec.configure do |config|
   config.order = "random"
 end
 
+def accept_popup(page)
+  page.driver.browser.switch_to.alert.accept
+  #page.driver.accept_js_confirms!
+end

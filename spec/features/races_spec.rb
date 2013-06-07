@@ -78,10 +78,10 @@ describe "Races" do
       #within "#race_#{existing_race.id}" do
         click_link 'Smazat'
       #end
-      page.driver.accept_js_confirms!
+      accept_popup(page)
+      page.should_not have_content race.title
     }.to change(Race,:count).by(-1)
     page.should have_content "Přehled Závodů"
-    page.should_not have_content race.title
   end
 end
 # encoding: UTF-8

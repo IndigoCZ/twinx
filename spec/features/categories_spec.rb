@@ -47,10 +47,10 @@ describe "Categories" do
     page.should have_content "Smazat"
     expect{
       click_link 'Smazat'
-      page.driver.accept_js_confirms!
+      accept_popup(page)
+      page.should_not have_content category.title
     }.to change(Category,:count).by(-1)
     page.should have_content "Přehled Kategorií"
-    page.should_not have_content category.title
   end
 
   it "allows me to specify age constraint when creating a category", js:true do
