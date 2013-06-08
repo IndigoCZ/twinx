@@ -8,10 +8,16 @@ module ApplicationHelper
     klass_list=[]
     klass_list<<"active" if current
     klass_list<<options[:wrapper_class] if options[:wrapper_class]
-    content_tag(:li, ln, class:klass_list.join(" "))
+    content_tag(:li, ln, :class => klass_list.join(" "))
   end
 
   def sort_link(text,attr=nil)
+    content_tag(:ul, :class =>"nav nav-pills header-pills") do
+      content_tag(:li,actual_sort_link(text,attr))
+    end
+  end
+
+  def actual_sort_link(text,attr)
     new_params=params.dup
     if attr
       if params[:sort] && params[:sort]==attr.to_s
@@ -27,33 +33,21 @@ module ApplicationHelper
     else
       new_params[:rsort]="default"
     end
-    content_tag(:ul, class:"nav nav-pills header-pills") do
-      content_tag(:li,link_to(text, url_for(new_params), id:"#{attr}_sort"))
-    end
+    link_to(text, url_for(new_params), id:"#{attr}_sort")
   end
 
   def filter_combo(text,attr)
-    content_tag(:ul, id:"#{attr}_filter", class:"nav nav-pills header-pills") do
-      content_tag(:li, sort_link(text,attr)) +
-      content_tag(:li, class:"dropdown") do
-        dropdown_content=link_to '<b class="caret"></b>'.html_safe, "#", class:"dropdown-toggle", data:{toggle:"dropdown"}
-        dropdown_content+=content_tag(:ul,:class=>"dropdown-menu") do
-          new_params=params.dup
-          if new_params.has_key?(:filter)
-            new_params.delete(:filter)
-            filter_content=content_tag(:li,link_to("Nefiltrovat", url_for(new_params)))
-            filter_content+=content_tag(:li,"", class:"divider")
-          else
-            filter_content=""
-          end
-          attr.to_s.capitalize.safe_constantize.for_race(@current_race).each do |model|
-            new_params[:filter]="#{attr}_#{model.id}"
-            filter_content+=content_tag(:li,link_to(model.title, url_for(new_params)))
-          end
-          filter_content.html_safe
-        end
-        dropdown_content.html_safe
-      end
+    new_params=params.dup
+    bottom_rows=[]
+    if new_params.has_key?(:filter)
+      new_params.delete(:filter)
+      bottom_rows<<link_to("Nefiltrovat", url_for(new_params))
+      bottom_rows<<nil
     end
+    attr.to_s.capitalize.safe_constantize.for_race(@current_race).each do |model|
+      new_params[:filter]="#{attr}_#{model.id}"
+      bottom_rows<<link_to(model.title, url_for(new_params))
+    end
+    render( partial:"controls/dropdown", locals:{dropdown_id:"#{attr}_filter",top_row:actual_sort_link(text,attr),bottom_rows:bottom_rows})
   end
 end
