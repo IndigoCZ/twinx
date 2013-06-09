@@ -18,18 +18,13 @@ class ApplicationController < ActionController::Base
   def group_sort_and_filter_class_for_current_race(klass)
     things=klass.for_race(@current_race)
     things=things.order("#{klass.sort_by(params[:group])} ASC") if params[:group]
-    if params[:sort]
-      things=things.order("#{klass.sort_by(params[:sort])} ASC")
-    elsif params[:rsort]
-      things=things.order("#{klass.sort_by(params[:rsort])} DESC")
-    else
-      things=things.order("#{klass.sort_by} ASC")
-    end
     things=things.filter_by(params[:filter]) if params[:filter]
-    if params[:search] && params[:search].length > 0
-      things=things.where("people.last_name ILIKE ?",params[:search]+"%")
+    things=things.where("people.last_name ILIKE ?",params[:search]+"%") if params[:search]
+    if @navigator.reverse_sort
+      things=things.order("#{klass.sort_by(@navigator.sort_by)} DESC")
+    else
+      things=things.order("#{klass.sort_by(@navigator.sort_by)} ASC")
     end
-    return things
   end
 
   def default_update(klass)
