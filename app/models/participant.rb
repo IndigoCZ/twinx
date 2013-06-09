@@ -1,5 +1,6 @@
 # encoding: UTF-8
 class Participant < ActiveRecord::Base
+  extend SortableTable
   attr_accessible :category_id, :starting_no, :team_id, :person_id
   belongs_to :person
   belongs_to :team, counter_cache:true
@@ -36,11 +37,6 @@ class Participant < ActiveRecord::Base
     self.includes(:race).where("races.id = ?",race.id).where(starting_no:starting_no).first
   end
 
-  def self.filter_by(string)
-    column,val=string.split("_")
-    self.send("by_#{column}_id",val)
-  end
-
   def self.group_by(column=nil)
     case column
     when "team"
@@ -50,16 +46,12 @@ class Participant < ActiveRecord::Base
     end
   end
 
-  def self.sort_by(column=nil)
-    case column
-    when "team"
-      "counties.title"
-    when "category"
-      "categories.sort_order"
-    when "name"
-      "people.last_name"
-    else
-      "starting_no"
-    end
+  def self.sort_attrs
+    {
+      "team"=>"counties.title",
+      "category"=>"categories.sort_order",
+      "name"=>"people.last_name",
+      "default"=>"starting_no"
+    }
   end
 end

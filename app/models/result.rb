@@ -1,5 +1,6 @@
 require 'duration'
 class Result < ActiveRecord::Base
+  extend SortableTable
   attr_accessible :position, :time, :participant_id, :starting_no
   attr_writer :race, :starting_no
   belongs_to :participant
@@ -50,22 +51,13 @@ class Result < ActiveRecord::Base
     end
   end
 
-  def self.filter_by(string)
-    column,val=string.split("_")
-    self.send("by_#{column}_id",val)
-  end
-
-  def self.sort_by(column=nil)
-    case column
-    when "team"
-      "counties.title"
-    when "category"
-      "categories.sort_order"
-    when "name"
-      "people.last_name"
-    else
-      "position"
-    end
+  def self.sort_attrs
+    {
+      "team"=>"counties.title",
+      "category"=>"categories.sort_order",
+      "name"=>"people.last_name",
+      "default"=>"position"
+    }
   end
 
   def participant_lookup(allow_duplicate=false)
