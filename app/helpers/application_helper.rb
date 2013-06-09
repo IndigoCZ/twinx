@@ -19,20 +19,15 @@ module ApplicationHelper
 
   def actual_sort_link(text,attr)
     new_params=params.dup
-    if attr
-      if params[:sort] && params[:sort]==attr.to_s
-        new_params.delete(:sort)
-        new_params[:rsort]=attr
-      else
-        new_params.delete(:rsort)
-        new_params[:sort]=attr
-      end
-    elsif params[:sort] || params[:rsort]=="default"
+    attr||="default"
+    if @navigator.reverse_sort || @navigator.sort_by!=attr
       new_params.delete(:rsort)
-      new_params.delete(:sort)
+      new_params[:sort]=attr
     else
-      new_params[:rsort]="default"
+      new_params.delete(:sort)
+      new_params[:rsort]=attr
     end
+    new_params.delete(:sort) if new_params[:sort]=="default"
     link_to(text, url_for(new_params), id:"#{attr}_sort")
   end
 
