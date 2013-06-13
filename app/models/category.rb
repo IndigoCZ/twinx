@@ -1,22 +1,17 @@
 # encoding: UTF-8
 class Category < ActiveRecord::Base
+  extend ModelDependencyHandling
   attr_accessible :race_id, :title, :constraints_attributes, :code, :sort_order, :difficulty
   belongs_to :race
   has_many :participants
   has_many :results, through: :participants
   has_many :constraints, :dependent => :destroy
   validates_presence_of :title, :race
-  before_destroy :check_dependencies
+  block_deletion_on_dependency :participants
   accepts_nested_attributes_for :constraints,:reject_if => :all_blank, allow_destroy: true
 
   scope :for_race, lambda { |race| includes(:constraints).where(race_id:race.id) }
 
-  def check_dependencies
-    if participants.count > 0
-      errors.add(:base, "cannot be deleted while participants exist")
-      return false
-    end
-  end
   def calculate_difficulty
     rval=Constraint::MAX_DIFFICULTY
     self.constraints.each do |constraint|
