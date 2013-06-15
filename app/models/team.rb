@@ -1,6 +1,6 @@
 class Team < ActiveRecord::Base
   extend ModelDependencyHandling
-  attr_accessible :county_id, :race_id
+  #attr_accessible :county_id, :race_id
   belongs_to :county
   belongs_to :race
   has_many :participants

@@ -92,3 +92,4 @@ gem 'rails_admin'
 
 
 gem "devise"
+gem "strong_parameters"

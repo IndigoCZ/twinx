@@ -1,6 +1,6 @@
 class County < ActiveRecord::Base
   extend ModelDependencyHandling
-  attr_accessible :title
+  #attr_accessible :title
   validates_presence_of :title
   validates_uniqueness_of :title
   has_many :teams

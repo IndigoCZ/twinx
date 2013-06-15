@@ -1,7 +1,6 @@
 # encoding: UTF-8
 class Category < ActiveRecord::Base
   extend ModelDependencyHandling
-  attr_accessible :race_id, :title, :constraints_attributes, :code, :sort_order, :difficulty
   belongs_to :race
   has_many :participants
   has_many :results, through: :participants

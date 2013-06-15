@@ -1,6 +1,6 @@
 class Person < ActiveRecord::Base
   extend ModelDependencyHandling
-  attr_accessible :born, :county_id, :first_name, :full_name, :id_string, :last_name, :yob, :gender
+  #attr_accessible :born, :county_id, :first_name, :full_name, :id_string, :last_name, :yob, :gender
   belongs_to :county
   has_many :participants
   validates_presence_of :first_name, :last_name, :yob, :gender, :county

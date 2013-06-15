@@ -11,7 +11,7 @@ class ResultsController < ApplicationController
     @result = Result.new
   end
   def create
-    @result = Result.new(params[:result])
+    @result = Result.new(result_params)
     @result.race=@current_race
     if @result.save
       redirect_to new_race_result_url(@current_race), notice: 'Výsledek byl úspěšně vytvořen.'
@@ -36,5 +36,9 @@ class ResultsController < ApplicationController
     @result = Result.find(params[:id])
     @result.destroy
     redirect_to race_results_url(@current_race)
+  end
+  private
+  def result_params
+    params.require(:result).permit(:position, :time, :participant_id, :starting_no)
   end
 end

@@ -17,7 +17,7 @@ class RacesController < ApplicationController
   end
 
   def create
-    @race = Race.new(params[:race])
+    @race = Race.new(race_params)
     if @race.save
       redirect_to @race, notice: "Závod byl úspěšně vytvořen."
     else
@@ -27,7 +27,7 @@ class RacesController < ApplicationController
 
   def update
     @race = Race.find(params[:id])
-    if @race.update_attributes(params[:race])
+    if @race.update_attributes(race_params)
       redirect_to @race, notice: "Závod byl úspěšně upraven."
     else
       render action: "edit"
@@ -38,5 +38,9 @@ class RacesController < ApplicationController
     @race = Race.find(params[:id])
     @race.destroy
     redirect_to races_url
+  end
+  private
+  def race_params
+    params.require(:race).permit(:held_on, :title, :subtitle, :short_name)
   end
 end

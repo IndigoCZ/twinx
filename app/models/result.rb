@@ -1,7 +1,6 @@
 require 'duration'
 class Result < ActiveRecord::Base
   extend SortableTable
-  attr_accessible :position, :time, :participant_id, :starting_no
   attr_writer :race, :starting_no
   belongs_to :participant
   validates_presence_of :participant, :position

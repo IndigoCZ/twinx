@@ -20,7 +20,7 @@ class ParticipantsController < ApplicationController
     if @person.save
       @person.dedup
       @team=Team.with_race_and_title(@current_race,@person.county.title)
-      @participant=Participant.new(params[:participant])
+      @participant=Participant.new(participant_params)
       @participant.team_id=@team.id
       @participant.person_id=@person.id
       session[:last_county_id]=@person.county.id
@@ -45,7 +45,7 @@ class ParticipantsController < ApplicationController
     @person.attributes=params[:participant].delete(:person)
     @team=Team.where(race_id:@current_race.id,county_id:@person.county.id).first_or_create
     @participant.team_id=@team.id
-    @participant.attributes=params[:participant]
+    @participant.attributes=participant_params
     if @person.save && @participant.save
       redirect_to [@current_race, @participant], notice:'Účastník byl úspěšně upraven.'
     else
@@ -57,5 +57,8 @@ class ParticipantsController < ApplicationController
     @participant.destroy
     redirect_to race_participants_url(@current_race)
   end
-
+  private
+  def participant_params
+      params.require(:participant).permit(:category_id, :starting_no, :team_id, :person_id)
+  end
 end

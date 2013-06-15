@@ -25,7 +25,7 @@ class CategoriesController < ApplicationController
   end
 
   def create
-    @category = Category.new(params[:category])
+    @category = Category.new(category_params)
     if @category.save
       redirect_to [@current_race, @category], notice: 'Kategorie byla úspěšně vytvořena.'
     else
@@ -41,5 +41,9 @@ class CategoriesController < ApplicationController
     @category = Category.find(params[:id])
     @category.destroy
     redirect_to race_categories_url @current_race
+  end
+  private
+  def category_params
+    params.require(:category).permit(:race_id, :title, :constraints_attributes, :code, :sort_order, :difficulty)
   end
 end

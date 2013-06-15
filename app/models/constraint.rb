@@ -1,5 +1,5 @@
 class Constraint < ActiveRecord::Base
-  attr_accessible :category_id, :restrict, :string_value, :integer_value, :value
+  #attr_accessible :category_id, :restrict, :string_value, :integer_value, :value
   belongs_to :category
   validates_presence_of :restrict
   validates_inclusion_of :restrict, in:["max_age","min_age","gender"]

@@ -1,7 +1,6 @@
 # encoding: UTF-8
 class Participant < ActiveRecord::Base
   extend SortableTable
-  attr_accessible :category_id, :starting_no, :team_id, :person_id
   belongs_to :person
   belongs_to :team, counter_cache:true
   belongs_to :category, counter_cache:true
