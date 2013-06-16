@@ -1,5 +1,7 @@
 # encoding: UTF-8
 class ResultsController < ApplicationController
+  extend DefaultControllerActions
+  default_update(Result)
   def index
     @results=group_sort_and_filter_class_for_current_race(Result)
     respond_to do |format|
@@ -28,9 +30,6 @@ class ResultsController < ApplicationController
   end
   def edit
     @result = Result.find(params[:id])
-  end
-  def update
-    default_update(Result)
   end
   def destroy
     @result = Result.find(params[:id])

@@ -27,14 +27,4 @@ class ApplicationController < ActionController::Base
       things=things.order("#{klass.sort_by(@navigator.sort_by)} ASC")
     end
   end
-
-  def default_update(klass)
-    @item = klass.find(params[:id])
-    klass_sym=klass.to_s.downcase.to_sym
-    if @item.update_attributes(self.send("#{klass_sym}_params"))
-      redirect_to [@current_race, @item], notice: t("messages.#{klass_sym}.updated_successfully")
-    else
-      render action: "edit"
-    end
-  end
 end

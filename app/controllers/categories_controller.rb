@@ -1,6 +1,8 @@
 # encoding: UTF-8
 require 'category_picker'
 class CategoriesController < ApplicationController
+  extend DefaultControllerActions
+  default_update(Category)
   def index
     @categories=Category.for_race(@current_race)
     if params[:gender] && params[:yob]
@@ -31,10 +33,6 @@ class CategoriesController < ApplicationController
     else
       render action: "new"
     end
-  end
-
-  def update
-    default_update(Category)
   end
 
   def destroy
