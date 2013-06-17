@@ -17,14 +17,6 @@ class ApplicationController < ActionController::Base
     @navigator=Navigator.new(params)
   end
   def group_sort_and_filter_class_for_current_race(klass)
-    things=klass.for_race(@current_race)
-    things=things.order("#{klass.sort_by(params[:group])} ASC") if params[:group]
-    things=things.filter_by(params[:filter]) if params[:filter]
-    things=things.where("people.last_name ILIKE ?",params[:search]+"%") if params[:search]
-    if @navigator.reverse_sort
-      things=things.order("#{klass.sort_by(@navigator.sort_by)} DESC")
-    else
-      things=things.order("#{klass.sort_by(@navigator.sort_by)} ASC")
-    end
+    @navigator.group_sort_and_filter(klass,klass.for_race(@current_race))
   end
 end
