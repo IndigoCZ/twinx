@@ -11,8 +11,8 @@ gem 'pg'
 group :test do
   #  gem 'sqlite3'
 
-  gem 'rb-inotify', :require => false
-  gem 'guard-rspec'
+  #gem 'rb-inotify', :require => false
+  #gem 'guard-rspec'
 
   gem 'capybara'#, '~> 2.0.3'
   gem 'selenium-webdriver'
@@ -22,7 +22,7 @@ group :test do
 
   gem 'database_cleaner'
 
-  gem 'launchy'
+  #gem 'launchy'
   gem 'faker'
 end
 
