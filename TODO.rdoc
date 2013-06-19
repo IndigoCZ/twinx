@@ -5,3 +5,4 @@
 * It should be possible to enter non-participants as well
 * Clean up spec/features/results_spec.rb
 * Clean up spec/features/participants_spec.rb
+* Review category sort_order

@@ -36,24 +36,24 @@ end
 
 races.each do |race|
   counties.each do |county|
-    Team.create(race_id:race.id, county_id:county.id)
+    Team.create(race_id:race.id, county_id:county.id, title:county.title)
   end
 end
 races.each do |race|
-  Category.create(title:"Juniori",race_id:race.id)
+  Category.create(title:"Juniori",race_id:race.id,sort_order:1)
   Constraint.create(restrict:"gender",string_value:"male",category_id:Category.last.id)
   Constraint.create(restrict:"max_age",integer_value:16,category_id:Category.last.id)
-  Category.create(title:"Muzi",race_id:race.id)
+  Category.create(title:"Muzi",race_id:race.id,sort_order:2)
   Constraint.create(restrict:"gender",string_value:"male",category_id:Category.last.id)
-  Category.create(title:"Seniori",race_id:race.id)
+  Category.create(title:"Seniori",race_id:race.id,sort_order:3)
   Constraint.create(restrict:"gender",string_value:"male",category_id:Category.last.id)
   Constraint.create(restrict:"min_age",integer_value:60,category_id:Category.last.id)
-  Category.create(title:"Juniorky",race_id:race.id)
+  Category.create(title:"Juniorky",race_id:race.id,sort_order:4)
   Constraint.create(restrict:"gender",string_value:"female",category_id:Category.last.id)
   Constraint.create(restrict:"max_age",integer_value:16,category_id:Category.last.id)
-  Category.create(title:"Zeny",race_id:race.id)
+  Category.create(title:"Zeny",race_id:race.id,sort_order:5)
   Constraint.create(restrict:"gender",string_value:"female",category_id:Category.last.id)
-  Category.create(title:"Seniorky",race_id:race.id)
+  Category.create(title:"Seniorky",race_id:race.id,sort_order:6)
   Constraint.create(restrict:"gender",string_value:"female",category_id:Category.last.id)
   Constraint.create(restrict:"min_age",integer_value:60,category_id:Category.last.id)
 end
