@@ -156,6 +156,9 @@ describe "Participants" do
     page.find("#name_sort").should have_content "Jméno"
     page.find("#name_sort").click
     page.should have_content(/AAAAA.*ZZZZZ/)
+    page.find("#name_sort").should have_content "Jméno"
+    page.find("#name_sort").click
+    page.should have_content(/ZZZZZ.*AAAAA/)
   end
   it "allows filtering of participants on the index", js:true do
     DatabaseCleaner.clean

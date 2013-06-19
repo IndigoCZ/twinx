@@ -20,6 +20,7 @@ module ApplicationHelper
   def actual_sort_link(text,attr)
     new_params=params.dup
     attr||="default"
+    attr=attr.to_s
     if @navigator.reverse_sort || @navigator.sort_by!=attr
       new_params.delete(:rsort)
       new_params[:sort]=attr
