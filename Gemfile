@@ -93,3 +93,5 @@ gem 'rails_admin'
 
 gem "devise"
 gem "strong_parameters"
+gem "turbolinks"
+gem "jquery-turbolinks"

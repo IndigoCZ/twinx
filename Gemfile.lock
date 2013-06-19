@@ -91,6 +91,9 @@ GEM
     jquery-rails (3.0.1)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
+    jquery-turbolinks (1.0.0)
+      railties (>= 3.1.0)
+      turbolinks
     jquery-ui-rails (3.0.1)
       jquery-rails
       railties (>= 3.1.0)
@@ -218,6 +221,8 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     ttfunk (1.0.3)
+    turbolinks (1.2.0)
+      coffee-rails
     tzinfo (0.3.37)
     uglifier (2.1.1)
       execjs (>= 0.3.0)
@@ -245,6 +250,7 @@ DEPENDENCIES
   factory_girl_rails
   faker
   jquery-rails
+  jquery-turbolinks
   pg
   prawn
   prawn_rails
@@ -257,5 +263,6 @@ DEPENDENCIES
   selenium-webdriver
   simple_form
   strong_parameters
+  turbolinks
   uglifier (>= 1.0.3)
   webrick
