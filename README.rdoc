@@ -1,6 +1,7 @@
 {<img src="https://travis-ci.org/IndigoCZ/twinx.png?branch=master" alt="Build Status" />}[https://travis-ci.org/IndigoCZ/twinx]
 {<img src="https://codeclimate.com/github/IndigoCZ/twinx.png" />}[https://codeclimate.com/github/IndigoCZ/twinx]
 {<img src="https://coveralls.io/repos/IndigoCZ/twinx/badge.png?branch=master" alt="Coverage Status" />}[https://coveralls.io/r/IndigoCZ/twinx?branch=master]
+{<img src="https://gemnasium.com/IndigoCZ/twinx.png" alt="Dependency Status" />}[https://gemnasium.com/IndigoCZ/twinx]
 
 == Twinx
 
