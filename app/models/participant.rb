@@ -11,7 +11,7 @@ class Participant < ActiveRecord::Base
   before_destroy :clean_result
   validate :starting_no_unique_for_race
 
-  scope :for_race, lambda { |race| includes([:category,{team: :county},:person]).where("categories.race_id = ?", race.id) }
+  scope :for_race, lambda { |race| includes([:category,{team: :county},:person]).where("categories.race_id = ?", race.id).references(:category) }
   scope :by_team_id, lambda { |team| where(team_id:team) }
   scope :by_category_id, lambda { |cat| where(category_id:cat) }
 
@@ -33,7 +33,7 @@ class Participant < ActiveRecord::Base
   end
 
   def self.find_for_result(race,starting_no)
-    self.includes(:race).where("races.id = ?",race.id).where(starting_no:starting_no).first
+    self.includes(:race).where("races.id = ?",race.id).references(:race).where(starting_no:starting_no).first
   end
 
   def self.group_by(column=nil)

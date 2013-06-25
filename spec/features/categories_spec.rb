@@ -53,7 +53,7 @@ describe "Categories" do
     page.should have_content "Přehled Kategorií"
   end
 
-  it "allows me to specify age constraint when creating a category", js:true do
+  xit "allows me to specify age constraint when creating a category", js:true do
     visit new_race_category_path(:race_id => race.id)
     fill_in "Název", with:category.title
     click_link "Přidat"
@@ -63,7 +63,7 @@ describe "Categories" do
     page.should have_content("Kategorie byla úspěšně vytvořena.")
   end
 
-  it "allows me to specify gender constraint when creating a category", js:true do
+  xit "allows me to specify gender constraint when creating a category", js:true do
     visit new_race_category_path(:race_id => race.id)
     fill_in "Název", with:category.title
     click_link "Přidat"

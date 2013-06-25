@@ -7,9 +7,9 @@ class Result < ActiveRecord::Base
   validates :position, :time_msec, :numericality => { only_integer:true }, allow_nil:true
   before_validation :participant_enforcement
 
-  scope :for_race, lambda { |race| includes(participant:[:category,{team: :county},:person]).where("categories.race_id = ?", race.id) }
-  scope :by_team_id, lambda { |team| includes(:participant).where("participants.team_id = ?", team) }
-  scope :by_category_id, lambda { |cat| includes(:participant).where("participants.category_id = ?", cat) }
+  scope :for_race, lambda { |race| includes(participant:[:category,{team: :county},:person]).where("categories.race_id = ?", race.id).references(:category) }
+  scope :by_team_id, lambda { |team| includes(:participant).where("participants.team_id = ?", team).references(:participant) }
+  scope :by_category_id, lambda { |cat| includes(:participant).where("participants.category_id = ?", cat).references(:participant) }
 
   def time
     Duration.from_ms(time_msec)

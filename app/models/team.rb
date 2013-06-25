@@ -22,14 +22,14 @@ class Team < ActiveRecord::Base
   end
 
   def dnfs
-    participants.includes(:result).where("results.id IS NULL")
+    participants.includes(:result).where("results.id IS NULL").references(:result)
   end
 
   def points(limit=nil)
     if limit
       self.results.collect(&:points).sort.reverse.shift(limit.to_i).sum
     else
-      self.results.sum(&:points)
+      self.results.collect(&:points).sum
     end
   end
 end

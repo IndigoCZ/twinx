@@ -24,7 +24,7 @@ class Category < ActiveRecord::Base
   end
 
   def dnfs
-    participants.includes(:result).where("results.id IS NULL")
+    participants.includes(:result).where("results.id IS NULL").references(:result)
   end
 
   def restriction
