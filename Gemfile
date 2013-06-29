@@ -25,8 +25,8 @@ end
 
 # Gems used only for assets and not required
 # in production environments by default.
-gem 'sass-rails',   github: 'rails/sass-rails'
-gem 'coffee-rails', github: 'rails/coffee-rails'
+gem 'sass-rails',   '~> 4.0.0'
+gem 'coffee-rails', '~> 4.0.0'
 
 # apt-get install nodejs
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
@@ -59,7 +59,7 @@ gem 'prawn_rails'
 
 gem 'coveralls', require: false
 
-#gem 'rails_admin', github: 'sferik/rails_admin'
+gem 'rails_admin', github: 'sferik/rails_admin'
 
 
 gem "devise", "~> 3.0.0.rc"
