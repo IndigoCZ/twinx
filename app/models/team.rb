@@ -26,10 +26,11 @@ class Team < ActiveRecord::Base
   end
 
   def points(limit=nil)
-    if limit
-      self.results.collect(&:points).sort.reverse.shift(limit.to_i).sum
-    else
-      self.results.collect(&:points).sum
-    end
+    limit||=point_array.size
+    point_array.shift(limit.to_i).sum
+  end
+
+  def point_array
+    self.results.collect(&:points).sort.reverse
   end
 end
