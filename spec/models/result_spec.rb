@@ -16,7 +16,7 @@ describe Result do
     it "returns a well formatted time" do
       result=FactoryGirl.build(:result)
       result.time_msec=60000
-      @duration_instance=stub
+      @duration_instance=double
       Duration.should_receive(:from_ms).and_return(@duration_instance)
       result.time.should be == @duration_instance
     end

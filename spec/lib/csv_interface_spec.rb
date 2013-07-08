@@ -23,8 +23,8 @@ describe CSVInterface do
       CSVInterface.export([],["starting_no","full_name"]).should eq "starting_no,full_name\n"
     end
     it "instantiates a CSVPresenter for each participant and forwards all queries to it" do
-      @participant=stub
-      @csv_presenter=stub
+      @participant=double
+      @csv_presenter=double
       CSVPresenter.should_receive(:new).with(@participant).and_return(@csv_presenter)
       @csv_presenter.should_receive(:starting_no).and_return(1)
       @csv_presenter.should_receive(:full_name).and_return("Lojzik")
