@@ -63,5 +63,5 @@ gem 'rails_admin', github: 'sferik/rails_admin'
 
 
 gem "devise", "~> 3.0.0.rc"
-gem "turbolinks"
-gem "jquery-turbolinks"
+#gem "turbolinks"
+#gem "jquery-turbolinks"
