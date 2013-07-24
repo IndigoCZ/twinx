@@ -43,7 +43,7 @@ gem 'jquery-rails'
 
 gem 'rails-i18n'
 
-gem 'simple_form', github: 'plataformatec/simple_form'
+gem 'simple_form', "~> 3.0.0.rc" , github: 'plataformatec/simple_form'
 #gem 'client_side_validations'
 #gem 'client_side_validations-simple_form'
 # rails generate simple_form:install --bootstrap
@@ -59,7 +59,7 @@ gem 'prawn_rails'
 
 gem 'coveralls', require: false
 
-gem 'rails_admin', github: 'sferik/rails_admin'
+gem 'rails_admin', "~> 0.5"#, github: 'sferik/rails_admin'
 
 
 gem "devise", "~> 3.0.0.rc"
