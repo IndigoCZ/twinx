@@ -62,6 +62,6 @@ gem 'coveralls', require: false
 gem 'rails_admin', "~> 0.5"#, github: 'sferik/rails_admin'
 
 
-gem "devise", "~> 3.0.0.rc"
+gem "devise", "~> 3.1"
 #gem "turbolinks"
 #gem "jquery-turbolinks"
