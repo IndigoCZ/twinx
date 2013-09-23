@@ -52,7 +52,7 @@ gem 'simple_form', "~> 3.0.0"
 # //= require rails.validations.simple_form
 # rails generate client_side_validations:copy_assets
 
-#gem 'cocoon'
+gem 'cocoon'
 
 gem 'prawn'
 gem 'prawn_rails'
