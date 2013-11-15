@@ -34,7 +34,8 @@ gem 'coffee-rails', '~> 4.0.0'
 
 gem 'uglifier', '>= 1.3.0'
 
-gem 'bootstrap-sass', '~> 2.3.2.0'
+gem 'bootstrap-sass', '~> 3.0.2.0'
+
 # http://railsapps.github.com/twitter-bootstrap-rails.html
 
 gem 'quiet_assets', :group => :development
@@ -59,7 +60,8 @@ gem 'prawn_rails'
 
 gem 'coveralls', require: false
 
-gem 'rails_admin', "~> 0.5"#, github: 'sferik/rails_admin'
+#gem 'rails_admin', "~> 0.5"#, github: 'sferik/rails_admin'
+gem 'rails_admin', github: 'sferik/rails_admin'
 
 
 gem "devise", "~> 3.1"
