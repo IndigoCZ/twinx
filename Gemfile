@@ -60,9 +60,8 @@ gem 'prawn_rails'
 
 gem 'coveralls', require: false
 
-#gem 'rails_admin', "~> 0.5"#, github: 'sferik/rails_admin'
-gem 'rails_admin', github: 'sferik/rails_admin'
-
+gem 'rails_admin', "~> 0.6"
+#gem 'rails_admin', github: 'sferik/rails_admin'
 
 gem "devise", "~> 3.1"
 #gem "turbolinks"
