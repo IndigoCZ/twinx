@@ -1,4 +1,4 @@
-<%= link_to "Twinx", root_path, :class => 'brand' %>
+<%= link_to "Twinx", root_path, :class => 'navbar-brand' %>
 
 <% if @current_race %>
   <% if request[:controller]=="results" %>
@@ -6,7 +6,7 @@
   <% else %>
     <%= link_to "Nový Účastník", new_race_participant_path(@current_race), class:"btn btn-success pull-left" %>
   <% end %>
-  <ul class="nav pull-left">
+  <ul class="nav navbar-nav">
     <%# nav_link "Nový Účastník", new_race_participant_path(@current_race), wrapper_class:"nav-success" %>
     <%= nav_link "Účastníci", race_participants_path(@current_race)        %>
     <%= nav_link "Výsledky" , race_results_path(@current_race)             %>
