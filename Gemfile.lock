@@ -238,7 +238,7 @@ DEPENDENCIES
   prawn
   prawn_rails
   quiet_assets
-  rails (~> 4.0.0)
+  rails (~> 4.0.2)
   rails-i18n
   rails_admin (~> 0.6)
   rspec-rails
