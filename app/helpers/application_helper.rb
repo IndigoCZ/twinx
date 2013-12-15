@@ -12,24 +12,11 @@ module ApplicationHelper
   end
 
   def sort_link(text,attr=nil)
-    content_tag(:ul, :class =>"nav nav-pills header-pills") do
-      content_tag(:li,actual_sort_link(text,attr))
-    end
+    link_to(text, sort_url(attr), id:"#{attr}_sort", class:"btn btn-default")
   end
 
-  def actual_sort_link(text,attr)
-    new_params=params.dup
-    attr||="default"
-    attr=attr.to_s
-    if @navigator.reverse_sort || @navigator.sort_by!=attr
-      new_params.delete(:rsort)
-      new_params[:sort]=attr
-    else
-      new_params.delete(:sort)
-      new_params[:rsort]=attr
-    end
-    new_params.delete(:sort) if new_params[:sort]=="default"
-    link_to(text, url_for(new_params), id:"#{attr}_sort")
+  def unsortable(text)
+    link_to text, "#", class:"btn btn-default disabled"
   end
 
   def filter_combo(text,attr)
@@ -44,6 +31,23 @@ module ApplicationHelper
       new_params[:filter]="#{attr}_#{model.id}"
       bottom_rows<<link_to(model.title, url_for(new_params))
     end
-    render( partial:"controls/dropdown", locals:{dropdown_id:"#{attr}_filter",top_row:actual_sort_link(text,attr),bottom_rows:bottom_rows})
+    render( partial:"controls/dropdown", locals:{dropdown_id:"#{attr}_filter",top_row:sort_link(text,attr),bottom_rows:bottom_rows})
+  end
+
+  private
+
+  def sort_url(attr)
+    new_params=params.dup
+    attr||="default"
+    attr=attr.to_s
+    if @navigator.reverse_sort || @navigator.sort_by!=attr
+      new_params.delete(:rsort)
+      new_params[:sort]=attr
+    else
+      new_params.delete(:sort)
+      new_params[:rsort]=attr
+    end
+    new_params.delete(:sort) if new_params[:sort]=="default"
+    url_for(new_params)
   end
 end
