@@ -4,10 +4,10 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th>Název</th>
-        <th>Počet Účastníků</th>
-        <th>Body</th>
-        <th>Akce</th>
+        <th><%= unsortable("Název") %></th>
+        <th><%= unsortable("Počet Účastníků") %></th>
+        <th><%= unsortable("Body") %></th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -22,8 +22,8 @@
       <% end %>
       <td>
         <div class="btn-group">
-          <%= link_to 'Startovní listina', race_participants_path(@current_race,filter:"team_#{team.id}"), :class => 'btn btn-mini' %>
-          <button class="btn btn-mini dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+          <%= link_to 'Startovní listina', race_participants_path(@current_race,filter:"team_#{team.id}"), :class => 'btn btn-xs btn-default' %>
+          <button class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
           <ul class="dropdown-menu">
             <li><%= link_to 'Výsledková listina', race_results_path(@current_race,filter:"team_#{team.id}") %></li>
           </ul>
