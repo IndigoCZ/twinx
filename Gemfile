@@ -32,9 +32,9 @@ gem 'coffee-rails', '~> 4.0.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', :platforms => :ruby
 
-gem 'uglifier', '>= 1.3.0'
+gem 'uglifier', '>= 2.0'
 
-gem 'bootstrap-sass', '~> 3.0.2.0'
+gem 'bootstrap-sass', '~> 3.0.2'
 
 # http://railsapps.github.com/twitter-bootstrap-rails.html
 
