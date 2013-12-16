@@ -1,22 +1,37 @@
-<%= simple_form_for([@current_race, @participant]) do |f| %>
+<div class="col-lg-8">
+  <%= simple_form_for([@current_race, @participant]) do |f| %>
   <%= f.error_notification %>
 
-  <div class="form-inputs">
     <%= f.input :starting_no %>
     <%= f.simple_fields_for(@person) do |p| %>
       <%= p.input :first_name %>
       <%= p.input :last_name %>
       <%= p.input :yob, input_html:{ class:'restrict_yob' } %>
-      <%= p.input :gender, as: :radio_buttons, collection:[:male,:female], input_html:{ class:'restrict_gender' } %>
-      <%= p.association :county, collection:County.order('title'), :prompt => "Prosím zvolte jednotu." %>
-      <%= p.input :born, discard_year:true, include_blank:true %>
-    <% end %>
-    <%= f.association :category, collection:Category.where(race_id:@current_race.id), :prompt => "Prosím zvolte kategorii.",
-      input_html:{ class:'restricted',data:{ restrict_gender:@person.gender,restrict_yob:@person.yob,source:race_categories_path(@current_race)} }
-    %>
-  </div>
+      <%#= p.input :gender, as: :radio_buttons, collection:[:male,:female], input_html:{ class:'restrict_gender' } %>
+      <div class="form-group radio_buttons required participant_person_gender">
+      <label class="radio_buttons required col-lg-2 control-label"><abbr title="povinné">*</abbr> Pohlaví</label>
+      <div class="col-lg-10">
+        <div class="radio">
+          <label class="radio">
+            <input <% if @person.gender=="male" %>checked="checked"<% end %> class="radio_buttons required restrict_gender" id="participant_person_gender_male" name="participant[person][gender]" type="radio" value="male">
+            Muž
+          </label>
+        </div>
+        <div class="radio">
+          <label class="radio">
+            <input <% if @person.gender=="female" %>checked="checked"<% end %> class="radio_buttons required restrict_gender" id="participant_person_gender_female" name="participant[person][gender]" type="radio" value="female">
+            Žena
+          </label>
+        </div>
+      </div>
+    </div> 
+    <%= p.association :county, collection:County.order('title'), :prompt => "Prosím zvolte jednotu." %>
+    <%= p.input :born, discard_year:true, include_blank:true %>
+  <% end %>
+  <%= f.association :category, collection:Category.where(race_id:@current_race.id), :prompt => "Prosím zvolte kategorii.",
+    input_html:{ class:'restricted',data:{ restrict_gender:@person.gender,restrict_yob:@person.yob,source:race_categories_path(@current_race)} }
+  %>
 
-  <div class="form-actions">
-    <%= f.button :submit %>
-  </div>
+  <%= f.button :submit %>
 <% end %>
+</div>
