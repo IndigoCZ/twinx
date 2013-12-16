@@ -17,10 +17,10 @@ class ParticipantsController < ApplicationController
   end
   def create
     @person=Person.new(params[:participant].delete(:person))
+    @participant=Participant.new(participant_params)
     if @person.save
       @person.dedup
       @team=Team.with_race_and_title(@current_race,@person.county.title)
-      @participant=Participant.new(participant_params)
       @participant.team_id=@team.id
       @participant.person_id=@person.id
       session[:last_county_id]=@person.county.id
