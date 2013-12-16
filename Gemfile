@@ -55,7 +55,7 @@ gem 'simple_form', "~> 3.0.0"
 
 gem 'cocoon'
 
-gem 'prawn'
+gem 'prawn', "~> 0.12.0"
 gem 'prawn_rails'
 
 gem 'coveralls', require: false
