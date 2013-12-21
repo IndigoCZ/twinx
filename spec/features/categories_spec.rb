@@ -59,7 +59,9 @@ describe "Categories" do
     click_link "Přidat"
     select "Věk do", from:"Typ"
     fill_in "Hodnota", with:"16"
-    click_button "Vytvořit"
+    expect{
+      click_button "Vytvořit"
+    }.to change(Constraint,:count).by(1)
     page.should have_content("Kategorie byla úspěšně vytvořena.")
   end
 
@@ -69,7 +71,9 @@ describe "Categories" do
     click_link "Přidat"
     select "Pohlaví", from:"Typ"
     fill_in "Hodnota", with:"male"
-    click_button "Vytvořit"
+    expect{
+      click_button "Vytvořit"
+    }.to change(Constraint,:count).by(1)
     page.should have_content("Kategorie byla úspěšně vytvořena.")
   end
 
