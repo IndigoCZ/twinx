@@ -77,4 +77,6 @@ describe "Categories" do
     page.should have_content("Kategorie byla úspěšně vytvořena.")
   end
 
+  it "allows me to remove a constraint when editing"
+
 end

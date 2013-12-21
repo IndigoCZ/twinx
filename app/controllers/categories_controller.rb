@@ -43,6 +43,6 @@ class CategoriesController < ApplicationController
   private
   def category_params
     # There may be a problem with removal of individual constraints!
-    params.require(:category).permit(:race_id, :title, :code, :sort_order, :difficulty, constraints_attributes: [:constraint_id, :restrict, :value])
+    params.require(:category).permit(:race_id, :title, :code, :sort_order, :difficulty, constraints_attributes: [:id, :restrict, :value, :_destroy])
   end
 end
