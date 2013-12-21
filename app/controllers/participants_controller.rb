@@ -16,19 +16,27 @@ class ParticipantsController < ApplicationController
 		@participant.starting_no=session[:last_starting_no].to_i+1
   end
   def create
+    logger.info "Prepare Person"
     @person=Person.new(params[:participant].delete(:person))
+    logger.info "Prepare Participant"
     @participant=Participant.new(participant_params)
+    logger.info "Try to save Person"
     if @person.save
       @person.dedup
       @team=Team.with_race_and_title(@current_race,@person.county.title)
       @participant.team_id=@team.id
       @participant.person_id=@person.id
       session[:last_county_id]=@person.county.id
+      logger.info "Try to save Participant"
       if @participant.save
         session[:last_starting_no]=@participant.starting_no
         redirect_to new_race_participant_url(@current_race), notice:'Účastník byl úspěšně vytvořen.'
         return
+      else
+        logger.info "Failed to save Participant"
       end
+    else
+      logger.info "Failed to save Person"
     end
     render action: "new"
   end
