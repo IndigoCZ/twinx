@@ -38,6 +38,6 @@ class ResultsController < ApplicationController
   end
   private
   def result_params
-    params.require(:result).permit(:position, :time, :participant_id, :starting_no)
+    params.require(:result).permit(:position, :participant_id, :starting_no, time:[:min,:sec,:fract])
   end
 end

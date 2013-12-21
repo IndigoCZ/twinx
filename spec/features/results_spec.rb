@@ -29,16 +29,16 @@ describe "Results" do
 
   it "creates a new complete result when I fill in starting_no, time and position into the new result form" do
     expect{
-    visit new_race_result_path(:race_id => @race.id)
-    fill_in "Startovní č.", with:@participant.starting_no
-    fill_in "Pozice", with:112
-    fill_in "result_time_min", with:2
-    fill_in "result_time_sec", with:3
-    fill_in "result_time_fract", with:45
-    click_button "Vytvořit"
-    page.should have_content("Výsledek byl úspěšně vytvořen.")
+      visit new_race_result_path(:race_id => @race.id)
+      fill_in "Startovní č.", with:@participant.starting_no
+      fill_in "Pozice", with:112
+      fill_in "result_time_min", with:2
+      fill_in "result_time_sec", with:3
+      fill_in "result_time_fract", with:45
+      click_button "Vytvořit"
+      page.should have_content("Výsledek byl úspěšně vytvořen.")
     }.to change(Result,:count).by(1)
-    #page.should have_content("2:03.450")
+    @participant.result.time.to_i.should eq 123450
   end
 
   it "shows details of an existing result when I visit /:result_id" do
