@@ -23,6 +23,10 @@ group :development, :test do
   gem 'webrick' # Bug in regular webrick
 end
 
+group :production do
+  gem 'unicorn'
+end
+
 # Gems used only for assets and not required
 # in production environments by default.
 gem 'sass-rails',   '~> 4.0.0'
