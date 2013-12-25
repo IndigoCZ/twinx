@@ -10,6 +10,7 @@
   <p><div class="btn-group">
     <%= link_to "Kategorie", race_categories_path(race)  , class:"btn btn-large btn-default span2" %>
     <%= link_to "Jednoty"  , race_teams_path(race)       , class:"btn btn-large btn-default span2" %>
+    <%= link_to "Upravit"  , edit_race_path(race)        , class:"btn btn-large btn-default span2" %>
     <%= link_to "Smazat"   , race                        , class:"btn btn-large btn-danger span2", method: :delete, data: { confirm: 'Jste si jisti?' } %>
   </div></p>
 </div>
@@ -27,6 +28,7 @@
         <p><div class="btn-group">
           <%= link_to "Kategorie", race_categories_path(race)  , class:"btn btn-default span1" %>
           <%= link_to "Jednoty"  , race_teams_path(race)       , class:"btn btn-default span1" %>
+          <%= link_to "Upravit"  , edit_race_path(race)        , class:"btn btn-default span1" %>
           <%= link_to "Smazat"   , race                        , class:"btn btn-danger span1", method: :delete , data: { confirm: 'Jste si jisti?' } %>
         </div></p>
       </div>

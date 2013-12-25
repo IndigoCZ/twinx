@@ -24,11 +24,13 @@ describe "Races" do
     hero.should have_link("Výsledky")
     hero.should have_link("Kategorie")
     hero.should have_link("Jednoty")
+    hero.should have_link("Upravit")
     thumb=first("div.thumbnail")
     thumb.should have_link("Účastníci")
     thumb.should have_link("Výsledky")
     thumb.should have_link("Kategorie")
     thumb.should have_link("Jednoty")
+    thumb.should have_link("Upravit")
   end
 
   it "shows the new race form when I visit /new" do
