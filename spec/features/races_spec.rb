@@ -17,6 +17,7 @@ describe "Races" do
     page.should have_content("Přehled Závodů")
     page.should have_content("first race title")
   end
+  # Replace with a test that ensures these links work!
   it "shows important links for each race" do
     visit root_url
     hero=find("#hero_race")
@@ -47,6 +48,7 @@ describe "Races" do
     page.should have_content("Závod byl úspěšně vytvořen.")
   end
 
+  # Not accessible, perhaps it should be removed
   it "shows details of an existing race when I visit /:race_id" do
     race.save
     visit race_path(race.id)
@@ -86,9 +88,3 @@ describe "Races" do
     page.should have_content "Přehled Závodů"
   end
 end
-# encoding: UTF-8
-require 'spec_helper'
-
-describe "Front_Page" do
-end
-
