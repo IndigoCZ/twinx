@@ -39,6 +39,7 @@ cs:
           one: "Jednota"
           few: "Jednoty"
           many: "Jednot"
+          other: "Jednota"
         category: "Kategorie"
         constraint: "Omezení"
         race: "Závod"
