@@ -54,6 +54,13 @@ class Category < ActiveRecord::Base
     cat
   end
   def self.categories_from_ruleset
-    @categories_from_ruleset||=YAML.load_file('config/rulesets/orel2012.yml')["categories"]
+    @@categories_from_ruleset||=YAML.load_file(self.ruleset_file)["categories"]
+  end
+  def self.set_ruleset_file(ruleset)
+    @@ruleset_file=ruleset
+    @@categories_from_ruleset=nil
+  end
+  def self.ruleset_file
+    @@ruleset_file||'config/rulesets/orel2012.yml'
   end
 end
