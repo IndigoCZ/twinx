@@ -1,5 +1,7 @@
 # encoding: UTF-8
 class Category < ActiveRecord::Base
+  @@ruleset_file=nil
+  @@categories_from_ruleset=nil
   extend ModelDependencyHandling
   belongs_to :race
   has_many :participants
