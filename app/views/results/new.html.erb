@@ -2,25 +2,26 @@
 
 <%= render 'form' %>
 <% if @previous_result %>
-<div class="col-lg-8">
-<h1>Předchozí výsledek</h1>
-  <p>
-  <b>Pozice:</b> <%= @previous_result.position %>
-  </p>
-  <p>
-  <b>Kategorie:</b> <%= @previous_result.participant.category.title %>
-  </p>
-  <p>
-  <b>Startovní číslo:</b> <%= @previous_result.participant.starting_no %>
-  </p>
-  <p>
-  <b>Účastník:</b> <%= @previous_result.participant.person.display_name %>
-  </p>
-  <p>
-  <b>Čas:</b> <%= @previous_result.time %>
-  </p>
-</div>
+  <div class="col-lg-12 alert alert-info">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <h1>Předchozí výsledek</h1>
+    <p>
+    <b>Pozice:</b> <%= @previous_result.position %>
+    </p>
+    <p>
+    <b>Kategorie:</b> <%= @previous_result.participant.category.title %>
+    </p>
+    <p>
+    <b>Startovní číslo:</b> <%= @previous_result.participant.starting_no %>
+    </p>
+    <p>
+    <b>Účastník:</b> <%= @previous_result.participant.person.display_name %>
+    </p>
+    <p>
+    <b>Čas:</b> <%= @previous_result.time %>
+    </p>
+  </div>
 <% end %>
-<div class="col-lg-8">
-<%= link_to 'Zpět', race_results_path(@current_race), class:"btn btn-default" %>
+<div class="col-lg-12">
+  <%= link_to 'Zpět', race_results_path(@current_race), class:"btn btn-default" %>
 </div>
