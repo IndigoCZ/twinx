@@ -2,7 +2,7 @@ namespace :twinx do
   desc "Load categories and constraints from a ruleset file"
   task :prep_race => :environment do
     new_race=Race.find(6)
-    ruleset_file="config/rulesets/orel2012.yml"
+    ruleset_file="config/rulesets/moutnice2014.yml"
     ruleset=YAML.load_file(ruleset_file)
     Category.set_ruleset_file(ruleset_file)
     ruleset["categories"].each_key do |code|
