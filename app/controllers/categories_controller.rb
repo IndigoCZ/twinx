@@ -4,7 +4,7 @@ class CategoriesController < ApplicationController
   extend DefaultControllerActions
   default_update(Category)
   def index
-    @categories=Category.for_race(@current_race)
+    @categories=Category.for_race(@current_race).order("categories.sort_order ASC")
     if params[:gender] && params[:yob]
       @categories=CategoryPicker.new(@categories).pick(params)
     end
