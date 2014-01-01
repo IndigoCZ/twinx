@@ -41,6 +41,21 @@ describe "Results" do
       @participant.result.time.to_i.should eq 123450
     end
 
+    it "shows details of a newly created result when a result is entered" do
+      visit new_race_result_path(:race_id => @race.id)
+      fill_in "Startovní č.", with:@participant.starting_no
+      fill_in "Pozice", with:112
+      fill_in "result_time_min", with:2
+      fill_in "result_time_sec", with:3
+      fill_in "result_time_fract", with:45
+      click_button "Vytvořit"
+      page.should have_content("Pozice: 112")
+      page.should have_content("Kategorie: #{@participant.category.title}")
+      page.should have_content("Startovní číslo: #{@participant.starting_no}")
+      page.should have_content("Účastník: #{@participant.person.display_name}")
+      page.should have_content("Čas: 2:03.450")
+    end
+
     it "shows details of an existing result when I visit /:result_id" do
       result=FactoryGirl.create(:result, participant_id:@participant.id)
       visit race_result_path(@race.id, result.id)
