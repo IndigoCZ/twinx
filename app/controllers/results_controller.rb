@@ -11,7 +11,7 @@ class ResultsController < ApplicationController
   end
   def new
     @result = Result.new
-    @previous_result=Result.find(prev_result_params[:previous_id]) if prev_result_params[:previous_id]
+    @previous_result=Result.find(previous_id) if previous_id
   end
   def create
     @result = Result.new(result_params)
@@ -41,7 +41,7 @@ class ResultsController < ApplicationController
   def result_params
     params.require(:result).permit(:position, :participant_id, :starting_no, time:[:min,:sec,:fract])
   end
-  def prev_result_params
-    params.permit(:previous_id)
+  def previous_id
+    params.permit(:previous_id)[:previous_id]
   end
 end
