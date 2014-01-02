@@ -1,22 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Startovní číslo:</b>
-  <%= @participant.starting_no %>
-</p>
-<p>
-  <b>Jméno:</b>
-  <%= @participant.display_name %>
-</p>
-<p>
-  <b>Kategorie:</b>
-  <%= @participant.category.title %>
-</p>
-<p>
-  <b>Jednota:</b>
-  <%= @participant.team.title %>
-</p>
-
+<%= render partial:'detail', locals:{participant:@participant} %>
 
 <%= link_to 'Upravit', edit_race_participant_path(@current_race,@participant) %> |
 <%= link_to 'Zpět', race_participants_path(@current_race) %>

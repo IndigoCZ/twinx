@@ -14,6 +14,7 @@ class ParticipantsController < ApplicationController
 		@person.county_id=session[:last_county_id]
     @participant=Participant.new
 		@participant.starting_no=session[:last_starting_no].to_i+1
+    @previous_participant=Participant.find(previous_id) if previous_id
   end
   def create
     logger.info "Prepare Person"
@@ -30,7 +31,7 @@ class ParticipantsController < ApplicationController
       logger.info "Try to save Participant"
       if @participant.save
         session[:last_starting_no]=@participant.starting_no
-        redirect_to new_race_participant_url(@current_race), notice:'Účastník byl úspěšně vytvořen.'
+        redirect_to new_race_participant_url(@current_race,previous_id:@participant.id), notice:'Účastník byl úspěšně vytvořen.'
         return
       else
         logger.info "Failed to save Participant"
@@ -68,5 +69,8 @@ class ParticipantsController < ApplicationController
   private
   def participant_params
       params.require(:participant).permit(:category_id, :starting_no, :team_id, :person_id)
+  end
+  def previous_id
+    params.permit(:previous_id)[:previous_id]
   end
 end

@@ -44,6 +44,22 @@ describe "Participants" do
     }.to change(Participant, :count).by(1)
   end
 
+  it "shows details of a newly created participant when a participant is entered" do
+    visit new_race_participant_path(:race_id => race.id)
+    fill_in "Startovní č.", with:participant.starting_no
+    fill_in "Jméno", with:participant.person.first_name
+    fill_in "Příjmení", with:participant.person.last_name
+    fill_in "Rok nar.", with:participant.person.yob
+    choose gender_to_human(participant.person.gender)
+    select county.title, from:"Jednota"
+    select participant.category.title, from:"Kategorie"
+    click_button "Vytvořit"
+    page.should have_content("Startovní číslo: #{participant.starting_no}")
+    page.should have_content("Jméno: #{participant.person.display_name}")
+    page.should have_content("Kategorie: #{participant.category.title}")
+    page.should have_content("Jednota: #{participant.team.title}")
+  end
+
   it "fills in default starting number and county based on last entry" do
     visit new_race_participant_path(:race_id => race.id)
     fill_in "Startovní č.", with:participant.starting_no
