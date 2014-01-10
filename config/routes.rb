@@ -4,7 +4,7 @@ Twinx::Application.routes.draw do
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
 
   resources :races do
-    resources :teams, only:["index"]
+    resources :teams, only:["index","new","create"]
     resources :categories
     resources :participants
     resources :results

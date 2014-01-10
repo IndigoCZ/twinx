@@ -7,3 +7,4 @@
 * Clean up spec/features/participants_spec.rb
 * Review category sort_order
 * Categories don't show up in results until they have at least one result
+* Missing Tests for Team#new

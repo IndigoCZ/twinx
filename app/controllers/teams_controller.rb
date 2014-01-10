@@ -10,4 +10,22 @@ class TeamsController < ApplicationController
       format.pdf
     end
   end
+
+  def new
+    @team = Team.new
+  end
+
+  def create
+    @team = County.new(team_params)
+    if @team.save
+      redirect_to race_teams_path(@current_race), notice: 'Jednota byla úspěšně vytvořena.'
+    else
+      render action: "new"
+    end
+  end
+
+  private
+  def team_params
+    params.require(:team).permit(:title)
+  end
 end
