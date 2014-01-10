@@ -19,8 +19,9 @@ class ResultsController < ApplicationController
     if @result.save
       redirect_to new_race_result_url(@current_race,previous_id:@result.id), notice: 'Výsledek byl úspěšně vytvořen.'
     else
-      if @result.participant_lookup(true)
-        redirect_to [@current_race, @result.participant_lookup(true).result], alert: 'Výsledek pro účastníka již existuje.'
+      lookup=@result.participant_lookup(true)
+      if lookup && lookup.result
+        redirect_to [@current_race, lookup.result], alert: 'Výsledek pro účastníka již existuje.'
       else
         render action: "new"
       end
