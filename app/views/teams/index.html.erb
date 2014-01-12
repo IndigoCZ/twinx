@@ -14,7 +14,7 @@
     <% @teams.each do |team| %>
       <tr>
       <td><%= team.title %></td>
-      <td><%= team.participants.size %></td>
+      <td><%= team.participants.count %></td>
       <% if params[:limit] %>
         <td><%= team.points(params[:limit]) %></td>
       <% else %>

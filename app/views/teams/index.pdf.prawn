@@ -16,7 +16,7 @@ prawn_document( :page_size => 'A4', :page_layout => :portrait, :margin => 25) do
     data<<{
       title:team.title,
       points:team.points(params[:limit]),
-      participants:team.participants.size
+      participants:team.participants.count
     }
   end
 
