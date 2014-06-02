@@ -1,21 +1,21 @@
 # encoding: UTF-8
 require 'spec_helper'
 
-describe Category do
+describe Category, :type => :model do
   context "Model basics" do
     it "has a valid factory" do
-      FactoryGirl.build(:category).should be_valid
+      expect(FactoryGirl.build(:category)).to be_valid
     end
     it "is invalid without a race" do
-      FactoryGirl.build(:category, race_id:nil).should_not be_valid
+      expect(FactoryGirl.build(:category, race_id:nil)).not_to be_valid
     end
     it "is invalid without a title" do
-      FactoryGirl.build(:category, title:nil).should_not be_valid
+      expect(FactoryGirl.build(:category, title:nil)).not_to be_valid
     end
     it "provides a scope for current race" do
       race=FactoryGirl.create(:race)
       FactoryGirl.create(:category,race:race)
-      race.categories.should be == Category.for_race(race)
+      expect(race.categories).to eq(Category.for_race(race))
     end
     it "can be deleted when empty" do
       @category=FactoryGirl.create(:category)
@@ -58,31 +58,31 @@ describe Category do
       @juniori.constraints.reload
     end
     it "calculates own difficulty based on restrictions" do
-      @seniori.difficulty.should be < @muzi.difficulty
+      expect(@seniori.difficulty).to be < @muzi.difficulty
     end
     it "provides a short description of its restrictions" do
-      @seniori.restriction.should be == "M60+"
-      @zeny.restriction.should be == "F"
-      @juniori.restriction.should be == "M20-"
+      expect(@seniori.restriction).to eq("M60+")
+      expect(@zeny.restriction).to eq("F")
+      expect(@juniori.restriction).to eq("M20-")
     end
 
     it "provides a list of DNF participants" do
       a=FactoryGirl.create(:participant,category:@juniori, starting_no:123)
       b=FactoryGirl.create(:participant,category:@juniori, starting_no:456)
       FactoryGirl.create(:result,participant:a)
-      @juniori.dnfs.should include b
-      @juniori.dnfs.should_not include a
+      expect(@juniori.dnfs).to include b
+      expect(@juniori.dnfs).not_to include a
     end
 
     it "returns a list of categories from a ruleset file" do
-      Category.categories_from_ruleset["M"]["title"].should eq "Muži A"
+      expect(Category.categories_from_ruleset["M"]["title"]).to eq "Muži A"
     end
     it "creates a category by code with details from ruleset file" do
-      Category.first_or_create_by_code(@race,"M").title.should eq "Muži A"
+      expect(Category.first_or_create_by_code(@race,"M").title).to eq "Muži A"
     end
     it "returns a category by code if it exists" do
       @category=FactoryGirl.create(:category,race:@race,code:"M",title:"Other Category")
-      Category.first_or_create_by_code(@race,"M").should eq @category
+      expect(Category.first_or_create_by_code(@race,"M")).to eq @category
     end
   end
 end

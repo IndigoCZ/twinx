@@ -1,20 +1,20 @@
 require 'spec_helper'
 
-describe County do
+describe County, :type => :model do
   it "has a valid factory" do
-    FactoryGirl.create(:county).should be_valid
+    expect(FactoryGirl.create(:county)).to be_valid
   end
   it "is invalid without a title" do
-    FactoryGirl.build(:county, title:nil).should_not be_valid
+    expect(FactoryGirl.build(:county, title:nil)).not_to be_valid
   end
   it "requires a unique county title" do
     DatabaseCleaner.clean
     c1=County.new(title:"Duplicate")
-    c1.should be_valid
+    expect(c1).to be_valid
     c2=County.new(title:"Duplicate")
-    c2.should be_valid
+    expect(c2).to be_valid
     c1.save
-    c2.should_not be_valid
+    expect(c2).not_to be_valid
   end
   it "can be deleted when empty" do
     @county=FactoryGirl.create(:county)

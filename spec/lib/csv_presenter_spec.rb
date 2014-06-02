@@ -6,35 +6,35 @@ describe CSVPresenter do
     @team=double("Person")
     @category=double("Category")
     @result=double("Team")
-    @participant.stub(:person).and_return(@person)
-    @participant.stub(:team).and_return(@team)
-    @participant.stub(:category).and_return(@category)
-    @participant.stub(:result).and_return(@result)
+    allow(@participant).to receive(:person).and_return(@person)
+    allow(@participant).to receive(:team).and_return(@team)
+    allow(@participant).to receive(:category).and_return(@category)
+    allow(@participant).to receive(:result).and_return(@result)
   end
   it "loads up the person, result, team and category for the Participant when instantiated" do
-    @participant.should_receive(:person)
-    @participant.should_receive(:result)
-    @participant.should_receive(:team)
-    @participant.should_receive(:category)
+    expect(@participant).to receive(:person)
+    expect(@participant).to receive(:result)
+    expect(@participant).to receive(:team)
+    expect(@participant).to receive(:category)
     CSVPresenter.new(@participant)
   end
   it "presents a NullResult when no result is found" do
-    @participant.should_receive(:result).and_return(nil)
+    expect(@participant).to receive(:result).and_return(nil)
     presenter=CSVPresenter.new(@participant)
-    presenter.position.should eq "DNF"
-    presenter.time.should eq nil
+    expect(presenter.position).to eq "DNF"
+    expect(presenter.time).to eq nil
   end
   it "forwards the methods to relevant objects" do
     presenter=CSVPresenter.new(@participant)
-    @participant.should_receive(:starting_no)
+    expect(@participant).to receive(:starting_no)
     presenter.starting_no
-    @person.should_receive(:first_name)
+    expect(@person).to receive(:first_name)
     presenter.first_name
-    @result.should_receive(:time)
+    expect(@result).to receive(:time)
     presenter.time
-    @team.should_receive(:title)
+    expect(@team).to receive(:title)
     presenter.team
-    @category.should_receive(:code)
+    expect(@category).to receive(:code)
     presenter.category
   end
 end

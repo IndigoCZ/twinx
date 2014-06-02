@@ -1,7 +1,7 @@
 # encoding: UTF-8
 require 'spec_helper'
 
-describe "Results" do
+describe "Results", :type => :feature do
   context "Basic model" do
     before :each do
       DatabaseCleaner.clean
@@ -16,7 +16,7 @@ describe "Results" do
 
     it "shows the new result form when I visit /new" do
       visit new_race_result_path(:race_id => @race.id)
-      page.should have_content("Nový výsledek")
+      expect(page).to have_content("Nový výsledek")
     end
 
     it "creates a new position result when I fill in starting_no and position into the new result form" do
@@ -24,7 +24,7 @@ describe "Results" do
       fill_in "Startovní č.", with:@participant.starting_no
       fill_in "Pozice", with:113
       click_button "Vytvořit"
-      page.should have_content("Výsledek byl úspěšně vytvořen.")
+      expect(page).to have_content("Výsledek byl úspěšně vytvořen.")
     end
 
     it "creates a new complete result when I fill in starting_no, time and position into the new result form" do
@@ -36,9 +36,9 @@ describe "Results" do
         fill_in "result_time_sec", with:3
         fill_in "result_time_fract", with:45
         click_button "Vytvořit"
-        page.should have_content("Výsledek byl úspěšně vytvořen.")
+        expect(page).to have_content("Výsledek byl úspěšně vytvořen.")
       }.to change(Result,:count).by(1)
-      @participant.result.time.to_i.should eq 123450
+      expect(@participant.result.time.to_i).to eq 123450
     end
 
     it "shows details of a newly created result when a result is entered" do
@@ -49,17 +49,17 @@ describe "Results" do
       fill_in "result_time_sec", with:3
       fill_in "result_time_fract", with:45
       click_button "Vytvořit"
-      page.should have_content("Pozice: 112")
-      page.should have_content("Kategorie: #{@participant.category.title}")
-      page.should have_content("Startovní číslo: #{@participant.starting_no}")
-      page.should have_content("Účastník: #{@participant.person.display_name}")
-      page.should have_content("Čas: 2:03.450")
+      expect(page).to have_content("Pozice: 112")
+      expect(page).to have_content("Kategorie: #{@participant.category.title}")
+      expect(page).to have_content("Startovní číslo: #{@participant.starting_no}")
+      expect(page).to have_content("Účastník: #{@participant.person.display_name}")
+      expect(page).to have_content("Čas: 2:03.450")
     end
 
     it "shows details of an existing result when I visit /:result_id" do
       result=FactoryGirl.create(:result, participant_id:@participant.id)
       visit race_result_path(@race.id, result.id)
-      page.should have_content(result.participant.display_name)
+      expect(page).to have_content(result.participant.display_name)
     end
 
     it "updates a result when I fill in the edit result form" do
@@ -67,14 +67,14 @@ describe "Results" do
       visit edit_race_result_path(@race.id, result.id)
       fill_in "Pozice", with:1
       click_button "Uložit Výsledek"
-      page.should have_content("Výsledek byl úspěšně upraven.")
+      expect(page).to have_content("Výsledek byl úspěšně upraven.")
     end
 
     it "shows a listing of results when I visit the index" do
       result=FactoryGirl.create(:result, participant_id:@participant.id)
       visit race_results_path(@race.id)
-      page.should have_content "Přehled Výsledků"
-      page.should have_content result.participant.display_name
+      expect(page).to have_content "Přehled Výsledků"
+      expect(page).to have_content result.participant.display_name
     end
 
     it "allows sorting of results on the index" do
@@ -86,10 +86,10 @@ describe "Results" do
       a_result=FactoryGirl.create(:result, position:2, participant:a_participant)
 
       visit race_results_path(@race.id)
-      page.should have_content(/ZZZZZ.*AAAAA/)
-      page.find("#name_sort").should have_content "Jméno"
+      expect(page).to have_content(/ZZZZZ.*AAAAA/)
+      expect(page.find("#name_sort")).to have_content "Jméno"
       page.find("#name_sort").click
-      page.should have_content(/AAAAA.*ZZZZZ/)
+      expect(page).to have_content(/AAAAA.*ZZZZZ/)
     end
     it "allows filtering of results on the index", js:true do
       DatabaseCleaner.clean
@@ -104,28 +104,28 @@ describe "Results" do
       a_result=FactoryGirl.create(:result, position:1, participant:a_participant)
 
       visit race_results_path(this_race.id)
-      page.should have_content(/ZZZZZ.*AAAAA/)
-      page.find("#category_filter").should have_content "Kategorie"
+      expect(page).to have_content(/ZZZZZ.*AAAAA/)
+      expect(page.find("#category_filter")).to have_content "Kategorie"
       page.find("#category_filter").find(".dropdown-toggle").click
-      page.find("#category_filter").should have_content "AAAAA"
+      expect(page.find("#category_filter")).to have_content "AAAAA"
       within("#category_filter") { click_link "AAAAA" }
-      page.should have_content("AAAAA")
-      page.should_not have_content("ZZZZZ")
+      expect(page).to have_content("AAAAA")
+      expect(page).not_to have_content("ZZZZZ")
     end
 
     it "deletes a result when I click the delete button", js:true do
       DatabaseCleaner.clean
       existing_result=FactoryGirl.create(:result)
       visit race_results_path(existing_result.participant.race.id)
-      page.should have_content existing_result.participant.display_name
+      expect(page).to have_content existing_result.participant.display_name
       page.find("tbody").find(".dropdown-toggle").click
-      page.should have_content "Smazat"
+      expect(page).to have_content "Smazat"
       expect{
         click_link 'Smazat'
         accept_popup(page)
-        page.should_not have_content existing_result.participant.display_name
+        expect(page).not_to have_content existing_result.participant.display_name
       }.to change(Result,:count).by(-1)
-      page.should have_content "Přehled Výsledků"
+      expect(page).to have_content "Přehled Výsledků"
     end
   end
 
@@ -154,8 +154,8 @@ describe "Results" do
       fill_in "Startovní č.", with:existing_participant.starting_no
       fill_in "Pozice", with:111
       click_button "Vytvořit"
-      URI.parse(current_url).path.should == race_result_path(existing_race.id,existing_result.id)
-      page.should have_content("Výsledek pro účastníka již existuje.")
+      expect(URI.parse(current_url).path).to eq(race_result_path(existing_race.id,existing_result.id))
+      expect(page).to have_content("Výsledek pro účastníka již existuje.")
     end
     it "allows me to create a result even when there is a duplicate starting no in another race" do
       DatabaseCleaner.clean
@@ -173,9 +173,9 @@ describe "Results" do
       fill_in "Startovní č.", with:123
       fill_in "Pozice", with:111
       click_button "Vytvořit"
-      page.should have_content("Výsledek byl úspěšně vytvořen.")
-      runner1.result.should be_nil
-      runner2.result.position.should eq 111
+      expect(page).to have_content("Výsledek byl úspěšně vytvořen.")
+      expect(runner1.result).to be_nil
+      expect(runner2.result.position).to eq 111
     end
   end
 end

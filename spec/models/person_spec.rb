@@ -1,33 +1,33 @@
 require 'spec_helper'
 
-describe Person do
+describe Person, :type => :model do
   context "Model basics" do
     it "has a valid factory" do
-      FactoryGirl.build(:person).should be_valid
+      expect(FactoryGirl.build(:person)).to be_valid
     end
     it "is invalid without a first name" do
-      FactoryGirl.build(:person, first_name:nil).should_not be_valid
+      expect(FactoryGirl.build(:person, first_name:nil)).not_to be_valid
     end
     it "is invalid without a last name" do
-      FactoryGirl.build(:person, last_name:nil).should_not be_valid
+      expect(FactoryGirl.build(:person, last_name:nil)).not_to be_valid
     end
     it "is invalid without a YOB" do
-      FactoryGirl.build(:person, yob:nil).should_not be_valid
+      expect(FactoryGirl.build(:person, yob:nil)).not_to be_valid
     end
     it "is invalid when born before 1900" do
-      FactoryGirl.build(:person, yob:1899).should_not be_valid
+      expect(FactoryGirl.build(:person, yob:1899)).not_to be_valid
     end
     it "is invalid when born in the future YOB" do
-      FactoryGirl.build(:person, yob:(Time.now.year+1)).should_not be_valid
+      expect(FactoryGirl.build(:person, yob:(Time.now.year+1))).not_to be_valid
     end
     it "is invalid without a county" do
-      FactoryGirl.build(:person, county_id:nil).should_not be_valid
+      expect(FactoryGirl.build(:person, county_id:nil)).not_to be_valid
     end
     it "is invalid without gender" do
-      FactoryGirl.build(:person, gender:nil).should_not be_valid
+      expect(FactoryGirl.build(:person, gender:nil)).not_to be_valid
     end
     it "is invalid with a gender other than male/female" do
-      FactoryGirl.build(:person, gender:"none").should_not be_valid
+      expect(FactoryGirl.build(:person, gender:"none")).not_to be_valid
     end
     it "can be deleted when empty" do
       @person=FactoryGirl.create(:person)
@@ -58,20 +58,20 @@ describe Person do
       participant2=FactoryGirl.create(:participant, person_id:@person2.id)
       participant3=FactoryGirl.create(:participant, person_id:@person3.id)
       @person1.merge(@person2)
-      @person2.persisted?.should be_falsey
-      @person1.id_string.should eq "MERGE THIS"
+      expect(@person2.persisted?).to be_falsey
+      expect(@person1.id_string).to eq "MERGE THIS"
       @person1.merge(@person3)
-      @person3.persisted?.should be_falsey
-      @person1.born.should eq Date.new(@person1.yob,1,1)
-      @person1.participants.should eq [participant1,participant2,participant3]
+      expect(@person3.persisted?).to be_falsey
+      expect(@person1.born).to eq Date.new(@person1.yob,1,1)
+      expect(@person1.participants).to eq [participant1,participant2,participant3]
     end
     it "Can locate a duplicate person" do
-      @person1.find_dupes.should eq [@person2,@person3]
+      expect(@person1.find_dupes).to eq [@person2,@person3]
     end
     it "Can deduplicate two identical people" do
       @person1.dedup
-      @person1.id_string.should eq "MERGE THIS"
-      @person1.born.should eq Date.new(@person1.yob,1,1)
+      expect(@person1.id_string).to eq "MERGE THIS"
+      expect(@person1.born).to eq Date.new(@person1.yob,1,1)
     end
   end
   context "Complex interactions" do
@@ -79,7 +79,7 @@ describe Person do
       person=FactoryGirl.build(:person,yob:1977)
       person.born=Date.new(1,5,13)
       person.save
-      person.born.to_s.should be == "1977-05-13"
+      expect(person.born.to_s).to eq("1977-05-13")
     end
   end
 end

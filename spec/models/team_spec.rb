@@ -1,17 +1,17 @@
 require 'spec_helper'
 
-describe Team do
+describe Team, :type => :model do
   context "Model basics" do
     it "has a valid factory" do
-      FactoryGirl.build(:team).should be_valid
+      expect(FactoryGirl.build(:team)).to be_valid
     end
     it "is invalid without a race" do
-      FactoryGirl.build(:team, race_id:nil).should_not be_valid
+      expect(FactoryGirl.build(:team, race_id:nil)).not_to be_valid
     end
     it "provides a scope for current race" do
       race=FactoryGirl.create(:race)
       team=FactoryGirl.create(:team,race:race)
-      race.teams.should be == Team.for_race(race)
+      expect(race.teams).to eq(Team.for_race(race))
     end
     it "can be deleted when empty" do
       @team=FactoryGirl.create(:team)
@@ -31,8 +31,8 @@ describe Team do
       a=FactoryGirl.create(:participant,team:@team)
       b=FactoryGirl.create(:participant,team:@team)
       FactoryGirl.create(:result,participant:a)
-      @team.dnfs.should include b
-      @team.dnfs.should_not include a
+      expect(@team.dnfs).to include b
+      expect(@team.dnfs).not_to include a
     end
   end
   context "scoring" do
@@ -44,12 +44,12 @@ describe Team do
       end
     end
     it "provides an overall score for all participants" do
-      @team.points.should eq 71 # 12 10 9 8 7 6 5 4 3 2 1 1 1 1 1
+      expect(@team.points).to eq 71 # 12 10 9 8 7 6 5 4 3 2 1 1 1 1 1
     end
     it "provides a total of the top N scores" do
-      @team.points(1).should eq 12 # 12
-      @team.points(3).should eq 31 # 12 10 9
-      @team.points(9).should eq 64 # 12 10 9 8 7 6 5 4 3
+      expect(@team.points(1)).to eq 12 # 12
+      expect(@team.points(3)).to eq 31 # 12 10 9
+      expect(@team.points(9)).to eq 64 # 12 10 9 8 7 6 5 4 3
     end
   end
   context "lookups" do
@@ -59,7 +59,7 @@ describe Team do
     end
     it "finds a team for race and county if it exists" do
       @team=FactoryGirl.create(:team,race:@race,title:@county.title)
-      Team.with_race_and_title(@race,@county.title).should eq @team
+      expect(Team.with_race_and_title(@race,@county.title)).to eq @team
     end
     it "creates a team for race and county if it exists" do
       expect {
