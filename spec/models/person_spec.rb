@@ -58,10 +58,10 @@ describe Person do
       participant2=FactoryGirl.create(:participant, person_id:@person2.id)
       participant3=FactoryGirl.create(:participant, person_id:@person3.id)
       @person1.merge(@person2)
-      @person2.persisted?.should be_false
+      @person2.persisted?.should be_falsey
       @person1.id_string.should eq "MERGE THIS"
       @person1.merge(@person3)
-      @person3.persisted?.should be_false
+      @person3.persisted?.should be_falsey
       @person1.born.should eq Date.new(@person1.yob,1,1)
       @person1.participants.should eq [participant1,participant2,participant3]
     end

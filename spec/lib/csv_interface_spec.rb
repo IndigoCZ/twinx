@@ -2,16 +2,16 @@ require 'csv_interface'
 describe CSVInterface do
   it "provides a list of valid fields" do
     %w[starting_no first_name last_name full_name gender yob team category position time born id_string].each do |field_name|
-      CSVInterface.valid_field?(field_name).should be_true
+      CSVInterface.valid_field?(field_name).should be_truthy
     end
   end
   it "can check that a header only contains valid fields" do
-    CSVInterface.check_header(%w[starting_no full_name]).should be_true
-    CSVInterface.check_header(%w[xxx]).should be_false
+    CSVInterface.check_header(%w[starting_no full_name]).should be_truthy
+    CSVInterface.check_header(%w[xxx]).should be_falsey
   end
   it "can check that a header contains all required fields" do
-    CSVInterface.check_header(%w[starting_no full_name],%w[full_name]).should be_true
-    CSVInterface.check_header(%w[starting_no],%w[full_name]).should be_false
+    CSVInterface.check_header(%w[starting_no full_name],%w[full_name]).should be_truthy
+    CSVInterface.check_header(%w[starting_no],%w[full_name]).should be_falsey
   end
   context "Export" do
     it "raises an exception when passed an invalid header" do
