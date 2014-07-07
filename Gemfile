@@ -38,7 +38,7 @@ gem 'coffee-rails', '~> 4.0.0'
 
 gem 'uglifier', '>= 2.0'
 
-gem 'bootstrap-sass', '~> 3.0.2'
+gem 'bootstrap-sass', '~> 3.0'
 
 # http://railsapps.github.com/twitter-bootstrap-rails.html
 
