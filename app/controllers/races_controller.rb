@@ -1,7 +1,7 @@
 # encoding: UTF-8
 class RacesController < ApplicationController
   def index
-    @races = Race.order(:held_on).reverse_order
+    @races = Race.order(:held_on).reverse_order.to_a
   end
 
   def show
