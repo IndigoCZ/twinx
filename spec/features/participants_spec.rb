@@ -88,7 +88,7 @@ describe "Participants", :type => :feature do
     fill_in "Příjmení", with:this_person.last_name
     fill_in "Rok nar.", with:this_person.yob
     select '13', from:"participant_person_born_3i"
-    select 'Duben', from:"participant_person_born_2i"
+    select 'duben', from:"participant_person_born_2i"
     choose gender_to_human(this_person.gender)
     select this_county.title, from:"Jednota"
     select this_category.title, from:"Kategorie"
