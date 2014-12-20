@@ -59,8 +59,7 @@ gem 'simple_form', "~> 3.0"
 
 gem 'cocoon'
 
-gem 'prawn', "~> 0.12.0"
-gem 'prawn_rails'
+gem 'prawn-rails', :git => 'https://github.com/cortiz/prawn-rails.git'
 
 gem 'coveralls', require: false
 
