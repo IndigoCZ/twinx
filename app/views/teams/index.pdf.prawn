@@ -1,6 +1,6 @@
 # encoding: UTF-8
-prawn_document( :page_size => 'A4', :page_layout => :portrait, :margin => 25) do |pdf|
-  pdf.font("#{Prawn::BASEDIR}/data/fonts/DejaVuSans.ttf")
+prawn_document do |pdf|
+  pdf.font("vendor/fonts/DejaVuSans.ttf")
   render "layouts/header", :pdf => pdf
 
   header_list={
