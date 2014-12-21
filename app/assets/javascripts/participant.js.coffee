@@ -18,6 +18,24 @@ Participant =
       else
         $('#participant_category_id').append($("<option></option>").attr("value", item["id"]).text(item["title"]))
 
+prepare_field = (data_in_json)->
+  console.log(data_in_json)
+
+  $("#participant_person_county_id").select2
+    createSearchChoice: (term,data) ->
+      if ($(data).filter( ->
+        this.text.localeCompare(term) is 0
+      ).length is 0)
+        id: term,
+        text: term
+    width: '300px'
+    data: data_in_json
+
+ready = ->
+    $.get '/counties/index.json', {}, prepare_field, 'json'
+$(document).ready(ready)
+$(document).on('page:load', ready)
+
 jQuery ->
   $('.restrict_yob').change ->
     $('#participant_category_id').data('restrict-yob',$(this).val())

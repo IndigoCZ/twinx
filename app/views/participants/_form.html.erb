@@ -25,7 +25,10 @@
         </div>
       </div>
     </div> 
-    <%= p.association :county, collection:County.order('title'), :prompt => "Prosím zvolte jednotu." %>
+    <div class="field">
+      <label for="participant_person_county_id">Jednota: </label><br>
+      <input type="hidden" name="participant[person][county_id]" id="participant_person_county_id" value="<%= @person.county_id %>" />
+    </div>
     <%= p.input :born, discard_year:true, include_blank:true %>
   <% end %>
   <%= f.association :category, collection:Category.where(race_id:@current_race.id), :prompt => "Prosím zvolte kategorii.",
