@@ -181,7 +181,7 @@ describe "Participants", :type => :feature do
     expect(page).to have_content("Účastník byl úspěšně upraven.")
   end
 
-  it "creates a new county and team when I fill in a custom County name", js:true do
+  it "creates a new county on create when I fill in a custom County name", js:true do
     expect {
       visit new_race_participant_path(:race_id => race.id)
       fill_in "Startovní č.", with:participant.starting_no
@@ -191,13 +191,30 @@ describe "Participants", :type => :feature do
       choose gender_to_human(participant.person.gender)
 
       page.find(".select2-arrow").click
-      fill_in("Jednota",with:"New County")
+      fill_in("Jednota",with:"Create County")
       page.find(".select2-match").click
 
       select participant.category.title, from:"Kategorie"
       click_button "Vytvořit"
       expect(page).to have_content("Účastník byl úspěšně vytvořen.")
     }.to change(County, :count).by(1)
+    expect(Participant.last.person.county.title).to eq("Create County")
+  end
+
+  it "creates a new county on update when I fill in a custom County name", js:true do
+    participant.save
+    expect {
+      visit edit_race_participant_path(race.id, participant.id)
+
+      page.find(".select2-arrow").click
+      fill_in("Jednota",with:"Update County")
+      page.find(".select2-match").click
+
+      click_button "Uložit Účastníka"
+      expect(page).to have_content("Účastník byl úspěšně upraven.")
+    }.to change(County, :count).by(1)
+    participant.reload
+    expect(participant.person.county.title).to eq("Update County")
   end
 
   it "does not adjust an existing person if the participant details change", js:true do

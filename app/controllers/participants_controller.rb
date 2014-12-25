@@ -61,7 +61,8 @@ class ParticipantsController < ApplicationController
     @participant.attributes=participant_params
     if @person.save
       @person.dedup
-      @team=Team.where(race_id:@current_race.id,county_id:@person.county.id).first_or_create
+      @team=Team.with_race_and_title(@current_race,@person.county.title)
+      #@team=Team.where(race_id:@current_race.id,county_id:@person.county.id).first_or_create
       @participant.team_id=@team.id
       @participant.person_id=@person.id
       if @participant.save
