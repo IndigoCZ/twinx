@@ -52,16 +52,24 @@ class ParticipantsController < ApplicationController
   end
   def update
     @participant=Participant.find(params[:id])
-    @person=@participant.person
-    @person.attributes=params[:participant].delete(:person)
-    @team=Team.where(race_id:@current_race.id,county_id:@person.county.id).first_or_create
-    @participant.team_id=@team.id
+    person_params=params[:participant].delete(:person)
+    @person=Person.new(person_params)
+    handle_new_county(@person,person_params)
+
+    #@person=@participant.person
+    #@person.attributes=params[:participant].delete(:person)
     @participant.attributes=participant_params
-    if @person.save && @participant.save
-      redirect_to [@current_race, @participant], notice:'Účastník byl úspěšně upraven.'
-    else
-      render action: "edit"
+    if @person.save
+      @person.dedup
+      @team=Team.where(race_id:@current_race.id,county_id:@person.county.id).first_or_create
+      @participant.team_id=@team.id
+      @participant.person_id=@person.id
+      if @participant.save
+        redirect_to [@current_race, @participant], notice:'Účastník byl úspěšně upraven.'
+        return true
+      end
     end
+    render action: "edit"
   end
   def destroy
     @participant=Participant.find(params[:id])

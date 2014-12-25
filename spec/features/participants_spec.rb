@@ -200,7 +200,40 @@ describe "Participants", :type => :feature do
     }.to change(County, :count).by(1)
   end
 
-  it "It does not adjust an existing person if the participant details change"
+  it "does not adjust an existing person if the participant details change", js:true do
+    expect {
+      visit new_race_participant_path(:race_id => race.id)
+      fill_in "Startovní č.", with:participant.starting_no
+      fill_in "Jméno", with:participant.person.first_name
+      fill_in "Příjmení", with:participant.person.last_name
+      fill_in "Rok nar.", with:participant.person.yob
+      choose gender_to_human(participant.person.gender)
+
+      page.find(".select2-arrow").click
+      fill_in("Jednota",with:county.title)
+      page.find(".select2-match").click
+      select category.title, from:"Kategorie"
+
+      click_button "Vytvořit"
+      expect(page).to have_content("Účastník byl úspěšně vytvořen.")
+
+      fill_in "Jméno", with:participant.person.first_name
+      fill_in "Příjmení", with:participant.person.last_name
+      fill_in "Rok nar.", with:(participant.person.yob-20)
+      choose gender_to_human(participant.person.gender)
+      select second_category.title, from:"Kategorie"
+
+      click_button "Vytvořit"
+      expect(page).to have_content("Účastník byl úspěšně vytvořen.")
+
+      visit edit_race_participant_path(race.id,Participant.last.id)
+      fill_in "Jméno", with:participant.person.first_name+" Jr."
+      click_button "Uložit"
+      expect(page).to have_content("Účastník byl úspěšně upraven.")
+    }.to change(Person, :count).by(2)
+  end
+
+  it "Handles empty people???"
 
   it "shows a listing of participants when I visit the index" do
     participant.save
