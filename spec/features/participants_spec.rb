@@ -68,23 +68,29 @@ describe "Participants", :type => :feature do
     expect(page).to have_content("Jednota: #{participant.team.title}")
   end
 
-  xit "fills in default starting number and county based on last entry", js:true do
-    visit new_race_participant_path(:race_id => race.id)
-    fill_in "Startovní č.", with:participant.starting_no
-    fill_in "Jméno", with:participant.person.first_name
-    fill_in "Příjmení", with:participant.person.last_name
-    fill_in "Rok nar.", with:participant.person.yob
-    choose gender_to_human(participant.person.gender)
+  it "fills in default starting number and county based on last entry", js:true do
+    expect {
+      visit new_race_participant_path(:race_id => race.id)
+      fill_in "Startovní č.", with:participant.starting_no
+      fill_in "Jméno", with:participant.person.first_name
+      fill_in "Příjmení", with:participant.person.last_name
+      fill_in "Rok nar.", with:participant.person.yob
+      choose gender_to_human(participant.person.gender)
 
-    page.find(".select2-arrow").click
-    fill_in("Jednota",with:county.title)
-    page.find(".select2-match").click
+      page.find(".select2-arrow").click
+      fill_in("Jednota",with:county.title)
+      page.find(".select2-match").click
 
-    select participant.category.title, from:"Kategorie"
-    click_button "Vytvořit"
-    visit new_race_participant_path(:race_id => race.id)
-    expect(page).to have_select('Jednota', :selected => participant.person.county.title)
-    expect(find_field('Startovní č.').value.to_i).to eq(participant.starting_no+1)
+      click_button "Vytvořit"
+      fill_in "Jméno", with:participant.person.first_name
+      fill_in "Příjmení", with:participant.person.last_name
+      fill_in "Rok nar.", with:participant.person.yob
+      choose gender_to_human(participant.person.gender)
+      click_button "Vytvořit"
+
+    }.to change(Participant,:count).by(2)
+    expect(Participant.last.starting_no).to eq(participant.starting_no+1)
+    expect(Participant.last.person.county.title).to eq(county.title)
   end
 
   it "allows a persons birthday to be specified when entering a participant", js:true do
