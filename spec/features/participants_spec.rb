@@ -175,6 +175,27 @@ describe "Participants", :type => :feature do
     expect(page).to have_content("Účastník byl úspěšně upraven.")
   end
 
+  it "creates a new county and team when I fill in a custom County name", js:true do
+    expect {
+      visit new_race_participant_path(:race_id => race.id)
+      fill_in "Startovní č.", with:participant.starting_no
+      fill_in "Jméno", with:participant.person.first_name
+      fill_in "Příjmení", with:participant.person.last_name
+      fill_in "Rok nar.", with:participant.person.yob
+      choose gender_to_human(participant.person.gender)
+
+      page.find(".select2-arrow").click
+      fill_in("Jednota",with:"New County")
+      page.find(".select2-match").click
+
+      select participant.category.title, from:"Kategorie"
+      click_button "Vytvořit"
+      expect(page).to have_content("Účastník byl úspěšně vytvořen.")
+    }.to change(County, :count).by(1)
+  end
+
+  it "It does not adjust an existing person if the participant details change"
+
   it "shows a listing of participants when I visit the index" do
     participant.save
     visit race_participants_path(race.id)

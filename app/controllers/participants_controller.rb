@@ -18,7 +18,9 @@ class ParticipantsController < ApplicationController
   end
   def create
     logger.info "Prepare Person"
-    @person=Person.new(params[:participant].delete(:person))
+    person_params=params[:participant].delete(:person)
+    @person=Person.new(person_params)
+    handle_new_county(@person,person_params)
     logger.info "Prepare Participant"
     @participant=Participant.new(participant_params)
     logger.info "Try to save Person"
@@ -72,5 +74,15 @@ class ParticipantsController < ApplicationController
   end
   def previous_id
     params.permit(:previous_id)[:previous_id]
+  end
+  def handle_new_county(person,original_params)
+    if person.county
+      logger.info "Existing County chosen"
+    else
+      county_name=original_params[:county_id]
+      logger.info("Creating new County #{county_name}")
+      county=County.find_or_create_by(title:county_name)
+      person.county=county
+    end
   end
 end
