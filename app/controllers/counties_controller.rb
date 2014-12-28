@@ -13,5 +13,7 @@ class CountiesController < ApplicationController
       format.html { render "people", layout: false }
       format.json { render :json => @county.people }
     end
+  rescue ActiveRecord::RecordNotFound
+    render nothing:true, status: 404
   end
 end
