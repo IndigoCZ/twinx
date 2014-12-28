@@ -82,11 +82,17 @@ describe "Participants", :type => :feature do
       page.find(".select2-match").click
 
       click_button "Vytvořit"
-      fill_in "Jméno", with:participant.person.first_name
-      fill_in "Příjmení", with:participant.person.last_name
+      expect(page).to have_content("Účastník byl úspěšně vytvořen.")
+
+      # Form-fill order reverted to let the category selection script work in the background
       fill_in "Rok nar.", with:participant.person.yob
       choose gender_to_human(participant.person.gender)
+
+      fill_in "Jméno", with:participant.person.first_name
+      fill_in "Příjmení", with:participant.person.last_name
+
       click_button "Vytvořit"
+      expect(page).to have_content("Účastník byl úspěšně vytvořen.")
 
     }.to change(Participant,:count).by(2)
     expect(Participant.last.starting_no).to eq(participant.starting_no+1)
@@ -191,14 +197,17 @@ describe "Participants", :type => :feature do
       choose gender_to_human(participant.person.gender)
 
       page.find(".select2-arrow").click
-      fill_in("Jednota",with:"Create County")
+      # Get a county that definitely doesn't exist
+      fill_in("Jednota",with:county.title+"Create County")
       page.find(".select2-match").click
 
       select participant.category.title, from:"Kategorie"
+
+
       click_button "Vytvořit"
       expect(page).to have_content("Účastník byl úspěšně vytvořen.")
     }.to change(County, :count).by(1)
-    expect(Participant.last.person.county.title).to eq("Create County")
+    expect(Participant.last.person.county.title).to eq(county.title+"Create County")
   end
 
   it "creates a new county on update when I fill in a custom County name", js:true do
@@ -207,14 +216,15 @@ describe "Participants", :type => :feature do
       visit edit_race_participant_path(race.id, participant.id)
 
       page.find(".select2-arrow").click
-      fill_in("Jednota",with:"Update County")
+      # Get a county that definitely doesn't exist
+      fill_in("Jednota",with:county.title+"Update County")
       page.find(".select2-match").click
 
       click_button "Uložit Účastníka"
       expect(page).to have_content("Účastník byl úspěšně upraven.")
     }.to change(County, :count).by(1)
     participant.reload
-    expect(participant.person.county.title).to eq("Update County")
+    expect(participant.person.county.title).to eq(county.title+"Update County")
   end
 
   it "does not adjust an existing person if the participant details change", js:true do
