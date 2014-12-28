@@ -31,7 +31,7 @@ prepare_field = (data_in_json)->
     data: data_in_json
 
 ready = ->
-    $.get '/counties/index.json', {}, prepare_field, 'json'
+    $.get '/counties.json', {}, prepare_field, 'json'
 $(document).ready(ready)
 $(document).on('page:load', ready)
 
