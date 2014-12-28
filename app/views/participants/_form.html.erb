@@ -27,7 +27,7 @@
       </div>
       <div class="form-group">
         <label class="col-lg-2 control-label" for="participant_person_county_id">Jednota</label>
-        <input class="col-lg-10" type="hidden" name="participant[person][county_id]" id="participant_person_county_id" value="<%= @person.county_id %>" />
+        <input class="col-lg-10" type="hidden" name="participant[person][county_id]" id="participant_person_county_id" data-race-id="<%= @current_race.id %>" value="<%= @person.county_id %>" />
       </div>
     <%= p.input :born, discard_year:true, include_blank:true %>
   <% end %>
