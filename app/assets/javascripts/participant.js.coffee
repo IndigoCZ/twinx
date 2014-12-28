@@ -18,22 +18,40 @@ Participant =
       else
         $('#participant_category_id').append($("<option></option>").attr("value", item["id"]).text(item["title"]))
 
-prepare_field = (data_in_json)->
-  console.log(data_in_json)
+Category =
+  prepare_field: (data_in_json)->
+    console.log(data_in_json)
 
-  $("#participant_person_county_id").select2
-    createSearchChoice: (term,data) ->
-      if ($(data).filter( ->
-        this.text.localeCompare(term) is 0
-      ).length is 0)
-        id: term,
-        text: term
-    data: data_in_json
+    $("#participant_person_county_id").select2
+      createSearchChoice: (term,data) ->
+        if ($(data).filter( ->
+          this.text.localeCompare(term) is 0
+        ).length is 0)
+          id: term,
+          text: term
+      data: data_in_json
+    $("#participant_person_county_id").on("change", Category.load_county_people)
+
+
+  prepare_county_people: (html_data)->
+    $("#county_people").replaceWith(html_data)
+
+  load_county_people: ->
+    console.log("load_county_people ")
+    county_id=$("#participant_person_county_id").val()
+    race_id=$("#participant_person_county_id").data("race-id")
+    console.log(race_id+"/"+county_id)
+    $.get '/counties/'+county_id+'/people.html', {race_id:race_id}, Category.prepare_county_people, 'html'
+
+  load_county_select: ->
+    console.log("load_county_select")
+    $.get '/counties.json', {}, Category.prepare_field, 'json'
 
 ready = ->
-    $.get '/counties.json', {}, prepare_field, 'json'
-$(document).ready(ready)
-$(document).on('page:load', ready)
+  console.log("Ready")
+  Category.load_county_select()
+  Category.load_county_people()
+  Participant.calculate_category()
 
 jQuery ->
   $('.restrict_yob').change ->
@@ -45,3 +63,7 @@ jQuery ->
     $('#participant_category_id').data('restrict-gender',$(this).val())
     Participant.calculate_category()
     #console.log($('#participant_category_id').data('restrict-gender'))
+
+  $(document).ready(ready)
+
+  $(document).on('page:load', ready)
