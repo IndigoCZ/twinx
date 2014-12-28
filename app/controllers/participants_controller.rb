@@ -8,10 +8,14 @@ class ParticipantsController < ApplicationController
     end
   end
   def new
-    @person=Person.new
-    @person.gender="male"
-    @person.yob="2000"
-		@person.county_id=session[:last_county_id]
+    if params.has_key?(:prefill_person_id)
+      @person=Person.find(params[:prefill_person_id])
+    else
+      @person=Person.new
+      @person.gender="male"
+      @person.yob="2000"
+      @person.county_id=session[:last_county_id]
+    end
     @participant=Participant.new
 		@participant.starting_no=session[:last_starting_no].to_i+1
     @previous_participant=Participant.find(previous_id) if previous_id
