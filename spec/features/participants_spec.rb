@@ -29,7 +29,7 @@ describe "Participants", :type => :feature do
     expect(page).to have_content("Nový účastník")
   end
 
-  it "creates a new participant when I fill in the new participant form" do
+  it "creates a new participant when I fill in the new participant form", js:true do
     expect {
       visit new_race_participant_path(:race_id => race.id)
       fill_in "Startovní č.", with:participant.starting_no
@@ -37,21 +37,29 @@ describe "Participants", :type => :feature do
       fill_in "Příjmení", with:participant.person.last_name
       fill_in "Rok nar.", with:participant.person.yob
       choose gender_to_human(participant.person.gender)
-      select county.title, from:"Jednota"
+
+      page.find(".select2-arrow").click
+      fill_in("Jednota",with:county.title)
+      page.find(".select2-match").click
+
       select participant.category.title, from:"Kategorie"
       click_button "Vytvořit"
       expect(page).to have_content("Účastník byl úspěšně vytvořen.")
     }.to change(Participant, :count).by(1)
   end
 
-  it "shows details of a newly created participant when a participant is entered" do
+  it "shows details of a newly created participant when a participant is entered", js:true do
     visit new_race_participant_path(:race_id => race.id)
     fill_in "Startovní č.", with:participant.starting_no
     fill_in "Jméno", with:participant.person.first_name
     fill_in "Příjmení", with:participant.person.last_name
     fill_in "Rok nar.", with:participant.person.yob
     choose gender_to_human(participant.person.gender)
-    select county.title, from:"Jednota"
+
+    page.find(".select2-arrow").click
+    fill_in("Jednota",with:county.title)
+    page.find(".select2-match").click
+
     select participant.category.title, from:"Kategorie"
     click_button "Vytvořit"
     expect(page).to have_content("Startovní číslo: #{participant.starting_no}")
@@ -60,22 +68,38 @@ describe "Participants", :type => :feature do
     expect(page).to have_content("Jednota: #{participant.team.title}")
   end
 
-  it "fills in default starting number and county based on last entry" do
-    visit new_race_participant_path(:race_id => race.id)
-    fill_in "Startovní č.", with:participant.starting_no
-    fill_in "Jméno", with:participant.person.first_name
-    fill_in "Příjmení", with:participant.person.last_name
-    fill_in "Rok nar.", with:participant.person.yob
-    choose gender_to_human(participant.person.gender)
-    select county.title, from:"Jednota"
-    select participant.category.title, from:"Kategorie"
-    click_button "Vytvořit"
-    visit new_race_participant_path(:race_id => race.id)
-    expect(page).to have_select('Jednota', :selected => participant.person.county.title)
-    expect(find_field('Startovní č.').value.to_i).to eq(participant.starting_no+1)
+  it "fills in default starting number and county based on last entry", js:true do
+    expect {
+      visit new_race_participant_path(:race_id => race.id)
+      fill_in "Startovní č.", with:participant.starting_no
+      fill_in "Jméno", with:participant.person.first_name
+      fill_in "Příjmení", with:participant.person.last_name
+      fill_in "Rok nar.", with:participant.person.yob
+      choose gender_to_human(participant.person.gender)
+
+      page.find(".select2-arrow").click
+      fill_in("Jednota",with:county.title)
+      page.find(".select2-match").click
+
+      click_button "Vytvořit"
+      expect(page).to have_content("Účastník byl úspěšně vytvořen.")
+
+      # Form-fill order reverted to let the category selection script work in the background
+      fill_in "Rok nar.", with:participant.person.yob
+      choose gender_to_human(participant.person.gender)
+
+      fill_in "Jméno", with:participant.person.first_name
+      fill_in "Příjmení", with:participant.person.last_name
+
+      click_button "Vytvořit"
+      expect(page).to have_content("Účastník byl úspěšně vytvořen.")
+
+    }.to change(Participant,:count).by(2)
+    expect(Participant.last.starting_no).to eq(participant.starting_no+1)
+    expect(Participant.last.person.county.title).to eq(county.title)
   end
 
-  it "allows a persons birthday to be specified when entering a participant" do
+  it "allows a persons birthday to be specified when entering a participant", js:true do
     DatabaseCleaner.clean
     this_race=FactoryGirl.create(:race)
     this_category=FactoryGirl.create(:category,race:this_race)
@@ -90,13 +114,17 @@ describe "Participants", :type => :feature do
     select '13', from:"participant_person_born_3i"
     select 'duben', from:"participant_person_born_2i"
     choose gender_to_human(this_person.gender)
-    select this_county.title, from:"Jednota"
+
+    page.find(".select2-arrow").click
+    fill_in("Jednota",with:this_county.title)
+    page.find(".select2-match").click
+
     select this_category.title, from:"Kategorie"
     click_button "Vytvořit"
     expect(page).to have_content("Účastník byl úspěšně vytvořen.")
   end
 
-  it "creates only one new person when I sign a person into two categories" do
+  it "creates only one new person when I sign a person into two categories", js:true do
     participant.save
     expect{
       visit new_race_participant_path(:race_id => race.id)
@@ -105,9 +133,13 @@ describe "Participants", :type => :feature do
       fill_in "Příjmení", with:participant.person.last_name
       fill_in "Rok nar.", with:participant.person.yob
       choose gender_to_human(participant.person.gender)
-      select county.title, from:"Jednota"
+
+      page.find(".select2-arrow").click
+      fill_in("Jednota",with:county.title)
+      page.find(".select2-match").click
+
       select second_category.title, from:"Kategorie"
-      click_button "Vytvořit"
+      click_button "Vytvořit Účastníka"
       expect(page).to have_content("Účastník byl úspěšně vytvořen.")
     }.to change(Person,:count).by(0)
   end
@@ -154,6 +186,81 @@ describe "Participants", :type => :feature do
     click_button "Uložit Účastníka"
     expect(page).to have_content("Účastník byl úspěšně upraven.")
   end
+
+  it "creates a new county on create when I fill in a custom County name", js:true do
+    expect {
+      visit new_race_participant_path(:race_id => race.id)
+      fill_in "Startovní č.", with:participant.starting_no
+      fill_in "Jméno", with:participant.person.first_name
+      fill_in "Příjmení", with:participant.person.last_name
+      fill_in "Rok nar.", with:participant.person.yob
+      choose gender_to_human(participant.person.gender)
+
+      page.find(".select2-arrow").click
+      # Get a county that definitely doesn't exist
+      fill_in("Jednota",with:county.title+"Create County")
+      page.find(".select2-match").click
+
+      select participant.category.title, from:"Kategorie"
+
+
+      click_button "Vytvořit"
+      expect(page).to have_content("Účastník byl úspěšně vytvořen.")
+    }.to change(County, :count).by(1)
+    expect(Participant.last.person.county.title).to eq(county.title+"Create County")
+  end
+
+  it "creates a new county on update when I fill in a custom County name", js:true do
+    participant.save
+    expect {
+      visit edit_race_participant_path(race.id, participant.id)
+
+      page.find(".select2-arrow").click
+      # Get a county that definitely doesn't exist
+      fill_in("Jednota",with:county.title+"Update County")
+      page.find(".select2-match").click
+
+      click_button "Uložit Účastníka"
+      expect(page).to have_content("Účastník byl úspěšně upraven.")
+    }.to change(County, :count).by(1)
+    participant.reload
+    expect(participant.person.county.title).to eq(county.title+"Update County")
+  end
+
+  it "does not adjust an existing person if the participant details change", js:true do
+    expect {
+      visit new_race_participant_path(:race_id => race.id)
+      fill_in "Startovní č.", with:participant.starting_no
+      fill_in "Jméno", with:participant.person.first_name
+      fill_in "Příjmení", with:participant.person.last_name
+      fill_in "Rok nar.", with:participant.person.yob
+      choose gender_to_human(participant.person.gender)
+
+      page.find(".select2-arrow").click
+      fill_in("Jednota",with:county.title)
+      page.find(".select2-match").click
+      select category.title, from:"Kategorie"
+
+      click_button "Vytvořit"
+      expect(page).to have_content("Účastník byl úspěšně vytvořen.")
+
+      fill_in "Jméno", with:participant.person.first_name
+      fill_in "Příjmení", with:participant.person.last_name
+      fill_in "Rok nar.", with:(participant.person.yob-20)
+      choose gender_to_human(participant.person.gender)
+      select second_category.title, from:"Kategorie"
+
+      click_button "Vytvořit"
+      expect(page).to have_content("Účastník byl úspěšně vytvořen.")
+
+      visit edit_race_participant_path(race.id,Participant.last.id)
+      fill_in "Jméno", with:participant.person.first_name+" Jr."
+      click_button "Uložit"
+      expect(page).to have_content("Účastník byl úspěšně upraven.")
+    }.to change(Person, :count).by(2)
+  end
+
+  it "Handles empty people???"
 
   it "shows a listing of participants when I visit the index" do
     participant.save

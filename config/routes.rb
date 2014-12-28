@@ -1,4 +1,6 @@
 Twinx::Application.routes.draw do
+  resources :counties, only:["index"]
+
   devise_for :users
 
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'

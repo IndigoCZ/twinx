@@ -9,23 +9,26 @@
       <%= p.input :yob, input_html:{ class:'restrict_yob' } %>
       <%#= p.input :gender, as: :radio_buttons, collection:[:male,:female], input_html:{ class:'restrict_gender' } %>
       <div class="form-group radio_buttons required participant_person_gender">
-      <label class="radio_buttons required col-lg-2 control-label"><abbr title="povinné">*</abbr> Pohlaví</label>
-      <div class="col-lg-10">
-        <div class="radio">
-          <label class="radio">
-            <input <% if @person.gender=="male" %>checked="checked"<% end %> class="radio_buttons required restrict_gender" id="participant_person_gender_male" name="participant[person][gender]" type="radio" value="male">
-            Muž
-          </label>
-        </div>
-        <div class="radio">
-          <label class="radio">
-            <input <% if @person.gender=="female" %>checked="checked"<% end %> class="radio_buttons required restrict_gender" id="participant_person_gender_female" name="participant[person][gender]" type="radio" value="female">
-            Žena
-          </label>
+        <label class="radio_buttons required col-lg-2 control-label"><abbr title="povinné">*</abbr> Pohlaví</label>
+        <div class="col-lg-10">
+          <div class="radio">
+            <label class="radio">
+              <input <% if @person.gender=="male" %>checked="checked"<% end %> class="radio_buttons required restrict_gender" id="participant_person_gender_male" name="participant[person][gender]" type="radio" value="male">
+              Muž
+            </label>
+          </div>
+          <div class="radio">
+            <label class="radio">
+              <input <% if @person.gender=="female" %>checked="checked"<% end %> class="radio_buttons required restrict_gender" id="participant_person_gender_female" name="participant[person][gender]" type="radio" value="female">
+              Žena
+            </label>
+          </div>
         </div>
       </div>
-    </div> 
-    <%= p.association :county, collection:County.order('title'), :prompt => "Prosím zvolte jednotu." %>
+      <div class="form-group">
+        <label class="col-lg-2 control-label" for="participant_person_county_id">Jednota</label>
+        <input class="col-lg-10" type="hidden" name="participant[person][county_id]" id="participant_person_county_id" value="<%= @person.county_id %>" />
+      </div>
     <%= p.input :born, discard_year:true, include_blank:true %>
   <% end %>
   <%= f.association :category, collection:Category.where(race_id:@current_race.id), :prompt => "Prosím zvolte kategorii.",
