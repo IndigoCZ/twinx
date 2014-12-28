@@ -1,5 +1,6 @@
 Twinx::Application.routes.draw do
   resources :counties, only:["index"]
+  get '/counties/:id/people', to: 'counties#people', as: 'county'
 
   devise_for :users
 
