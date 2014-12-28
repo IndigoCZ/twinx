@@ -28,7 +28,6 @@ prepare_field = (data_in_json)->
       ).length is 0)
         id: term,
         text: term
-    width: '300px'
     data: data_in_json
 
 ready = ->
