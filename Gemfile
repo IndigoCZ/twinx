@@ -57,11 +57,11 @@ gem 'simple_form', "~> 3.0"
 # //= require rails.validations.simple_form
 # rails generate client_side_validations:copy_assets
 
-gem "select2-rails"
+gem "select2-rails", "~> 3.0"
 
 gem 'cocoon'
 
-gem 'prawn-rails', :git => 'https://github.com/cortiz/prawn-rails.git'
+gem 'prawn-rails'#, :git => 'https://github.com/cortiz/prawn-rails.git'
 
 gem 'coveralls', require: false
 
