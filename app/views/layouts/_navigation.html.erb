@@ -10,8 +10,13 @@
     <%= nav_link "Jednoty",          race_teams_path(@current_race)               %>
     <%= nav_link "Kategorie",        race_categories_path(@current_race)          %>
   </ul>
-  <% new_params=params.dup; new_params[:format]="pdf" %>
-  <%= link_to "PDF", url_for(new_params) , class:"btn btn-danger navbar-btn" %>
+  <%
+      if params["action"]=="index" && %w[participants teams results].include?(params["controller"])
+        new_params=params.dup
+        new_params[:format]="pdf"
+      %>
+    <%= link_to "PDF", url_for(new_params) , class:"btn btn-danger navbar-btn" %>
+  <% end %>
   <%= form_tag(race_participants_path(@current_race), :method => 'get', :id => "participants_search", :class => "navbar-form navbar-right", role:"search") do %>
     <%= text_field_tag :search, params[:search], placeholder:"Hledat účastníka", :class=>"form-control" %>
     <% if params[:sort] %>
