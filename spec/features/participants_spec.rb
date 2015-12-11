@@ -9,6 +9,12 @@ def gender_to_human(gender)
   end
 end
 
+def fill_in_participant_county(participant_county_title)
+  page.find(".select2-arrow").click
+  fill_in("Jednota",with:participant_county_title)
+  page.find(".select2-match").click
+end
+
 describe "Participants", :type => :feature do
   let(:race) { FactoryGirl.create(:race) }
   let(:county) { FactoryGirl.create(:county)}
@@ -38,9 +44,7 @@ describe "Participants", :type => :feature do
       fill_in "Rok nar.", with:participant.person.yob
       choose gender_to_human(participant.person.gender)
 
-      page.find(".select2-arrow").click
-      fill_in("Jednota",with:county.title)
-      page.find(".select2-match").click
+      fill_in_participant_county(county.title)
 
       select participant.category.title, from:"Kategorie"
       click_button "Vytvořit"
@@ -56,9 +60,7 @@ describe "Participants", :type => :feature do
     fill_in "Rok nar.", with:participant.person.yob
     choose gender_to_human(participant.person.gender)
 
-    page.find(".select2-arrow").click
-    fill_in("Jednota",with:county.title)
-    page.find(".select2-match").click
+    fill_in_participant_county(county.title)
 
     select participant.category.title, from:"Kategorie"
     click_button "Vytvořit"
@@ -77,9 +79,7 @@ describe "Participants", :type => :feature do
       fill_in "Rok nar.", with:participant.person.yob
       choose gender_to_human(participant.person.gender)
 
-      page.find(".select2-arrow").click
-      fill_in("Jednota",with:county.title)
-      page.find(".select2-match").click
+      fill_in_participant_county(county.title)
 
       click_button "Vytvořit"
       expect(page).to have_content("Účastník byl úspěšně vytvořen.")
@@ -115,9 +115,7 @@ describe "Participants", :type => :feature do
     select 'duben', from:"participant_person_born_2i"
     choose gender_to_human(this_person.gender)
 
-    page.find(".select2-arrow").click
-    fill_in("Jednota",with:this_county.title)
-    page.find(".select2-match").click
+    fill_in_participant_county(this_county.title)
 
     select this_category.title, from:"Kategorie"
     click_button "Vytvořit"
@@ -134,9 +132,7 @@ describe "Participants", :type => :feature do
       fill_in "Rok nar.", with:participant.person.yob
       choose gender_to_human(participant.person.gender)
 
-      page.find(".select2-arrow").click
-      fill_in("Jednota",with:county.title)
-      page.find(".select2-match").click
+      fill_in_participant_county(county.title)
 
       select second_category.title, from:"Kategorie"
       click_button "Vytvořit Účastníka"
@@ -196,10 +192,8 @@ describe "Participants", :type => :feature do
       fill_in "Rok nar.", with:participant.person.yob
       choose gender_to_human(participant.person.gender)
 
-      page.find(".select2-arrow").click
       # Get a county that definitely doesn't exist
-      fill_in("Jednota",with:county.title+"Create County")
-      page.find(".select2-match").click
+      fill_in_participant_county(county.title+"Create County")
 
       select participant.category.title, from:"Kategorie"
 
@@ -215,10 +209,8 @@ describe "Participants", :type => :feature do
     expect {
       visit edit_race_participant_path(race.id, participant.id)
 
-      page.find(".select2-arrow").click
       # Get a county that definitely doesn't exist
-      fill_in("Jednota",with:county.title+"Update County")
-      page.find(".select2-match").click
+      fill_in_participant_county(county.title+"Update County")
 
       click_button "Uložit Účastníka"
       expect(page).to have_content("Účastník byl úspěšně upraven.")
@@ -236,9 +228,8 @@ describe "Participants", :type => :feature do
       fill_in "Rok nar.", with:participant.person.yob
       choose gender_to_human(participant.person.gender)
 
-      page.find(".select2-arrow").click
-      fill_in("Jednota",with:county.title)
-      page.find(".select2-match").click
+      fill_in_participant_county(county.title)
+
       select category.title, from:"Kategorie"
 
       click_button "Vytvořit"
