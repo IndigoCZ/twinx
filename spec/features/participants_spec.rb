@@ -10,9 +10,9 @@ def gender_to_human(gender)
 end
 
 def fill_in_participant_county(participant_county_title)
-  page.find(".select2-arrow").click
+  page.find("div#s2id_participant_person_county_id").find(".select2-arrow").click
   fill_in("Jednota",with:participant_county_title)
-  page.find(".select2-match").click
+  page.find(".select2-input").native.send_keys(:return)
 end
 
 describe "Participants", :type => :feature do
