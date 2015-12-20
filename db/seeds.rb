@@ -7,24 +7,29 @@ require 'faker'
 Result.delete_all
 Participant.delete_all
 Team.delete_all
+TeamType.delete_all
 Constraint.delete_all
 Category.delete_all
 Person.delete_all
 County.delete_all
 Race.delete_all
 
+puts "Generating Races"
 races=Race.create([
   {title:"Test XVI", held_on:3.years.ago},
   {title:"Filler", held_on:2.years.ago},
   {title:"Sample", held_on:1.year.ago}
 ])
+puts "Generating Counties"
 counties=County.create([
   {title:"Moutnice"},
   {title:"Tesany"},
   {title:"Nesvacilka"},
   {title:"Rozarin"}
 ])
+puts "Generating People"
 40.times do
+  putc "."
   Person.create(
     first_name:Faker::Name.first_name,
     last_name:Faker::Name.last_name,
@@ -34,9 +39,16 @@ counties=County.create([
   )
 end
 
+default_team_type=TeamType.where(title:"Orel").first_or_create
+TeamType.where(title:"Sokol").first_or_create
+TeamType.where(title:"Obec").first_or_create
+TeamType.where(title:"SK").first_or_create
+TeamType.where(title:"FC").first_or_create
+puts "\nGenerating Teams"
 races.each do |race|
   counties.each do |county|
-    Team.create(race_id:race.id, county_id:county.id, title:county.title)
+    putc "."
+    Team.create(race_id:race.id, county_id:county.id, title:county.title, team_type:default_team_type)
   end
 end
 races.each do |race|
@@ -57,8 +69,10 @@ races.each do |race|
   Constraint.create(restrict:"gender",string_value:"female",category_id:Category.last.id)
   Constraint.create(restrict:"min_age",integer_value:60,category_id:Category.last.id)
 end
+puts "\nGenerating Participants"
 races.each do |race|
   Person.all.each_with_index do |person,index|
+    putc "."
     Participant.create(
       starting_no:(index+1),
       category_id:race.categories.sample.id,
@@ -68,9 +82,11 @@ races.each do |race|
   end
 end
 
+puts "\nGenerating Results"
 Category.all.each do |category|
   last_time=rand(100000)+30000
   category.participants.to_a.shuffle.each_with_index do |participant,index|
+    putc "."
     split=last_time+rand(10000)
     time={}
     time["fract"]=(split % 1000).to_s
@@ -80,3 +96,5 @@ Category.all.each do |category|
     last_time=split
   end
 end
+
+puts "\nDone"

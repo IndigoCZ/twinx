@@ -33,6 +33,8 @@ cs:
       participant:
         starting_no: "Startovní č."
         category: "Kategorie"
+      team:
+        team_type: "Druh Jednoty"
     models:
         team: "Tým"
         county:

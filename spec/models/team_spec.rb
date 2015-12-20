@@ -56,14 +56,15 @@ describe Team, :type => :model do
     before(:each) do
       @race=FactoryGirl.create(:race)
       @county=FactoryGirl.create(:county)
+      @team_type=FactoryGirl.create(:team_type)
     end
-    it "finds a team for race and county if it exists" do
-      @team=FactoryGirl.create(:team,race:@race,title:@county.title)
-      expect(Team.with_race_and_title(@race,@county.title)).to eq @team
+    it "finds a team for race, county and team_type ID if it exists" do
+      @team=FactoryGirl.create(:team,race:@race,county:@county,team_type:@team_type)
+      expect(Team.for_participant_form(@race,@county,@team_type)).to eq @team
     end
-    it "creates a team for race and county if it exists" do
+    it "creates a team for race, county and team_type ID if it does not exist" do
       expect {
-        Team.with_race_and_title(@race,@county.title)
+        Team.for_participant_form(@race,@county,@team_type)
       }.to change(Team,:count).by(1)
     end
   end
