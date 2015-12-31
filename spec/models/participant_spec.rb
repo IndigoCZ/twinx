@@ -28,12 +28,12 @@ describe Participant, :type => :model do
   end
   it "provides sort query strings" do
     expect(Participant.sort_by).to eq("starting_no")
-    expect(Participant.sort_by("team")).to eq("counties.title")
+    expect(Participant.sort_by("team")).to eq("teams.title")
     expect(Participant.sort_by("category")).to eq("categories.sort_order")
   end
   it "provides group query strings" do
     expect(Participant.group_by).to eq("categories.sort_order")
-    expect(Participant.group_by("team")).to eq("counties.title")
+    expect(Participant.group_by("team")).to eq("teams.title")
     expect(Participant.group_by("category")).to eq("categories.sort_order")
   end
   it "provides a filter_by method" do
