@@ -39,7 +39,7 @@ class Participant < ActiveRecord::Base
   def self.group_by(column=nil)
     case column
     when "team"
-      "counties.title"
+      "teams.title"
     else
       "categories.sort_order"
     end
@@ -47,7 +47,7 @@ class Participant < ActiveRecord::Base
 
   def self.sort_attrs
     {
-      "team"=>"counties.title",
+      "team"=>"teams.title",
       "category"=>"categories.sort_order",
       "name"=>"people.last_name",
       "default"=>"starting_no"
