@@ -30,7 +30,7 @@
         <input class="col-lg-10" type="hidden" name="participant[person][county_id]" id="participant_person_county_id" data-race-id="<%= @current_race.id %>" value="<%= @person.county_id %>" />
       </div>
       <%= f.simple_fields_for(@team) do |pt| %>
-        <%= pt.association :team_type, collection:TeamType.all %>
+        <%= pt.association :team_type, collection:TeamType.all, include_blank:false%>
       <% end %>
     <%= p.input :born, discard_year:true, include_blank:true %>
   <% end %>
