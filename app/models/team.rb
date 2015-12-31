@@ -3,6 +3,7 @@ class Team < ActiveRecord::Base
   #attr_accessible :county_id, :race_id
   belongs_to :county
   belongs_to :race
+  belongs_to :team_type
   has_many :participants
   has_many :results, through: :participants
   validates_presence_of :race, :title
@@ -11,11 +12,11 @@ class Team < ActiveRecord::Base
   scope :for_race, lambda { |race| where(race_id:race.id).includes(:county) }
 
 
-  def self.with_race_and_title(race,title)
-    county=County.where(title:title).first_or_create
-    team=self.where(race_id:race,title:title).first_or_create
-    unless team.county==county
-      team.county=county
+  def self.for_participant_form(race,county,team_type)
+    #county=County.where(title:title).first_or_create
+    team=self.where(race_id:race,county:county,team_type:team_type).first_or_create
+    unless team.title
+      team.title="#{team_type.title} #{county.title}"
       team.save
     end
     return team

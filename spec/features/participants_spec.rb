@@ -10,23 +10,29 @@ def gender_to_human(gender)
 end
 
 def fill_in_participant_county(participant_county_title)
-  page.find(".select2-arrow").click
+  page.find("div#s2id_participant_person_county_id").find(".select2-arrow").click
   fill_in("Jednota",with:participant_county_title)
-  page.find(".select2-match").click
+  page.find(".select2-input").native.send_keys(:return)
 end
 
 describe "Participants", :type => :feature do
   let(:race) { FactoryGirl.create(:race) }
-  let(:county) { FactoryGirl.create(:county)}
+  let(:county) { FactoryGirl.build(:county)}
+  let(:team_type) { FactoryGirl.build(:team_type)}
+  let(:second_team_type) { FactoryGirl.build(:team_type, title:"Some other prefix")}
   let(:category) { FactoryGirl.build(:category, race_id:race.id) }
   let(:second_category) { FactoryGirl.build(:category,title:"Some other category", race_id:race.id) }
-  let(:team) { FactoryGirl.build(:team, race_id:race.id, title:county.title, county_id:county.id)}
+  let(:team) { FactoryGirl.build(:team, race_id:race.id, 
+                                 county_id:county.id,
+                                 team_type_id:team_type.id,
+                                 title:"#{TeamType.first.title} #{county.title}")}
   let(:person) { FactoryGirl.build(:person, county_id:county.id) }
   let(:participant) { FactoryGirl.build(:participant, team_id:team.id, category_id:category.id, person_id:person.id)}
   before :each do
+    county.save
+    team_type.save
     person.save
     category.save
-    second_category.save
     team.save
   end
 
@@ -102,6 +108,7 @@ describe "Participants", :type => :feature do
   it "allows a persons birthday to be specified when entering a participant", js:true do
     DatabaseCleaner.clean
     this_race=FactoryGirl.create(:race)
+    FactoryGirl.create(:team_type)
     this_category=FactoryGirl.create(:category,race:this_race)
     this_county=FactoryGirl.create(:county)
     this_person=FactoryGirl.build(:person,county:this_county)
@@ -124,6 +131,7 @@ describe "Participants", :type => :feature do
 
   it "creates only one new person when I sign a person into two categories", js:true do
     participant.save
+    second_category.save
     expect{
       visit new_race_participant_path(:race_id => race.id)
       fill_in "Startovní č.", with:participant.starting_no+1000
@@ -142,6 +150,7 @@ describe "Participants", :type => :feature do
   it "automatically picks the appropriate category for the participant", js:true do
     DatabaseCleaner.clean
     this_race=FactoryGirl.create(:race)
+    FactoryGirl.create(:team_type)
     old_male_category=FactoryGirl.create(:category, title:"OLD_MALE",race:this_race)
     FactoryGirl.create(:constraint, restrict:"min_age", value:"30", category:old_male_category)
     FactoryGirl.create(:constraint, restrict:"gender", value:"male", category:old_male_category)
@@ -220,6 +229,7 @@ describe "Participants", :type => :feature do
   end
 
   it "does not adjust an existing person if the participant details change", js:true do
+    second_category.save
     expect {
       visit new_race_participant_path(:race_id => race.id)
       fill_in "Startovní č.", with:participant.starting_no
@@ -261,9 +271,9 @@ describe "Participants", :type => :feature do
   end
   it "allows sorting of participants on the index" do
     z_person=FactoryGirl.create(:person,last_name:"ZZZZZ", county_id:county.id)
-    z_participant=FactoryGirl.create(:participant, team_id:team.id, category_id:category.id, person_id:z_person.id, starting_no:1)
+    FactoryGirl.create(:participant, team_id:team.id, category_id:category.id, person_id:z_person.id, starting_no:1)
     a_person=FactoryGirl.create(:person,last_name:"AAAAA", county_id:county.id)
-    a_participant=FactoryGirl.create(:participant, team_id:team.id, category_id:category.id, person_id:a_person.id, starting_no:2)
+    FactoryGirl.create(:participant, team_id:team.id, category_id:category.id, person_id:a_person.id, starting_no:2)
 
     visit race_participants_path(race.id)
     expect(page).to have_content(/ZZZZZ.*AAAAA/)
@@ -279,10 +289,10 @@ describe "Participants", :type => :feature do
     this_race=FactoryGirl.create(:race)
     z_category=FactoryGirl.create(:category, title:"ZZZZZ",race:this_race)
     z_person=FactoryGirl.create(:person)
-    z_participant=FactoryGirl.create(:participant, category:z_category, person:z_person, starting_no:1)
+    FactoryGirl.create(:participant, category:z_category, person:z_person, starting_no:1)
     a_category=FactoryGirl.create(:category, title:"AAAAA",race:this_race)
     a_person=FactoryGirl.create(:person)
-    a_participant=FactoryGirl.create(:participant, category:a_category, person:a_person, starting_no:2)
+    FactoryGirl.create(:participant, category:a_category, person:a_person, starting_no:2)
 
     visit race_participants_path(this_race.id)
     expect(page).to have_content(/ZZZZZ.*AAAAA/)
@@ -307,6 +317,41 @@ describe "Participants", :type => :feature do
       expect(page).not_to have_content existing_participant.person.first_name
     }.to change(Participant,:count).by(-1)
     expect(page).to have_content "Přehled Účastníků"
+  end
+
+  it "pre-fills a team type in the form" do
+    visit new_race_participant_path(:race_id => race.id)
+    expect(page).to have_select("Druh Jednoty", :selected => team_type.title)
+  end
+
+  it "fills in previous team type based on last entry", js:true do
+    second_team_type.save
+    expect {
+      visit new_race_participant_path(:race_id => race.id)
+      fill_in "Startovní č.", with:participant.starting_no
+      fill_in "Jméno", with:participant.person.first_name
+      fill_in "Příjmení", with:participant.person.last_name
+      fill_in "Rok nar.", with:participant.person.yob
+      choose gender_to_human(participant.person.gender)
+
+      fill_in_participant_county(county.title)
+      select second_team_type.title, from:"Druh Jednoty"
+
+      click_button "Vytvořit"
+      expect(page).to have_content("Účastník byl úspěšně vytvořen.")
+
+      # Form-fill order reverted to let the category selection script work in the background
+      fill_in "Rok nar.", with:participant.person.yob
+      choose gender_to_human(participant.person.gender)
+
+      fill_in "Jméno", with:participant.person.first_name
+      fill_in "Příjmení", with:participant.person.last_name
+
+      click_button "Vytvořit"
+      expect(page).to have_content("Účastník byl úspěšně vytvořen.")
+
+    }.to change(Participant,:count).by(2)
+    expect(Participant.last.team.team_type).to eq(second_team_type)
   end
 
 end

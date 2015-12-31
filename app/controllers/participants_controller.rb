@@ -19,21 +19,29 @@ class ParticipantsController < ApplicationController
     @participant=Participant.new
 		@participant.starting_no=session[:last_starting_no].to_i+1
     @previous_participant=Participant.find(previous_id) if previous_id
+
+    @team=Team.new
+    @team.team_type_id=session[:last_team_type_id]||TeamType.first.id
   end
   def create
     logger.info "Prepare Person"
     person_params=params[:participant].delete(:person)
     @person=Person.new(person_params)
     handle_new_county(@person,person_params)
+
+    team_params=params[:participant].delete(:team)
+    @team_type=TeamType.find(team_params["team_type_id"])
+
     logger.info "Prepare Participant"
     @participant=Participant.new(participant_params)
     logger.info "Try to save Person"
     if @person.save
       @person.dedup
-      @team=Team.with_race_and_title(@current_race,@person.county.title)
+      @team=Team.for_participant_form(@current_race,@person.county,@team_type)
       @participant.team_id=@team.id
       @participant.person_id=@person.id
       session[:last_county_id]=@person.county.id
+      session[:last_team_type_id]=@team_type.id
       logger.info "Try to save Participant"
       if @participant.save
         session[:last_starting_no]=@participant.starting_no
@@ -53,6 +61,7 @@ class ParticipantsController < ApplicationController
   def edit
     @participant=Participant.find(params[:id])
     @person=@participant.person
+    @team=@participant.team
   end
   def update
     @participant=Participant.find(params[:id])
@@ -60,13 +69,13 @@ class ParticipantsController < ApplicationController
     @person=Person.new(person_params)
     handle_new_county(@person,person_params)
 
-    #@person=@participant.person
-    #@person.attributes=params[:participant].delete(:person)
+    team_params=params[:participant].delete(:team)
+    @team_type=TeamType.find(team_params["team_type_id"])
+
     @participant.attributes=participant_params
     if @person.save
       @person.dedup
-      @team=Team.with_race_and_title(@current_race,@person.county.title)
-      #@team=Team.where(race_id:@current_race.id,county_id:@person.county.id).first_or_create
+      @team=Team.for_participant_form(@current_race,@person.county,@team_type)
       @participant.team_id=@team.id
       @participant.person_id=@person.id
       if @participant.save
