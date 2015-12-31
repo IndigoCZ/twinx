@@ -48,7 +48,7 @@ puts "\nGenerating Teams"
 races.each do |race|
   counties.each do |county|
     putc "."
-    Team.create(race_id:race.id, county_id:county.id, title:county.title, team_type:default_team_type)
+    Team.for_participant_form(race, county, default_team_type)
   end
 end
 races.each do |race|
