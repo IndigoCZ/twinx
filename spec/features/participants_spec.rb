@@ -16,7 +16,7 @@ def fill_in_participant_county(participant_county_title)
 end
 
 describe "Participants", :type => :feature do
-  let(:race) { FactoryGirl.create(:race) }
+  let(:race) { FactoryGirl.build(:race) }
   let(:county) { FactoryGirl.build(:county)}
   let(:team_type) { FactoryGirl.build(:team_type)}
   let(:second_team_type) { FactoryGirl.build(:team_type, title:"Some other prefix")}
@@ -25,10 +25,11 @@ describe "Participants", :type => :feature do
   let(:team) { FactoryGirl.build(:team, race_id:race.id, 
                                  county_id:county.id,
                                  team_type_id:team_type.id,
-                                 title:"#{TeamType.first.title} #{county.title}")}
+                                 title:"#{team_type.title} #{county.title}")}
   let(:person) { FactoryGirl.build(:person, county_id:county.id) }
   let(:participant) { FactoryGirl.build(:participant, team_id:team.id, category_id:category.id, person_id:person.id)}
   before :each do
+    race.save
     county.save
     team_type.save
     person.save
