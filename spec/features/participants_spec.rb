@@ -25,7 +25,7 @@ describe "Participants", :type => :feature do
   let(:team) { FactoryGirl.build(:team, race_id:race.id, 
                                  county_id:county.id,
                                  team_type_id:team_type.id,
-                                 title:"#{team_type.title} #{county.title}")}
+                                 title:"#{TeamType.first.title} #{county.title}")}
   let(:person) { FactoryGirl.build(:person, county_id:county.id) }
   let(:participant) { FactoryGirl.build(:participant, team_id:team.id, category_id:category.id, person_id:person.id)}
   before :each do
