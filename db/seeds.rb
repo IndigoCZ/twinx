@@ -68,6 +68,10 @@ races.each do |race|
   Category.create(title:"Seniorky",race_id:race.id,sort_order:6)
   Constraint.create(restrict:"gender",string_value:"female",category_id:Category.last.id)
   Constraint.create(restrict:"min_age",integer_value:60,category_id:Category.last.id)
+  Category.create(title:"Lidovy Beh",race_id:race.id,sort_order:7)
+end
+Category.all.each do |category|
+  category.recalculate_difficulty
 end
 puts "\nGenerating Participants"
 races.each do |race|

@@ -16,11 +16,9 @@ describe Constraint, :type => :model do
      expect(hard.difficulty).to be > easy.difficulty
   end
   it "returns maximum difficulty for gender restriction" do
-    expect(FactoryGirl.create(:constraint,restrict:"gender",string_value:"male").difficulty).to be Constraint::MAX_DIFFICULTY
+    expect(FactoryGirl.create(:constraint,restrict:"gender",string_value:"male").difficulty).to be Constraint::MAX_DIFFICULTY - 1
   end
-  it "returns the appropriate value when queried" do
-
-  end
+  it "returns the appropriate value when queried"
   it "is invalid without a proper value" do
      expect(FactoryGirl.build(:constraint, restrict:"gender",integer_value:10, string_value:nil)).not_to be_valid
      expect(FactoryGirl.build(:constraint, restrict:"max_age", integer_value:nil, string_value:"aaaa")).not_to be_valid
