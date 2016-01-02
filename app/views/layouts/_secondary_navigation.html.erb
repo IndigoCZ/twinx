@@ -1,0 +1,6 @@
+<% if @current_race %>
+  <ul class="nav navbar-nav">
+    <%= nav_link "Nový Účastník",    new_race_participant_path(@current_race)     %>
+    <%= nav_link "Nový Výsledek",    new_race_result_path(@current_race)          %>
+  </ul>
+<% end %>

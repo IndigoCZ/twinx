@@ -2,11 +2,8 @@
 
 <% if @current_race %>
   <ul class="nav navbar-nav">
-    <%# nav_link "Nový Účastník", new_race_participant_path(@current_race), wrapper_class:"nav-success" %>
     <%= nav_link "Účastníci",        race_participants_path(@current_race)        %>
-    <%= nav_link content_tag(:span, "", class:"glyphicon glyphicon-plus-sign" ),    new_race_participant_path(@current_race)     %>
     <%= nav_link "Výsledky",         race_results_path(@current_race)             %>
-    <%= nav_link content_tag(:span, "", class:"glyphicon glyphicon-plus-sign" ),    new_race_result_path(@current_race)          %>
     <%= nav_link "Jednoty",          race_teams_path(@current_race)               %>
     <%= nav_link "Kategorie",        race_categories_path(@current_race)          %>
   </ul>
