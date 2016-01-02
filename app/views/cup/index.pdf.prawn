@@ -1,7 +1,7 @@
 # encoding: UTF-8
 prawn_document do |pdf|
   pdf.font("vendor/fonts/DejaVuSans.ttf")
-  @document_heading="Přehled týmů"
+  @document_heading="Pohár Orla"
   render "layouts/header", :pdf => pdf
 
   header_list={
