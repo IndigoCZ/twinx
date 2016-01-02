@@ -6,9 +6,10 @@ module ApplicationHelper
       link_to link_text, link_path, class:"current"
     end
     klass_list=[]
-    klass_list<<"active" if current
-    klass_list<<options[:wrapper_class] if options[:wrapper_class]
-    content_tag(:li, ln, :class => klass_list.join(" "))
+    klass_list<< options[:class] if options[:class]
+    klass_list<< "active" if current
+    options[:class]=klass_list.join(" ")
+    content_tag(:li, ln, options)
   end
 
   def sort_link(text,attr=nil)
