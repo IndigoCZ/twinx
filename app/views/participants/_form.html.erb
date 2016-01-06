@@ -2,6 +2,10 @@
   <%= simple_form_for([@current_race, @participant]) do |f| %>
   <%= f.error_notification %>
 
+    <div class="form-group">
+      <label class="col-lg-2 control-label" for="participant_person_county_id">Jednota</label>
+      <input class="col-lg-10" type="hidden" name="participant[person][county_id]" id="participant_person_county_id" data-race-id="<%= @current_race.id %>" value="<%= @person.county_id %>" />
+    </div>
     <%= f.input :starting_no %>
     <%= f.simple_fields_for(@person) do |p| %>
       <%= p.input :first_name %>
@@ -24,10 +28,6 @@
             </label>
           </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label class="col-lg-2 control-label" for="participant_person_county_id">Jednota</label>
-        <input class="col-lg-10" type="hidden" name="participant[person][county_id]" id="participant_person_county_id" data-race-id="<%= @current_race.id %>" value="<%= @person.county_id %>" />
       </div>
     <%= p.input :born, discard_year:true, include_blank:true %>
   <% end %>
