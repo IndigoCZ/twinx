@@ -3,7 +3,7 @@ prawn_document do |pdf|
   pdf.font("vendor/fonts/DejaVuSans.ttf")
 
   header_list={
-    starting_no:"#",
+    starting_no:"Číslo",
     name:"Jméno",
     category:"Kategorie",
     team:"Jednota",
@@ -54,4 +54,5 @@ prawn_document do |pdf|
       end
     end
   end
+  render "layouts/page_numbers", :pdf => pdf
 end
