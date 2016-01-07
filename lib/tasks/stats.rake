@@ -15,7 +15,11 @@ namespace :twinx do
         else
           puts "Nej#{order} žena:"
         end
-        puts "#{nej.starting_no} #{nej.person.display_name} #{nej.person.born}"
+        if nej
+          puts "#{nej.starting_no} #{nej.person.display_name} #{nej.person.born}"
+        else
+          puts "N/A"
+        end
       end
     end
   end
