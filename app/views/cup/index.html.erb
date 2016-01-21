@@ -1,0 +1,25 @@
+<h1>Pohár Orla</h1>
+
+<div id="team_table">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th><%= unsortable("Název") %></th>
+        <th><%= unsortable("Počet Účastníků") %></th>
+        <th><%= unsortable("Body") %></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @teams.each do |team| %>
+      <tr>
+      <td><%= team.title %></td>
+      <td><%= team.participants.count %></td>
+      <td><%= team.points(@point_limit) %></td>
+      <td>
+        <%= link_to 'Výsledková listina', race_results_path(@current_race,filter:"team_#{team.id}"), class:"btn btn-xs btn-default" %>
+      </td>
+    </tr>
+  <% end %>
+  </table>
+</div>

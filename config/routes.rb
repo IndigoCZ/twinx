@@ -12,6 +12,7 @@ Twinx::Application.routes.draw do
     resources :participants
     resources :results
     resources :data_transfer, only:["index","create"]
+    get 'cup', to: 'cup#index'
   end
 
   root :to => 'races#index'

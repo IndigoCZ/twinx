@@ -1,10 +1,9 @@
 # encoding: UTF-8
 prawn_document do |pdf|
   pdf.font("vendor/fonts/DejaVuSans.ttf")
-  render "layouts/header", :pdf => pdf
 
   header_list={
-    name:"Jméno (#)",
+    name:"Jméno (Číslo)",
     category:"Kategorie",
     team:"Jednota",
     yob:"Rok nar.",
@@ -16,14 +15,23 @@ prawn_document do |pdf|
     result_groups=@results.to_a.group_by { |result| result.participant.send(pdf_grouping) }
     case pdf_grouping
     when :category
+      if result_groups.size > 1
+        @document_heading="Kompletní Výsledky"
+      else
+        @document_heading="Výsledková listina"
+      end
       selection={position:{width:70},name:{width:250},team:{width:130},time:{width:80}}
     when :team
+      @document_heading="Výsledky jednoty"
       selection={position:{width:70},name:{width:250},category:{width:130},time:{width:80}}
     end
   else
+    @document_heading="Přehled výsledků"
     result_groups={all:@results}
     selection={position:{width:50},name:{width:160},team:{width:120},category:{width:120},time:{width:80}}
   end
+
+  render "layouts/header", :pdf => pdf
 
   result_groups.each_pair do |key,result_list|
     data=[]
@@ -69,4 +77,5 @@ prawn_document do |pdf|
 
 
   end
+  render "layouts/page_numbers", :pdf => pdf
 end

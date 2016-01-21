@@ -3,12 +3,12 @@
   <table class="table table-condensed table-striped">
     <thead>
       <tr>
-        <th>Name</th>
-        <th>YOB</th>
+        <th>Jméno</th>
+        <th>Narozen</th>
       </tr>
     </thead>
     <tbody>
-    <% @county.people.each do |person| %>
+    <% @county.people.order(:last_name, :first_name).each do |person| %>
       <tr>
         <td><a href="<%= new_race_participant_path(@current_race, prefill_person_id:person.id) %>"><%= person.display_name %></a></td>
         <td><%= person.yob %></td>

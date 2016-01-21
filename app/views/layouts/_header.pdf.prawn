@@ -9,5 +9,7 @@ pdf.bounding_box([x_pos, y_pos], :width => 500, :height => 100) do
     pdf.text I18n.localize(@current_race.held_on).to_s, :align => :right, :size => 12
   end
 end
-pdf.move_up(50)
+pdf.move_up(30)
+pdf.text(@document_heading, :size => 18)
+pdf.move_up(30)
 

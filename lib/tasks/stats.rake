@@ -8,14 +8,18 @@ namespace :twinx do
         if order=="mladší"
           nej=race.participants.includes(:person).where("people.gender='#{gender}' AND people.born IS NOT NULL").order("people.born DESC").first
         else
-          nej=race.participants.includes(:person).where("people.gender='#{gender}'").order("people.born").first
+          nej=race.participants.includes(:person).where("people.gender='#{gender}'").order("people.yob").order("people.born").first
         end
         if gender=="male"
           puts "Nej#{order} muž:"
         else
           puts "Nej#{order} žena:"
         end
-        puts "#{nej.starting_no} #{nej.person.display_name} #{nej.person.born}"
+        if nej
+          puts "#{nej.starting_no} #{nej.person.display_name} #{nej.person.born}"
+        else
+          puts "N/A"
+        end
       end
     end
   end

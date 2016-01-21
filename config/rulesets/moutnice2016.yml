@@ -1,0 +1,114 @@
+categories:
+  "D5":
+    title: "Benjamínci D (50m)"
+    gender: "female"
+    max_age: 5
+    sort_order: 6
+  "C5":
+    title: "Benjamínci H (50m)"
+    gender: "male"
+    max_age: 5
+    sort_order: 8
+  "D7":
+    title: "Atletická školka D (50m)"
+    gender: "female"
+    max_age: 7
+    sort_order: 10
+  "C7":
+    title: "Atletická školka H (50m)"
+    gender: "male"
+    max_age: 7
+    sort_order: 20
+  "D9":
+    title: "Minipřípravka D (100m)"
+    gender: "female"
+    max_age: 9
+    sort_order: 30
+  "C9":
+    title: "Minipřípravka H (200m)"
+    gender: "male"
+    max_age: 9
+    sort_order: 40
+  "D11":
+    title: "Přípravka D (200m)"
+    gender: "female"
+    max_age: 11
+    sort_order: 50
+  "C11":
+    title: "Přípravka H (400m)"
+    gender: "male"
+    max_age: 11
+    sort_order: 60
+  "D13":
+    title: "Mladší žákyně (400m)"
+    gender: "female"
+    max_age: 13
+    sort_order: 70
+  "C13":
+    title: "Mladší žáci (800m)"
+    gender: "male"
+    max_age: 13
+    sort_order: 80
+  "D15":
+    title: "Starší žákyně (800m)"
+    gender: "female"
+    max_age: 15
+    sort_order: 90
+  "C15":
+    title: "Starší žáci (1000m)"
+    gender: "male"
+    max_age: 15
+    sort_order: 100
+  "D17":
+    title: "Dorostenky (1000m)"
+    gender: "female"
+    max_age: 17
+    sort_order: 110
+  "C17":
+    title: "Dorostenci (1500m)"
+    gender: "male"
+    max_age: 17
+    sort_order: 120
+  "D19":
+    title: "Juniorky (1500m)"
+    gender: "female"
+    max_age: 19
+    sort_order: 130
+  "C19":
+    title: "Junioři (2000m)"
+    gender: "male"
+    max_age: 19
+    sort_order: 140
+  "Z45":
+    title: "Ženy C (1000m)"
+    gender: "female"
+    min_age: 45
+    sort_order: 145
+  "Z35":
+    title: "Ženy B (1000m)"
+    gender: "female"
+    min_age: 35
+    sort_order: 150
+  "Z":
+    title: "Ženy A (1500m)"
+    gender: "female"
+    sort_order: 160
+  "V60":
+    title: "Muži D (2000m)"
+    gender: "male"
+    min_age: 60
+    sort_order: 170
+  "V50":
+    title: "Muži C (2000m)"
+    gender: "male"
+    min_age: 50
+    sort_order: 180
+  "V40":
+    title: "Muži B (2000m)"
+    gender: "male"
+    min_age: 40
+    sort_order: 190
+  "M":
+    title: "Muži A (5000m)"
+    gender: "male"
+    sort_order: 200
