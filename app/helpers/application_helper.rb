@@ -28,7 +28,7 @@ module ApplicationHelper
       bottom_rows<<link_to("Nefiltrovat", url_for(new_params))
       bottom_rows<<nil
     end
-    attr.to_s.capitalize.safe_constantize.for_race(@current_race).each do |model|
+    attr.to_s.capitalize.safe_constantize.for_race(@current_race).order(:title).each do |model|
       new_params[:filter]="#{attr}_#{model.id}"
       bottom_rows<<link_to(model.title, url_for(new_params))
     end

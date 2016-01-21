@@ -1,12 +1,5 @@
 == TODO
 
-* It should be possible to create a new county when entering a participant
-* The County field in the participant form should be a freeform field with options pulled from County.all, but it should ultimately refer to Team.title
+* Shorten entered participant window
 * It should be possible to enter non-participants as well
-* Clean up spec/features/results_spec.rb
-* Clean up spec/features/participants_spec.rb
-* Review category sort_order
 * Categories don't show up in results until they have at least one result
-* Missing Tests for Team#new
-* Changing an existing participants team fails
-* Use count instead of size
