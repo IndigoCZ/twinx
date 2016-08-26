@@ -23,6 +23,10 @@ group :development, :test do
   gem 'webrick' # Bug in regular webrick
 end
 
+group :development do
+  gem 'web-console', '~> 2.0'
+end
+
 group :production do
   gem 'unicorn'
 end
