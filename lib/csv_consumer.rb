@@ -12,7 +12,7 @@ class CSVConsumer < OpenStruct
   end
   def get_team
     @team_id||=Team.for_participant_form(
-      Race.find(race),
+      Race.find(race.id),
       County.find(get_county),
       TeamType.where(title:"Orel").first_or_create
     ).id
