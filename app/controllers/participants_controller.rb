@@ -25,7 +25,7 @@ class ParticipantsController < ApplicationController
   end
   def create
     logger.info "Prepare Person"
-    person_params=params[:participant].delete(:person)
+    person_params=extract_person_params(params[:participant].delete(:person))
     @person=Person.new(person_params)
     handle_new_county(@person,person_params)
 
@@ -65,7 +65,7 @@ class ParticipantsController < ApplicationController
   end
   def update
     @participant=Participant.find(params[:id])
-    person_params=params[:participant].delete(:person)
+    person_params=extract_person_params(params[:participant].delete(:person))
     @person=Person.new(person_params)
     handle_new_county(@person,person_params)
 
@@ -106,5 +106,8 @@ class ParticipantsController < ApplicationController
       county=County.find_or_create_by(title:county_name)
       person.county=county
     end
+  end
+  def extract_person_params(person_params)
+    person_params.permit(:county_id,:first_name,:last_name,:yob,:gender,:born)
   end
 end
