@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.1.0'
+gem 'rails', '~> 4.2.0'
 
 gem 'pg'
 #apt-get install libpq-dev
@@ -21,6 +21,10 @@ group :development, :test do
   gem 'factory_girl_rails'
 
   gem 'webrick' # Bug in regular webrick
+end
+
+group :development do
+  gem 'web-console', '~> 2.0'
 end
 
 group :production do
