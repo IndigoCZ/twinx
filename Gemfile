@@ -75,3 +75,5 @@ gem 'rails_admin', "~> 0.6"
 gem "devise", "~> 3.1"
 #gem "turbolinks"
 #gem "jquery-turbolinks"
+
+gem 'rails_12factor', group: :production
