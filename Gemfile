@@ -7,7 +7,7 @@ gem 'pg'
 
 group :test do
   gem 'capybara' #, github: 'jnicklas/capybara'
-  gem 'selenium-webdriver'
+  gem 'selenium-webdriver',  '~> 2.53'
   # apt-get install libxslt-dev libxml2-dev
 
   gem 'database_cleaner'
@@ -18,7 +18,7 @@ end
 group :development, :test do
   gem 'rspec-rails'
 
-  gem 'factory_girl_rails'
+  gem 'factory_girl_rails', '~> 4.7.0'
 
   gem 'webrick' # Bug in regular webrick
 end
