@@ -10,6 +10,7 @@ class Category < ActiveRecord::Base
   validates_presence_of :title, :race
   block_deletion_on_dependency :participants
   accepts_nested_attributes_for :constraints,:reject_if => :all_blank, allow_destroy: true
+  before_validation :recalculate_difficulty
 
   scope :for_race, lambda { |race| includes(:constraints).where(race_id:race.id) }
 
@@ -21,8 +22,7 @@ class Category < ActiveRecord::Base
     rval
   end
   def recalculate_difficulty
-    self.reload
-    self.update_attributes(difficulty:calculate_difficulty)
+    self.difficulty=calculate_difficulty
   end
 
   def dnfs

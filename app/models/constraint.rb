@@ -5,20 +5,8 @@ class Constraint < ActiveRecord::Base
   validates_inclusion_of :restrict, in:["max_age","min_age","gender"]
   validates_presence_of :integer_value, :if => :numeric_restriction?
   validates_presence_of :string_value, :if => :string_restriction?
-  after_create :cap_category_difficulty
-  after_update :recalculate_category_difficulty
-  after_destroy :recalculate_category_difficulty
+  after_save :update_category
   MAX_DIFFICULTY=100
-
-  def cap_category_difficulty
-    if (self.category.difficulty.nil?) || (self.category.difficulty > self.difficulty)
-      self.category.update_attributes(difficulty:self.difficulty)
-    end
-  end
-
-  def recalculate_category_difficulty
-    self.category.recalculate_difficulty
-  end
 
   def numeric_restriction?
     restrict == "max_age" || restrict == "min_age"
@@ -57,5 +45,11 @@ class Constraint < ActiveRecord::Base
     else
       MAX_DIFFICULTY - 1
     end
+  end
+
+  private
+  def update_category
+    self.category.reload
+    self.category.save
   end
 end

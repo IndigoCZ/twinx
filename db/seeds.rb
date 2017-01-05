@@ -70,9 +70,7 @@ races.each do |race|
   Constraint.create(restrict:"min_age",integer_value:60,category_id:Category.last.id)
   Category.create(title:"Lidovy Beh",race_id:race.id,sort_order:7)
 end
-Category.all.each do |category|
-  category.recalculate_difficulty
-end
+
 puts "\nGenerating Participants"
 races.each do |race|
   Person.all.each_with_index do |person,index|
