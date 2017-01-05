@@ -50,7 +50,7 @@ class Category < ActiveRecord::Base
     return cats.first unless cats.empty?
     details=self.categories_from_ruleset[code]
     cat=Category.create(race_id:race.id,title:details["title"],code:code,sort_order:details["sort_order"])
-    Constraint.create(category_id:cat.id,restrict:"gender",value:details["gender"])
+    Constraint.create(category_id:cat.id,restrict:"gender",value:details["gender"]) if details.has_key? "gender"
     Constraint.create(category_id:cat.id,restrict:"max_age",value:details["max_age"]) if details.has_key? "max_age"
     Constraint.create(category_id:cat.id,restrict:"min_age",value:details["min_age"]) if details.has_key? "min_age"
     cat
