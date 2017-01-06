@@ -40,6 +40,14 @@ class CategoriesController < ApplicationController
     @category.destroy
     redirect_to race_categories_url @current_race
   end
+
+  def results
+    @category = Category.find(params[:id])
+    @category_participants = @category.participants.includes(:person,:result).order(:starting_no)
+    respond_to do |format|
+      format.html { render "results", layout: false }
+    end
+  end
   private
   def category_params
     # There may be a problem with removal of individual constraints!

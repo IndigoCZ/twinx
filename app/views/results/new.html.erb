@@ -11,3 +11,8 @@
 <% end %>
   <%= link_to 'Zpět', race_results_path(@current_race), class:"btn btn-default" %>
 </div>
+<% if @previous_result %>
+  <div class="col-lg-4" id="category_results"
+    data-category-id="<%= @previous_result.participant.category_id %>"
+    data-race-id="<%= @current_race.id %>"></div>
+<% end %>
