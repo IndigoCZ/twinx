@@ -1,5 +1,6 @@
 <h1>Nový výsledek</h1>
 
+<div class="col-lg-8">
 <%= render 'form' %>
 <% if @previous_result %>
   <div class="col-lg-12 alert alert-info">
@@ -8,6 +9,5 @@
     <%= render partial: 'detail', locals: {result: @previous_result} %>
   </div>
 <% end %>
-<div class="col-lg-12">
   <%= link_to 'Zpět', race_results_path(@current_race), class:"btn btn-default" %>
 </div>

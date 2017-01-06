@@ -32,6 +32,7 @@ class ResultsController < ApplicationController
   end
   def edit
     @result = Result.find(params[:id])
+    @disable_starting_no = true
   end
   def destroy
     @result = Result.find(params[:id])
