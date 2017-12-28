@@ -3,6 +3,8 @@ rvm:
   - 2.2.3
 env:
   - TWINX_DB_USER=postgres
+addons:
+    firefox: "47.0.1"
 before_install:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
