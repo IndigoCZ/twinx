@@ -6,6 +6,7 @@
     <%= f.input :held_on, as: :string %>
     <%= f.input :subtitle %>
     <%= f.input :short_name %>
+    <%= f.input :ruleset, collection: @rulesets, as: :select %>
   </div>
 
   <div class="form-actions">
