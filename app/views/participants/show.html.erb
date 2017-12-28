@@ -1,6 +1,4 @@
-<p id="notice"><%= notice %></p>
-
 <%= render partial:'detail', locals:{participant:@participant} %>
 
-<%= link_to 'Upravit', edit_race_participant_path(@current_race,@participant) %> |
-<%= link_to 'Zpět', race_participants_path(@current_race) %>
+<%= link_to 'Upravit', edit_race_participant_path(@current_race,@participant), class:"btn" %>
+<%= link_to 'Zpět', race_participants_path(@current_race), class:"btn btn-default" %>

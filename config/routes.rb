@@ -13,6 +13,7 @@ Twinx::Application.routes.draw do
     resources :results
     resources :data_transfer, only:["index","create"]
     get 'cup', to: 'cup#index'
+    get '/categories/:id/results', to: 'categories#results', as: 'category_results'
   end
 
   root :to => 'races#index'

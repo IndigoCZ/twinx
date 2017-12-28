@@ -10,6 +10,7 @@ class Category < ActiveRecord::Base
   validates_presence_of :title, :race
   block_deletion_on_dependency :participants
   accepts_nested_attributes_for :constraints,:reject_if => :all_blank, allow_destroy: true
+  before_validation :recalculate_difficulty
 
   scope :for_race, lambda { |race| includes(:constraints).where(race_id:race.id) }
 
@@ -21,8 +22,7 @@ class Category < ActiveRecord::Base
     rval
   end
   def recalculate_difficulty
-    self.reload
-    self.update_attributes(difficulty:calculate_difficulty)
+    self.difficulty=calculate_difficulty
   end
 
   def dnfs
@@ -50,7 +50,7 @@ class Category < ActiveRecord::Base
     return cats.first unless cats.empty?
     details=self.categories_from_ruleset[code]
     cat=Category.create(race_id:race.id,title:details["title"],code:code,sort_order:details["sort_order"])
-    Constraint.create(category_id:cat.id,restrict:"gender",value:details["gender"])
+    Constraint.create(category_id:cat.id,restrict:"gender",value:details["gender"]) if details.has_key? "gender"
     Constraint.create(category_id:cat.id,restrict:"max_age",value:details["max_age"]) if details.has_key? "max_age"
     Constraint.create(category_id:cat.id,restrict:"min_age",value:details["min_age"]) if details.has_key? "min_age"
     cat

@@ -1,6 +1,7 @@
 <h1>Upravit účastníka</h1>
-
+<div class="col-lg-8">
 <%= render 'form' %>
 
-<%= link_to 'Zobrazit', [@current_race, @participant] %> |
-<%= link_to 'Zpět', race_participants_path(@current_race) %>
+<%= link_to 'Zobrazit', [@current_race, @participant], class:"btn" %>
+<%= link_to 'Zpět', race_participants_path(@current_race), class:"btn btn-default" %>
+</div>

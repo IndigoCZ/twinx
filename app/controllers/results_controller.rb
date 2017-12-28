@@ -12,6 +12,7 @@ class ResultsController < ApplicationController
   def new
     @result = Result.new
     @previous_result=Result.find(previous_id) if previous_id
+    @result.starting_no=params[:prefill_starting_no]
   end
   def create
     @result = Result.new(result_params)
@@ -32,6 +33,7 @@ class ResultsController < ApplicationController
   end
   def edit
     @result = Result.find(params[:id])
+    @disable_starting_no = true
   end
   def destroy
     @result = Result.find(params[:id])

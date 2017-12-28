@@ -355,4 +355,5 @@ describe "Participants", :type => :feature do
     expect(Participant.last.team.team_type).to eq(second_team_type)
   end
 
+  it "does not fail with an error when a new Person is invalid"
 end

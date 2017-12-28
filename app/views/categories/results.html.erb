@@ -1,0 +1,27 @@
+<div class="col-lg-4" id="category_results">
+  <h3><%= @category.title %></h3>
+  <table class="table table-condensed table-striped">
+    <thead>
+      <tr>
+        <th>Číslo</th>
+        <th>Jméno</th>
+        <th>Pozice</th>
+        <th>Čas</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @category_participants.each do |participant| %>
+      <tr>
+        <td><%= participant.starting_no %></td>
+        <td><%= participant.display_name %></td>
+        <% if participant.result %>
+          <td><%= participant.result.position %></td>
+          <td><%= participant.result.time %></td>
+        <% else %>
+          <td colspan=2><a href="<%= new_race_result_path(@current_race, prefill_starting_no:participant.starting_no) %>">Přidat výsledek</a></td>
+        <% end %>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>

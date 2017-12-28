@@ -34,10 +34,13 @@ class ParticipantsController < ApplicationController
 
     logger.info "Prepare Participant"
     @participant=Participant.new(participant_params)
+
+    logger.info "Prepare Team"
+    @team=Team.for_participant_form(@current_race,@person.county,@team_type)
+
     logger.info "Try to save Person"
     if @person.save
       @person.dedup
-      @team=Team.for_participant_form(@current_race,@person.county,@team_type)
       @participant.team_id=@team.id
       @participant.person_id=@person.id
       session[:last_county_id]=@person.county.id
