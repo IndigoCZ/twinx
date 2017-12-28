@@ -20,7 +20,7 @@ group :development, :test do
 
   gem 'factory_girl_rails', '~> 4.7.0'
 
-  gem 'webrick' # Bug in regular webrick
+  gem 'webrick', '~> 1.3.1' # Bug in regular webrick
 end
 
 group :development do

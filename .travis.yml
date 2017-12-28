@@ -13,3 +13,4 @@ before_script:
   - psql -c 'create database twinx_test;' -U postgres
 cache: bundler
 sudo: false
+dist: precise
