@@ -1,0 +1,30 @@
+<h1>Statistiky</h1>
+<p>Počet účastníků: <%= @participant_count %></p>
+<table class="table table-condensed table-striped">
+  <thead>
+    <tr>
+      <th>Nej</th>
+      <th>#</th>
+      <th>Jméno</th>
+      <th>Rok nar.</th>
+      <th>Narozen</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @top_participants.each_pair do |tuple, participant| %>
+    <% gender=(tuple.last==:male ? "Muž" : "Žena") %>
+    <% age=(tuple.first==:young ? "Nejmladší" : "Nejstarší") %>
+    <tr>
+      <td><%= "#{age} #{gender}" %></td>
+      <% if participant then %>
+        <td><%= participant.starting_no %></td>
+        <td><%= link_to participant.person.display_name, [@current_race, participant] %></td>
+        <td><%= participant.person.yob %></td>
+        <td><%= participant.person.born %></td>
+      <% else %>
+        <td></td><td></td><td></td><td></td>
+      <% end %>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

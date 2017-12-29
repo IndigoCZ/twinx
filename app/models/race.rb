@@ -1,5 +1,7 @@
 class Race < ActiveRecord::Base
   extend ModelDependencyHandling
+
+  attr_accessor :ruleset
   validates_presence_of :title, :held_on
   has_many :categories
   has_many :teams

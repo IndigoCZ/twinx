@@ -4,5 +4,7 @@
     <%= nav_link "Nový Výsledek",       new_race_result_path(@current_race) %>
     <%= nav_link "Pohár Orla",          race_cup_path(@current_race) %>
     <%= nav_link "Kompletní Výsledky" , race_results_path(@current_race,group:"category") %>
+    <%= nav_link "Statistiky" ,         race_stats_path(@current_race) %>
+    <%= nav_link "Administrace" ,      race_admin_path(@current_race) %>
   </ul>
 <% end %>

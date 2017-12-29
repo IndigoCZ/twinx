@@ -1,5 +1,25 @@
-<%= form_tag({:action => :create}, :multipart => true) do %>
-  <%= label_tag(:q, "Import CSV file:") %>
-  <%= file_field_tag 'import' %>
-  <%= submit_tag("Import", class:"btn btn-primary")%>
-<% end %>
+<div class="row">
+  <div class="col-md-4">
+    <%= link_to "Export CSV", race_export_url(@current_race, :format => :csv), class:"btn btn-primary" %>
+  </div>
+  <div class="col-md-4">
+    <%= form_tag(race_import_url(@current_race), :multipart => true) do %>
+      <%= submit_tag("Import CSV", class:"btn btn-danger")%>
+      <%= file_field_tag 'import'%>
+    <% end %>
+  </div>
+  <div class="col-md-4">
+    <%= link_to "Fix counters", race_fix_url(@current_race), class:"btn btn-default" %>
+  </div>
+</div>
+<hr />
+<div class="row">
+  <div class="col-md-6">
+    <p>Ruby version: <%= RUBY_VERSION %></p>
+  </div>
+  <div class="col-md-6">
+    <% @app_links.each do |al| %>
+      <%= link_to al, al %><br />
+    <% end %>
+  </div>
+</div>

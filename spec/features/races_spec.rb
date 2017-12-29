@@ -45,7 +45,7 @@ describe "Races", :type => :feature do
 
     fill_in "Datum", with:race.held_on
     click_button "Vytvořit Závod"
-    expect(page).to have_content("Závod byl úspěšně vytvořen.")
+    expect(page).to have_content("Závod byl úspěšně vytvořen")
   end
 
   # Not accessible, perhaps it should be removed
