@@ -11,7 +11,11 @@ class DataTransferController < ApplicationController
     end
   end
   def create
-    CSVInterface.import(@current_race, params[:import].read.force_encoding("UTF-8"))
-    redirect_to race_data_transfer_index_path(@current_race), notice: 'Import'
+    if params[:import]
+      CSVInterface.import(@current_race, params[:import].read.force_encoding("UTF-8"))
+      redirect_to race_data_transfer_index_path(@current_race), notice: 'Import'
+    else
+      redirect_to race_data_transfer_index_path(@current_race), notice: 'Failed'
+    end
   end
 end

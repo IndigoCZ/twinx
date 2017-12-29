@@ -1,5 +1,11 @@
-<%= form_tag({:action => :create}, :multipart => true) do %>
-  <%= label_tag(:q, "Import CSV file:") %>
-  <%= file_field_tag 'import' %>
-  <%= submit_tag("Import", class:"btn btn-primary")%>
-<% end %>
+<div class="row">
+  <div class="col-md-6">
+    <%= link_to "Export CSV", race_data_transfer_index_url(@current_race, :format => :csv), class:"btn btn-primary" %>
+  </div>
+  <div class="col-md-6">
+    <%= form_tag({:action => :create}, :multipart => true) do %>
+      <%= submit_tag("Import CSV", class:"btn btn-danger")%>
+      <%= file_field_tag 'import'%>
+    <% end %>
+  </div>
+</div>
