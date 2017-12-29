@@ -5,6 +5,6 @@
     <%= nav_link "Pohár Orla",          race_cup_path(@current_race) %>
     <%= nav_link "Kompletní Výsledky" , race_results_path(@current_race,group:"category") %>
     <%= nav_link "Statistiky" ,         race_stats_path(@current_race) %>
-    <%= nav_link "Import/Export" ,      race_data_transfer_index_path(@current_race) %>
+    <%= nav_link "Administrace" ,      race_admin_path(@current_race) %>
   </ul>
 <% end %>

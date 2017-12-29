@@ -13,7 +13,11 @@ Twinx::Application.routes.draw do
     resources :categories
     resources :participants
     resources :results
-    resources :data_transfer, only:["index","create"]
+    get 'admin', to: 'data_transfer#index'
+    get 'export', to: 'data_transfer#index'
+    post 'import', to: 'data_transfer#create'
+    get 'fix', to: 'data_transfer#fix'
+    #resources :data_transfer, only:["index","create","update"]
     get 'cup', to: 'cup#index'
     get 'stats', to: 'stats#index'
     get '/categories/:id/results', to: 'categories#results', as: 'category_results'
