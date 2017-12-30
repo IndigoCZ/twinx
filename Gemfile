@@ -69,10 +69,6 @@ gem 'prawn-rails'#, :git => 'https://github.com/cortiz/prawn-rails.git'
 
 gem 'coveralls', require: false
 
-gem 'rails_admin', "~> 0.6"
-#gem 'rails_admin', github: 'sferik/rails_admin'
-
-gem "devise", "~> 3.1"
 #gem "turbolinks"
 #gem "jquery-turbolinks"
 

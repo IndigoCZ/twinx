@@ -1,12 +1,6 @@
 Twinx::Application.routes.draw do
-  get 'stats/index'
-
   resources :counties, only:["index"]
   get '/counties/:id/people', to: 'counties#people', as: 'county'
-
-  devise_for :users
-
-  mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
 
   resources :races do
     resources :teams, only:["index","new","create"]
