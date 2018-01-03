@@ -1,15 +1,15 @@
 <div class="row">
   <div class="col-md-4">
-    <%= link_to "Export CSV", race_export_url(@current_race, :format => :csv), class:"btn btn-primary" %>
+    <%= link_to "Export CSV", race_export_path(@current_race, :format => :csv), class:"btn btn-primary" %>
   </div>
   <div class="col-md-4">
-    <%= form_tag(race_import_url(@current_race), :multipart => true) do %>
+    <%= form_tag(race_import_path(@current_race), :multipart => true) do %>
       <%= submit_tag("Import CSV", class:"btn btn-danger")%>
       <%= file_field_tag 'import'%>
     <% end %>
   </div>
   <div class="col-md-4">
-    <%= link_to "Fix counters", race_fix_url(@current_race), class:"btn btn-default" %>
+    <%= link_to "Fix counters", race_fix_path(@current_race), class:"btn btn-default" %>
   </div>
 </div>
 <hr />
