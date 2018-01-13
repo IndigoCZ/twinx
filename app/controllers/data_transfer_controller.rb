@@ -47,4 +47,8 @@ class DataTransferController < ApplicationController
     end
     redirect_to race_admin_path(@current_race), notice: cleanup_stats.inspect
   end
+
+  def shutdown
+    `sudo shutdown -h now`
+  end
 end
