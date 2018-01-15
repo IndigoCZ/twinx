@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '~> 4.2.0'
 
-gem 'pg'
+gem 'pg', '~> 0.21.0'
 #apt-get install libpq-dev
 
 group :test do
