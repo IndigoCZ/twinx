@@ -17,5 +17,7 @@ Twinx::Application.routes.draw do
     get '/categories/:id/results', to: 'categories#results', as: 'category_results'
   end
 
+  get 'shutdown', to: 'data_transfer#shutdown'
+
   root :to => 'races#index'
 end

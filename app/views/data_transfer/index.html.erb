@@ -9,7 +9,7 @@
     <% end %>
   </div>
   <div class="col-md-4">
-    <%= link_to "Fix counters", race_fix_path(@current_race), class:"btn btn-default" %>
+    <%= link_to "Cleanup database", race_fix_path(@current_race), class:"btn btn-default" %>
   </div>
 </div>
 <hr />
@@ -21,5 +21,10 @@
     <% @app_links.each do |al| %>
       <%= link_to al, al %><br />
     <% end %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <%= link_to "Shutdown", shutdown_path(), class:"btn btn-danger" %>
   </div>
 </div>

@@ -22,15 +22,33 @@ class DataTransferController < ApplicationController
   end
 
   def fix
-    return_string=""
+    cleanup_stats={
+      removed_people:0,
+      removed_teams:0,
+      removed_counties:0
+    }
+    Person.includes(:participants).select{|p| p.participants.size == 0}.each do |p|
+      p.delete
+      cleanup_stats[:removed_people]+=1
+    end
+    Team.where(participants_count:0).each do |x|
+      x.delete
+      cleanup_stats[:removed_teams]+=1
+    end
+    County.includes(:teams).select{|c| c.teams.size == 0}.each do |c|
+      c.delete
+      cleanup_stats[:removed_counties]+=1
+    end
     @current_race.categories.each do |cat|
       Category.reset_counters(cat.id, :participants)
-      return_string+="C"
     end
     @current_race.teams.each do |team|
       Team.reset_counters(team.id, :participants)
-      return_string+="T"
     end
-    redirect_to race_admin_path(@current_race), notice: return_string
+    redirect_to race_admin_path(@current_race), notice: cleanup_stats.inspect
+  end
+
+  def shutdown
+    `sudo shutdown -h now`
   end
 end
