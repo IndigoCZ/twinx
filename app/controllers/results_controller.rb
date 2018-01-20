@@ -13,6 +13,7 @@ class ResultsController < ApplicationController
     @result = Result.new
     @previous_result=Result.find(previous_id) if previous_id
     @result.starting_no=params[:prefill_starting_no]
+    @result.position=@previous_result.position+1 if @previous_result
   end
   def create
     @result = Result.new(result_params)

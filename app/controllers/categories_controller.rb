@@ -44,6 +44,7 @@ class CategoriesController < ApplicationController
   def results
     @category = Category.find(params[:id])
     @category_participants = @category.participants.includes(:person,:result).order(:starting_no)
+    @previous_id=previous_id
     respond_to do |format|
       format.html { render "results", layout: false }
     end
@@ -52,5 +53,8 @@ class CategoriesController < ApplicationController
   def category_params
     # There may be a problem with removal of individual constraints!
     params.require(:category).permit(:race_id, :title, :code, :sort_order, :difficulty, constraints_attributes: [:id, :restrict, :value, :_destroy])
+  end
+  def previous_id
+      params.permit(:previous_id)[:previous_id]
   end
 end

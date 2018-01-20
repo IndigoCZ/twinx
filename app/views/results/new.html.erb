@@ -14,5 +14,6 @@
 <% if @previous_result %>
   <div class="col-lg-4" id="category_results"
     data-category-id="<%= @previous_result.participant.category_id %>"
-    data-race-id="<%= @current_race.id %>"></div>
+    data-race-id="<%= @current_race.id %>"
+    data-previous-id="<%= @previous_result.id %>"></div>
 <% end %>
