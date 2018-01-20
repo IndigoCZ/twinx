@@ -34,8 +34,10 @@ class CSVConsumer < OpenStruct
         county_id:get_county
       )
     person.born=born if born
-    person.save
-    @person_id=person.id
+    if person.save
+      person.dedup
+      @person_id=person.id
+    end
   end
   def get_participant
     return @participant_id if @participant_id
