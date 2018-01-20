@@ -8,9 +8,9 @@
       </tr>
     </thead>
     <tbody>
-    <% @county.people.order(:last_name, :first_name).each do |person| %>
+    <% @people.each do |person| %>
       <tr>
-        <td><a href="<%= new_race_participant_path(@current_race, prefill_person_id:person.id) %>"><%= person.display_name %></a></td>
+        <td><a href="<%= new_race_participant_path(@current_race, prefill_person_id:person.id, prefill_starting_no:@starting_no) %>"><%= person.display_name %></a></td>
         <td><%= person.yob %></td>
       </tr>
     <% end %>

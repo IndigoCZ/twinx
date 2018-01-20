@@ -54,6 +54,10 @@ County =
       data: data_in_json
     $("#participant_person_county_id").on("change", County.load_county_people)
 
+    $("#participant_person_first_name").on("input", County.load_county_people)
+    $("#participant_person_last_name").on("input", County.load_county_people)
+    $("#participant_starting_no").on("input", County.load_county_people)
+
   load_county_select: ->
     console.log("load_county_select")
     $.get '/counties.json', {}, County.prepare_field, 'json'
@@ -66,8 +70,15 @@ County =
     county_id=$("#participant_person_county_id").val()
     race_id=$("#participant_person_county_id").data("race-id")
     if county_id && race_id
-      console.log(race_id+"/"+county_id)
-      $.get '/counties/'+county_id+'/people.html', {race_id:race_id}, County.prepare_county_people, 'html'
+      participant_params={}
+      ["person_first_name","person_last_name","starting_no"].forEach (k) ->
+        v=encodeURIComponent($("#participant_"+k).val())
+        if v
+          participant_params[k]=v
+      if participant_params.size > 0
+        $.get '/counties/'+county_id+'/people.html?'+$.param(participant_params), {race_id:race_id}, County.prepare_county_people, 'html'
+      else
+        $.get '/counties/'+county_id+'/people.html', {race_id:race_id}, County.prepare_county_people, 'html'
 
 ready = ->
   console.log("Ready")

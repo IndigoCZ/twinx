@@ -4,21 +4,25 @@ class CSVConsumer < OpenStruct
     get_category
     get_county
     get_person
+    get_team
     get_participant
     get_result unless position.empty?
   end
   def get_category
-    @category_id||=Category.first_or_create_by_code(race,category)
+    @category_id||=Category.first_or_create_by_code(race,category).id
   end
   def get_team
     @team_id||=Team.for_participant_form(
       Race.find(race.id),
       County.find(get_county),
-      TeamType.where(title:"Orel").first_or_create
+      TeamType.find(get_ttype)
     ).id
   end
   def get_county
     @county_id||=County.where(title:team).first_or_create.id
+  end
+  def get_ttype
+    @ttype_id||=TeamType.where(title:ttype).first_or_create.id
   end
   def get_person
     return @person_id if @person_id
@@ -29,25 +33,30 @@ class CSVConsumer < OpenStruct
         yob:yob,
         county_id:get_county
       )
-    person.full_name=full_name if full_name
     person.born=born if born
-    person.id_string=id_string if id_string
-    person.save
-    @person_id=person.id
+    if person.save
+      person.dedup
+      @person_id=person.id
+    end
   end
   def get_participant
-    @participant_id||=Participant.create(starting_no:starting_no,person_id:get_person,team_id:get_team,category_id:get_category)
+    return @participant_id if @participant_id
+    participant=Participant.find_for_result(race,starting_no)||Participant.create(starting_no:starting_no,person_id:get_person,team_id:get_team,category_id:get_category)
+    @participant_id=participant.id
   end
   def get_position
     return nil if position.nil? || position.empty?
-    position
+    position.to_i
   end
   def get_time
     return nil if time.nil? || time.empty?
     time
   end
   def get_result
-    @result_id||=Result.create(participant_id:get_participant,position:get_position,time:get_time)
+    return @result_id if @result_id
+    result=Result.create(participant_id:get_participant,position:get_position,time:get_time)
+    puts result.errors.full_messages
+    @result_id=result.id
   end
 =begin
     return "Nothing loaded" unless check_header(header,["category"])

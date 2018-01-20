@@ -36,7 +36,7 @@ module CSVInterface
   # Internals
 
   def valid_fields
-    %w[starting_no first_name last_name full_name gender yob team category position time born id_string]
+    %w[starting_no first_name last_name full_name gender yob ttype team category position time born id_string]
   end
 
   def valid_field?(field_name)

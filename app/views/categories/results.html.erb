@@ -17,6 +17,8 @@
         <% if participant.result %>
           <td><%= participant.result.position %></td>
           <td><%= participant.result.time %></td>
+        <% elsif @previous_id %>
+          <td colspan=2><a href="<%= new_race_result_path(@current_race, prefill_starting_no:participant.starting_no,previous_id:@previous_id) %>">Přidat výsledek</a></td>
         <% else %>
           <td colspan=2><a href="<%= new_race_result_path(@current_race, prefill_starting_no:participant.starting_no) %>">Přidat výsledek</a></td>
         <% end %>
