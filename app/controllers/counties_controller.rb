@@ -10,8 +10,9 @@ class CountiesController < ApplicationController
     @county=County.find(params[:id])
     @current_race=Race.find(params[:race_id])
     @people=@county.people
-    first_name=params[:first_name]
-    last_name=params[:last_name]
+    first_name=params[:person_first_name]
+    last_name=params[:person_last_name]
+    @starting_no=params[:starting_no]
     if first_name
       @people=@people.where('first_name ILIKE ?',"%#{first_name}%")
     end

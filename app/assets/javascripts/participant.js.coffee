@@ -56,6 +56,7 @@ County =
 
     $("#participant_person_first_name").on("input", County.load_county_people)
     $("#participant_person_last_name").on("input", County.load_county_people)
+    $("#participant_starting_no").on("input", County.load_county_people)
 
   load_county_select: ->
     console.log("load_county_select")
@@ -68,16 +69,14 @@ County =
     console.log("load_county_people")
     county_id=$("#participant_person_county_id").val()
     race_id=$("#participant_person_county_id").data("race-id")
-    first_name=encodeURIComponent($("#participant_person_first_name").val())
-    last_name=encodeURIComponent($("#participant_person_last_name").val())
     if county_id && race_id
-      console.log(race_id+"/"+county_id+"/"+first_name+":"+last_name)
-      if first_name && last_name
-        $.get '/counties/'+county_id+'/people.html?first_name='+first_name+'&last_name='+last_name, {race_id:race_id}, County.prepare_county_people, 'html'
-      else if first_name
-        $.get '/counties/'+county_id+'/people.html?first_name='+first_name, {race_id:race_id}, County.prepare_county_people, 'html'
-      else if last_name
-        $.get '/counties/'+county_id+'/people.html?last_name='+last_name, {race_id:race_id}, County.prepare_county_people, 'html'
+      participant_params={}
+      ["person_first_name","person_last_name","starting_no"].forEach (k) ->
+        v=encodeURIComponent($("#participant_"+k).val())
+        if v
+          participant_params[k]=v
+      if participant_params.size > 0
+        $.get '/counties/'+county_id+'/people.html?'+$.param(participant_params), {race_id:race_id}, County.prepare_county_people, 'html'
       else
         $.get '/counties/'+county_id+'/people.html', {race_id:race_id}, County.prepare_county_people, 'html'
 

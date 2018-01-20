@@ -17,7 +17,11 @@ class ParticipantsController < ApplicationController
       @person.county_id=session[:last_county_id]
     end
     @participant=Participant.new
-		@participant.starting_no=session[:last_starting_no].to_i+1
+    if params[:prefill_starting_no]
+      @participant.starting_no=params[:prefill_starting_no]
+    else
+      @participant.starting_no=session[:last_starting_no].to_i+1
+    end
     @previous_participant=Participant.find(previous_id) if previous_id
 
     @team=Team.new
