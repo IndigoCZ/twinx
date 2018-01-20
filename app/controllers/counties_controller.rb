@@ -13,10 +13,10 @@ class CountiesController < ApplicationController
     first_name=params[:first_name]
     last_name=params[:last_name]
     if first_name
-      @people=@people.where("first_name ILIKE '%#{first_name}%'")
+      @people=@people.where('first_name ILIKE ?',"%#{first_name}%")
     end
     if last_name
-      @people=@people.where("last_name ILIKE '%#{last_name}%'")
+      @people=@people.where('last_name ILIKE ?',"%#{last_name}%")
     end
     @people=@people.order(:last_name, :first_name)
     respond_to do |format|
