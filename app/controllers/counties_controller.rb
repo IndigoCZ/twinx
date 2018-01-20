@@ -9,9 +9,19 @@ class CountiesController < ApplicationController
   def people
     @county=County.find(params[:id])
     @current_race=Race.find(params[:race_id])
+    @people=@county.people
+    first_name=params[:first_name]
+    last_name=params[:last_name]
+    if first_name
+      @people=@people.where("first_name ILIKE '%#{first_name}%'")
+    end
+    if last_name
+      @people=@people.where("last_name ILIKE '%#{last_name}%'")
+    end
+    @people=@people.order(:last_name, :first_name)
     respond_to do |format|
       format.html { render "people", layout: false }
-      format.json { render :json => @county.people.order(:last_name, :first_name) }
+      format.json { render :json => @people }
     end
   rescue ActiveRecord::RecordNotFound
     render nothing:true, status: 404
