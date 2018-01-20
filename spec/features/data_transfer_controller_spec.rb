@@ -12,11 +12,14 @@ describe DataTransferController, :type => :feature do
 
   it "supports export of race results" do
     this_race=FactoryGirl.create(:race)
-    participant=FactoryGirl.create(:participant,race:this_race)
+    ttype=FactoryGirl.create(:team_type)
+    county=FactoryGirl.create(:county)
+    team=FactoryGirl.create(:team,team_type:ttype,county:county)
+    participant=FactoryGirl.create(:participant,race:this_race,team:team)
     visit race_admin_path(race_id:this_race.id, format: "csv")
     expect(CSV.parse(page.body)).to eq [
-      ["starting_no", "first_name", "last_name", "full_name", "gender", "yob", "team", "category", "position", "time", "born", "id_string"],
-      [participant.starting_no.to_s, participant.person.first_name, participant.person.last_name, participant.person.full_name, participant.person.gender, participant.person.yob.to_s, participant.team.title, participant.category.code, "DNF",nil,participant.person.born,participant.person.id_string]
+      ["starting_no", "first_name", "last_name", "gender", "yob", "ttype", "team", "category", "position", "time", "born"],
+      [participant.starting_no.to_s, participant.person.first_name, participant.person.last_name, participant.person.gender, participant.person.yob.to_s, ttype.title, county.title, participant.category.code, "DNF",nil,participant.person.born]
     ]
   end
 

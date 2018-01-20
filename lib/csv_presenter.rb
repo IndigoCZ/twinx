@@ -25,8 +25,11 @@ class CSVPresenter
   def yob
     @person.yob
   end
+  def ttype
+    @team.team_type.title
+  end
   def team
-    @team.title
+    @team.county.title
   end
   def category
     @category.code

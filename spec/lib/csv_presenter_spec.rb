@@ -3,13 +3,17 @@ describe CSVPresenter do
   before :each do
     @participant=double("Participant")
     @person=double("Person")
-    @team=double("Person")
+    @team=double("Team")
+    @team_type=double("TeamType")
+    @county=double("County")
     @category=double("Category")
-    @result=double("Team")
+    @result=double("Result")
     allow(@participant).to receive(:person).and_return(@person)
     allow(@participant).to receive(:team).and_return(@team)
     allow(@participant).to receive(:category).and_return(@category)
     allow(@participant).to receive(:result).and_return(@result)
+    allow(@team).to receive(:county).and_return(@county)
+    allow(@team).to receive(:team_type).and_return(@team_type)
   end
   it "loads up the person, result, team and category for the Participant when instantiated" do
     expect(@participant).to receive(:person)
@@ -32,8 +36,10 @@ describe CSVPresenter do
     presenter.first_name
     expect(@result).to receive(:time)
     presenter.time
-    expect(@team).to receive(:title)
+    expect(@county).to receive(:title)
     presenter.team
+    expect(@team_type).to receive(:title)
+    presenter.ttype
     expect(@category).to receive(:code)
     presenter.category
   end

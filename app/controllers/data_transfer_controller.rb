@@ -4,7 +4,7 @@ require 'csv'
 class DataTransferController < ApplicationController
   def index
     participants=@current_race.participants
-    header=["starting_no", "first_name", "last_name", "full_name", "gender", "yob", "team", "category", "position", "time", "born", "id_string"]
+    header=["starting_no", "first_name", "last_name", "gender", "yob", "ttype", "team", "category", "position", "time", "born"]
 
     @app_links=`/sbin/ip addr show`.scan(/inet \d+.\d+.\d+.\d+/).map {|m| "http://#{m.split.last}:#{request.port}/"}
     respond_to do |format|
