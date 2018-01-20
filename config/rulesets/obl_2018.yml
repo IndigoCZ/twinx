@@ -1,0 +1,138 @@
+categories:
+  "D5":
+    title: "Benjamínci D"
+    gender: "female"
+    max_age: 5
+    sort_order: 6
+  "C5":
+    title: "Benjamínci H"
+    gender: "male"
+    max_age: 5
+    sort_order: 8
+  "D7":
+    title: "Atletická školka D"
+    gender: "female"
+    max_age: 7
+    sort_order: 10
+  "C7":
+    title: "Atletická školka H"
+    gender: "male"
+    max_age: 7
+    sort_order: 20
+  "D9":
+    title: "Minipřípravka D"
+    gender: "female"
+    max_age: 9
+    sort_order: 30
+  "C9":
+    title: "Minipřípravka H"
+    gender: "male"
+    max_age: 9
+    sort_order: 40
+  "D11":
+    title: "Přípravka D"
+    gender: "female"
+    max_age: 11
+    sort_order: 50
+  "C11":
+    title: "Přípravka H"
+    gender: "male"
+    max_age: 11
+    sort_order: 60
+  "D13":
+    title: "Mladší žákyně"
+    gender: "female"
+    max_age: 13
+    sort_order: 70
+  "C13":
+    title: "Mladší žáci"
+    gender: "male"
+    max_age: 13
+    sort_order: 80
+  "D15":
+    title: "Starší žákyně"
+    gender: "female"
+    max_age: 15
+    sort_order: 90
+  "C15":
+    title: "Starší žáci"
+    gender: "male"
+    max_age: 15
+    sort_order: 100
+  "D17":
+    title: "Dorostenky"
+    gender: "female"
+    max_age: 17
+    sort_order: 110
+  "C17":
+    title: "Dorostenci"
+    gender: "male"
+    max_age: 17
+    sort_order: 120
+  "D19":
+    title: "Juniorky"
+    gender: "female"
+    max_age: 19
+    sort_order: 130
+  "C19":
+    title: "Junioři"
+    gender: "male"
+    max_age: 19
+    sort_order: 140
+  "Z55":
+    title: "Ženy D"
+    gender: "female"
+    min_age: 55
+    sort_order: 142
+  "Z45":
+    title: "Ženy C"
+    gender: "female"
+    min_age: 45
+    sort_order: 145
+  "Z35":
+    title: "Ženy B"
+    gender: "female"
+    min_age: 35
+    sort_order: 150
+  "Z":
+    title: "Ženy A"
+    gender: "female"
+    sort_order: 160
+  "V70":
+    title: "Muži D"
+    gender: "male"
+    min_age: 70
+    sort_order: 165
+  "V60":
+    title: "Muži D"
+    gender: "male"
+    min_age: 60
+    sort_order: 170
+  "V50":
+    title: "Muži C"
+    gender: "male"
+    min_age: 50
+    sort_order: 180
+  "V40":
+    title: "Muži B"
+    gender: "male"
+    min_age: 40
+    sort_order: 190
+  "M":
+    title: "Muži A"
+    gender: "male"
+    sort_order: 200
+  "OM":
+    title: "Všelidový běh muži"
+    gender: "male"
+    sort_order: 210
+  "OZ":
+    title: "Všelidový běh ženy"
+    gender: "female"
+    sort_order: 220
+  "H":
+    title: "Handicap"
+    sort_order: 230
+  "K":
+    title: "Kněží"
+    sort_order: 240
