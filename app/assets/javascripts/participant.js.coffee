@@ -75,10 +75,10 @@ County =
         v=encodeURIComponent($("#participant_"+k).val())
         if v
           participant_params[k]=v
-      if participant_params.size > 0
-        $.get '/counties/'+county_id+'/people.html?'+$.param(participant_params), {race_id:race_id}, County.prepare_county_people, 'html'
-      else
+      if $.isEmptyObject(participant_params)
         $.get '/counties/'+county_id+'/people.html', {race_id:race_id}, County.prepare_county_people, 'html'
+      else
+        $.get '/counties/'+county_id+'/people.html?'+$.param(participant_params), {race_id:race_id}, County.prepare_county_people, 'html'
 
 ready = ->
   console.log("Ready")
