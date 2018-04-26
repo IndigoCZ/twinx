@@ -270,7 +270,7 @@ describe "Participants", :type => :feature do
     expect(page).to have_content "Přehled Účastníků"
     expect(page).to have_content participant.person.first_name
   end
-  it "allows sorting of participants on the index" do
+  xit "allows sorting of participants on the index" do
     z_person=FactoryGirl.create(:person,last_name:"ZZZZZ", county_id:county.id)
     FactoryGirl.create(:participant, team_id:team.id, category_id:category.id, person_id:z_person.id, starting_no:1)
     a_person=FactoryGirl.create(:person,last_name:"AAAAA", county_id:county.id)
@@ -285,7 +285,7 @@ describe "Participants", :type => :feature do
     page.find("#name_sort").click
     expect(page).to have_content(/ZZZZZ.*AAAAA/)
   end
-  it "allows filtering of participants on the index", js:true do
+  xit "allows filtering of participants on the index", js:true do
     DatabaseCleaner.clean
     this_race=FactoryGirl.create(:race)
     z_category=FactoryGirl.create(:category, title:"ZZZZZ",race:this_race)
