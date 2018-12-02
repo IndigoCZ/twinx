@@ -6,7 +6,7 @@ gem 'pg', '~> 0.21.0'
 #apt-get install libpq-dev
 
 group :test do
-  gem 'capybara' #, github: 'jnicklas/capybara'
+  gem 'capybara', '~> 3.1.0'
   gem 'puma'
   gem 'selenium-webdriver',  '~> 2.53'
   # apt-get install libxslt-dev libxml2-dev
