@@ -305,6 +305,9 @@ describe "Participants", :type => :feature do
     expect(page).not_to have_content("ZZZZZ")
   end
 
+  xit "allows searching for a participant by name"
+  xit "allows searching for a participant by name while ignoring accented characters"
+
   it "deletes a participant when I click the delete button", js:true do
     DatabaseCleaner.clean
     existing_participant=FactoryGirl.create(:participant)
