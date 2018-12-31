@@ -22,7 +22,7 @@ class Navigator
   def group_sort_and_filter(klass,things)
     things=things.order("#{klass.sort_by(group_by)} ASC") if group_by
     things=things.filter_by(filter_by) if filter_by
-    things=things.where("people.last_name ILIKE ?",search+"%") if search
+    things=things.where("unaccent(people.last_name) ILIKE unaccent(?)",search+"%") if search
     things.order("#{klass.sort_by(sort_by)} #{reverse_sort ? "DESC" : "ASC"}")
   end
 end
