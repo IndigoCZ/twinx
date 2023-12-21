@@ -23,19 +23,31 @@ class Duration
   end
   def to_s
     return "" if zero?
-    "#{min}:#{sec}.#{fract}"
+    "#{min(true)}:#{sec(true)}.#{fract(true)}"
   end
-  def min
+  def min(accuracy_shift=false)
     return "0" if zero?
-    (@ms / 60000).to_s
+    if accuracy_shift then
+      ((@ms.to_f/100).ceil / 600).to_s
+    else
+      (@ms / 60000).to_s
+    end
   end
-  def sec
+  def sec(accuracy_shift=false)
     return "00" if zero?
-    ((@ms / 1000) % 60).to_s.rjust(2,"0")
+    if accuracy_shift then
+      (((@ms.to_f/100).ceil / 10) % 60).to_s.rjust(2,"0")
+    else
+      ((@ms / 1000) % 60).to_s.rjust(2,"0")
+    end
   end
-  def fract
+  def fract(accuracy_shift=false)
     return "000" if zero?
-    (@ms % 1000).to_s.rjust(3,"0")
+    if accuracy_shift then
+      ((@ms.to_f/100).ceil % 10).to_s
+    else
+      (@ms % 1000).to_s.rjust(3,"0")
+    end
   end
 
   private
