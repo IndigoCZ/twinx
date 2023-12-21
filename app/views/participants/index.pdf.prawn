@@ -43,7 +43,7 @@ prawn_document do |pdf|
 
     pdf_table_break(pdf)
     if pdf_table_title(key)
-      pdf.text(pdf_table_title(key), :size => 16)# Title
+      pdf.text("#{pdf_table_title(key)} (#{participant_list.size})", :size => 16)# Title
     end
 
     pdf.font_size(10)
