@@ -1,3 +1,30 @@
 == Twinx
 
 Twinx is an application for managing local athletic competitions.
+
+
+=== Installing
+- Deploy postgres
+-- sudo apt-get install postgresql
+-- Import backup, or create user and DBs
+-- sudo apt-get install libpq-dev
+- Deploy NodeJS (for ExecJS)
+-- sudo apt-get install nodejs
+- Install RBenv, ruby, bundler and the gems
+-- https://www.digitalocean.com/community/tutorials/how-to-install-ruby-on-rails-with-rbenv-on-ubuntu-22-04
+-- Ruby ~> 2.4.1
+-- gem install bundler -v 1.17.3
+-- bundle install
+- Deploy and configure nginx
+-- apt-get install nginx
+-- /etc/nginx/sites-available/twinx
+-- cd /etc/nginx/sites-enabled/
+-- ln -s ../sites-available/twinx
+-- rm default
+-- service nginx restart
+- Precompile assets
+-- RAILS_ENV=production bin/rake assets:precompile
+- Create Unicorn service script
+-- ~/.config/systemd/user/unicorn.service
+-- systemctl --user daemon-reload
+-- systemctl --user enable unicorn
